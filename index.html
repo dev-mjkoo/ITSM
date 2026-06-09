@@ -503,6 +503,18 @@
       border-right: 0;
     }
 
+    .event-result-table tbody td {
+      color: #253246;
+    }
+
+    .event-result-table tbody tr:nth-child(even) td {
+      background: #fbfcfe;
+    }
+
+    .event-result-table tbody tr:hover td {
+      background: #f7fbff;
+    }
+
     .event-result-table .event-col-select {
       width: 56px;
       padding: 0;
@@ -545,6 +557,16 @@
 
     .event-result-table .event-col-message {
       width: 280px;
+    }
+
+    .event-result-table td.event-col-error-type,
+    .event-result-table td.event-col-transaction-code,
+    .event-result-table td.event-col-service,
+    .event-result-table td.event-col-global,
+    .event-result-table td.event-col-host,
+    .event-result-table td.event-col-error-code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
     }
 
     .table-panel {
@@ -2411,6 +2433,7 @@
   </div>
 
   <script src="sample-data.js"></script>
+  <script src="event-sample-data.js"></script>
   <script>
     const statusBoardColumns = [
       { key: "select", className: "col-select", selectable: true },
@@ -2429,6 +2452,30 @@
       { key: "store", className: "col-store" },
       { key: "hostName", className: "col-host" },
       { key: "pid", className: "col-pid" }
+    ];
+
+    const eventResultColumns = [
+      { key: "select", className: "event-col-select", selectable: true },
+      { key: "status", className: "event-col-status" },
+      { key: "errorType", className: "event-col-error-type" },
+      { key: "occurredAt", className: "event-col-occurred" },
+      { key: "channelType", className: "event-col-channel" },
+      { key: "department", className: "event-col-department" },
+      { key: "cell", className: "event-col-cell" },
+      { key: "owner", className: "event-col-owner" },
+      { key: "transactionCode", className: "event-col-transaction-code" },
+      { key: "transactionName", className: "event-col-transaction-name" },
+      { key: "serviceName", className: "event-col-service" },
+      { key: "globalId", className: "event-col-global" },
+      { key: "hostName", className: "event-col-host" },
+      { key: "errorCode", className: "event-col-error-code" },
+      { key: "errorMessage", className: "event-col-message" },
+      { key: "duplicateCount", className: "event-col-duplicate" },
+      { key: "actionType", className: "event-col-action-type" },
+      { key: "plannedDate", className: "event-col-planned" },
+      { key: "completedDate", className: "event-col-completed" },
+      { key: "businessGroup", className: "event-col-business-group" },
+      { key: "business", className: "event-col-business" }
     ];
 
     const pageMeta = {
@@ -2452,6 +2499,7 @@
     const navButtons = [...document.querySelectorAll("[data-view-target]")];
     const navGroups = [...document.querySelectorAll("[data-nav-group]")];
     const views = [...document.querySelectorAll(".view")];
+    const eventResultBody = document.querySelector("#event-result-body");
     const pageHeading = document.querySelector("#page-heading");
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
@@ -3431,6 +3479,50 @@
       return cell;
     }
 
+    function createEventResultCell(row, column) {
+      const cell = document.createElement("td");
+      const value = row[column.key] ?? "";
+
+      cell.className = column.className;
+
+      if (column.selectable) {
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        const hiddenText = document.createElement("span");
+
+        label.className = "select-control";
+        checkbox.className = "row-select";
+        checkbox.type = "checkbox";
+        hiddenText.className = "sr-only";
+        hiddenText.textContent = `${row.no}번 이벤트 선택`;
+        label.append(checkbox, hiddenText);
+        cell.append(label);
+
+        return cell;
+      }
+
+      cell.title = String(value);
+      cell.textContent = value;
+
+      return cell;
+    }
+
+    function renderEventResultRows(rows) {
+      const fragment = document.createDocumentFragment();
+
+      rows.forEach((row) => {
+        const tableRow = document.createElement("tr");
+
+        eventResultColumns.forEach((column) => {
+          tableRow.append(createEventResultCell(row, column));
+        });
+
+        fragment.append(tableRow);
+      });
+
+      eventResultBody.replaceChildren(fragment);
+    }
+
     function renderStatusBoardRows(rows) {
       const fragment = document.createDocumentFragment();
 
@@ -3577,6 +3669,7 @@
     });
 
     initializeEventSearchControls();
+    renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
     showView("status-board");
   </script>
