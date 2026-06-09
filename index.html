@@ -593,31 +593,60 @@
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
     }
 
-    .detail-summary {
+    .detail-tabs {
+      position: relative;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 14px 24px;
-      border-bottom: 1px solid var(--border);
+      gap: 6px;
+      padding: 10px 24px 0;
+      background: var(--surface);
     }
 
-    .detail-chip {
-      min-height: 28px;
+    .detail-tabs::after {
+      content: "";
+      position: absolute;
+      right: 24px;
+      bottom: 0;
+      left: 24px;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .detail-tab {
+      position: relative;
+      z-index: 1;
+      min-height: 38px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 0 10px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: #f7f9fc;
-      color: #344255;
-      font-size: 12px;
-      font-weight: 700;
+      justify-content: center;
+      padding: 0 16px;
+      border: 1px solid transparent;
+      border-bottom: 0;
+      border-radius: 6px 6px 0 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
     }
 
-    .detail-chip strong {
-      color: var(--muted);
-      font-weight: 600;
+    .detail-tab:hover {
+      background: #f7f9fc;
+      color: #26364a;
+    }
+
+    .detail-tab.is-active {
+      border-color: var(--border);
+      background: var(--surface-subtle);
+      color: var(--primary-strong);
+    }
+
+    .detail-tab-panel[hidden] {
+      display: none;
+    }
+
+    .detail-tab-panel {
+      flex: 1 1 auto;
+      min-height: 0;
     }
 
     .detail-body {
@@ -626,16 +655,13 @@
     }
 
     .detail-section {
-      padding: 20px 0 4px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .detail-section:last-child {
-      border-bottom: 0;
+      padding: 20px 0 6px;
     }
 
     .detail-section h3 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
       color: #26364a;
       font-size: 14px;
       line-height: 1.3;
@@ -683,6 +709,143 @@
     .detail-field.is-code dd {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 12px;
+    }
+
+    .detail-action-panel {
+      overflow: auto;
+      padding: 20px 24px 22px;
+    }
+
+    .action-receipt {
+      display: grid;
+      gap: 18px;
+    }
+
+    .action-receipt-section {
+      padding-bottom: 18px;
+    }
+
+    .action-receipt-section:last-child {
+      padding-bottom: 0;
+    }
+
+    .action-receipt-section h3 {
+      margin: 0 0 14px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
+      color: #26364a;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .action-target-grid,
+    .action-form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px 16px;
+    }
+
+    .action-field {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+
+    .action-field.is-wide {
+      grid-column: span 2;
+    }
+
+    .action-field.is-full {
+      grid-column: 1 / -1;
+    }
+
+    .action-field label,
+    .action-field dt {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .action-field dd {
+      min-height: 32px;
+      margin: 0;
+      padding: 7px 10px;
+      overflow-wrap: anywhere;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fbfcfe;
+      color: #1d2a3a;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .action-field input,
+    .action-field select,
+    .action-field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 13px;
+    }
+
+    .action-field input,
+    .action-field select {
+      min-height: 36px;
+      padding: 0 10px;
+    }
+
+    .action-field textarea {
+      min-height: 108px;
+      padding: 9px 10px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+
+    .action-field input:focus,
+    .action-field select:focus,
+    .action-field textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .action-receipt-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .action-button {
+      min-width: 76px;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .action-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .action-button.is-primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .action-button.is-primary:hover {
+      border-color: var(--primary-strong);
+      background: var(--primary-strong);
     }
 
     .settings-modal[hidden] {
@@ -1070,13 +1233,21 @@
       }
 
       .detail-header,
-      .detail-summary,
+      .detail-tabs,
+      .detail-action-panel,
       .detail-body {
         padding-left: 16px;
         padding-right: 16px;
       }
 
-      .detail-grid {
+      .detail-tabs::after {
+        right: 16px;
+        left: 16px;
+      }
+
+      .detail-grid,
+      .action-target-grid,
+      .action-form-grid {
         grid-template-columns: minmax(0, 1fr);
       }
 
@@ -1101,7 +1272,9 @@
       }
 
       .detail-field.is-wide,
-      .detail-field.is-full {
+      .detail-field.is-full,
+      .action-field.is-wide,
+      .action-field.is-full {
         grid-column: 1 / -1;
       }
     }
@@ -1270,6 +1443,24 @@
                     <td>이벤트 조치하기 실행 시 선택된 오류상황판 행이 없으면 조치 대상 선택 안내 팝업을 표시한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-005</td>
+                    <td class="req-category">오류 상세</td>
+                    <td>오류 상세 페이지는 상세내용과 이벤트 조치접수 탭으로 구분한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-006</td>
+                    <td class="req-category">오류 상세</td>
+                    <td>오류상황판 행을 클릭하면 상세 페이지를 열고 상세내용 탭을 기본 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-007</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>이벤트 조치하기 실행 시 선택된 오류상황판 행의 상세 페이지를 열고 이벤트 조치접수 탭으로 바로 이동한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1365,8 +1556,12 @@
           </svg>
         </button>
       </header>
-      <div class="detail-summary" id="detail-summary"></div>
-      <div class="detail-body" id="detail-body"></div>
+      <div class="detail-tabs" role="tablist" aria-label="오류 상세 탭">
+        <button class="detail-tab is-active" type="button" role="tab" id="detail-tab-content" aria-selected="true" aria-controls="detail-body" data-detail-tab-target="detail-body">상세내용</button>
+        <button class="detail-tab" type="button" role="tab" id="detail-tab-action" aria-selected="false" aria-controls="detail-action-panel" data-detail-tab-target="detail-action-panel">이벤트 조치접수</button>
+      </div>
+      <div class="detail-body detail-tab-panel" id="detail-body" role="tabpanel" aria-labelledby="detail-tab-content"></div>
+      <div class="detail-action-panel detail-tab-panel" id="detail-action-panel" role="tabpanel" aria-labelledby="detail-tab-action" hidden></div>
     </div>
   </div>
 
@@ -1425,8 +1620,10 @@
     const detailTitle = document.querySelector("#detail-title");
     const detailSubtitle = document.querySelector("#detail-subtitle");
     const detailMeta = document.querySelector("#detail-meta");
-    const detailSummary = document.querySelector("#detail-summary");
     const detailBody = document.querySelector("#detail-body");
+    const detailActionPanel = document.querySelector("#detail-action-panel");
+    const detailTabButtons = [...document.querySelectorAll("[data-detail-tab-target]")];
+    const detailTabPanels = [...document.querySelectorAll(".detail-tab-panel")];
     let statusRows = [];
     let lastFocusedElement = null;
     let lastSettingsFocusedElement = null;
@@ -1616,20 +1813,154 @@
       return token;
     }
 
-    function createDetailChip(label, value) {
-      const chip = document.createElement("span");
-      const chipLabel = document.createElement("strong");
-      const chipValue = document.createElement("span");
+    function setDetailTab(panelId) {
+      detailTabButtons.forEach((button) => {
+        const isActive = button.dataset.detailTabTarget === panelId;
 
-      chip.className = "detail-chip";
-      chipLabel.textContent = label;
-      chipValue.textContent = value;
-      chip.append(chipLabel, chipValue);
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-selected", String(isActive));
+      });
 
-      return chip;
+      detailTabPanels.forEach((panel) => {
+        panel.hidden = panel.id !== panelId;
+      });
     }
 
-    function openDetailModal(row) {
+    function createActionReadonlyField(labelText, value, options = {}) {
+      const field = document.createElement("dl");
+      const label = document.createElement("dt");
+      const content = document.createElement("dd");
+
+      field.className = "action-field";
+
+      if (options.wide) {
+        field.classList.add("is-wide");
+      }
+
+      if (options.full) {
+        field.classList.add("is-full");
+      }
+
+      label.textContent = labelText;
+      content.textContent = value ?? "";
+      field.append(label, content);
+
+      return field;
+    }
+
+    function createActionInputField(config) {
+      const field = document.createElement("div");
+      const label = document.createElement("label");
+      let control;
+
+      field.className = "action-field";
+
+      if (config.wide) {
+        field.classList.add("is-wide");
+      }
+
+      if (config.full) {
+        field.classList.add("is-full");
+      }
+
+      if (config.type === "select") {
+        control = document.createElement("select");
+
+        config.options.forEach((optionValue) => {
+          const option = document.createElement("option");
+
+          option.value = optionValue;
+          option.textContent = optionValue;
+          option.selected = optionValue === config.value;
+          control.append(option);
+        });
+      } else if (config.type === "textarea") {
+        control = document.createElement("textarea");
+        control.value = config.value || "";
+      } else {
+        control = document.createElement("input");
+        control.type = "text";
+        control.value = config.value || "";
+      }
+
+      control.id = config.id;
+      label.setAttribute("for", config.id);
+      label.textContent = config.label;
+      field.append(label, control);
+
+      return field;
+    }
+
+    function createActionReceiptPanel(row, detail, actionRows = [row]) {
+      const wrapper = document.createElement("div");
+      const targetSection = document.createElement("section");
+      const targetTitle = document.createElement("h3");
+      const targetGrid = document.createElement("div");
+      const receiptSection = document.createElement("section");
+      const receiptTitle = document.createElement("h3");
+      const receiptGrid = document.createElement("div");
+      const defaultStage = row.stage === "제외" ? "제외" : "조치예정";
+      const fieldPrefix = `action-receipt-${row.no}`;
+
+      wrapper.className = "action-receipt";
+      targetSection.className = "action-receipt-section";
+      targetTitle.textContent = "접수 대상";
+      targetGrid.className = "action-target-grid";
+      receiptSection.className = "action-receipt-section";
+      receiptTitle.textContent = "접수 정보";
+      receiptGrid.className = "action-form-grid";
+
+      targetGrid.append(
+        createActionReadonlyField("대상건수", `${actionRows.length}건`),
+        createActionReadonlyField("대상 NO", actionRows.map((item) => item.no).join(", ")),
+        createActionReadonlyField("거래명", row.transactionName, { wide: true }),
+        createActionReadonlyField("거래코드", row.transactionCode),
+        createActionReadonlyField("에러코드", row.errorCode),
+        createActionReadonlyField("오류구분", row.errorType),
+        createActionReadonlyField("호스트명", row.hostName),
+        createActionReadonlyField("PID", row.pid),
+        createActionReadonlyField("글로벌 ID", detail.globalId, { wide: true })
+      );
+
+      receiptGrid.append(
+        createActionInputField({
+          id: `${fieldPrefix}-stage`,
+          label: "조치단계",
+          type: "select",
+          value: defaultStage,
+          options: ["조치예정", "제외"]
+        }),
+        createActionInputField({
+          id: `${fieldPrefix}-owner`,
+          label: "담당자",
+          value: row.owner
+        }),
+        createActionInputField({
+          id: `${fieldPrefix}-part`,
+          label: "파트명",
+          value: row.part
+        }),
+        createActionInputField({
+          id: `${fieldPrefix}-actor`,
+          label: "접수자",
+          value: row.lastActor
+        }),
+        createActionInputField({
+          id: `${fieldPrefix}-comment`,
+          label: "접수내용",
+          type: "textarea",
+          full: true
+        })
+      );
+
+      targetSection.append(targetTitle, targetGrid);
+      receiptSection.append(receiptTitle, receiptGrid);
+      wrapper.append(targetSection, receiptSection);
+
+      return wrapper;
+    }
+
+    function openDetailModal(row, initialTabId = "detail-body", actionRows = [row]) {
       const detail = getDetailRecord(row);
       const fragment = document.createDocumentFragment();
 
@@ -1641,18 +1972,13 @@
         createDetailMetaToken("에러코드", row.errorCode, "is-danger"),
         createDetailMetaToken("오류구분", row.errorType)
       );
-      detailSummary.replaceChildren(
-        createDetailChip("채널", row.channelType),
-        createDetailChip("오류구분", row.errorType),
-        createDetailChip("거래점", row.store),
-        createDetailChip("PID", row.pid)
-      );
-
       detailSections.forEach((section) => {
         fragment.append(createDetailSection(detail, section));
       });
 
       detailBody.replaceChildren(fragment);
+      detailActionPanel.replaceChildren(createActionReceiptPanel(row, detail, actionRows));
+      setDetailTab(initialTabId);
       detailModal.hidden = false;
       body.classList.add("detail-open");
       detailCloseButton.focus();
@@ -1710,6 +2036,13 @@
     function handleEventActionClick() {
       if (selectedStatusRows.size === 0) {
         openEventActionEmptyModal();
+        return;
+      }
+
+      const actionRows = getSelectedStatusRows();
+
+      if (actionRows.length > 0) {
+        openDetailModal(actionRows[0], "detail-action-panel", actionRows);
       }
     }
 
@@ -1722,6 +2055,10 @@
       const row = statusRows.find((item) => String(item.no) === selectedId);
 
       return row ? getSelectionKey(row) : "";
+    }
+
+    function getSelectedStatusRows() {
+      return statusRows.filter((row) => selectedStatusRows.has(String(row.no)));
     }
 
     function updateRowSelectionState() {
@@ -1921,6 +2258,12 @@
       if (event.target === eventActionEmptyModal) {
         closeEventActionEmptyModal();
       }
+    });
+
+    detailTabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setDetailTab(button.dataset.detailTabTarget);
+      });
     });
 
     detailCloseButton.addEventListener("click", closeDetailModal);
