@@ -401,6 +401,246 @@
       background: var(--primary-strong);
     }
 
+    .event-rule-page {
+      min-height: calc(100vh - var(--header-height) - 48px);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .event-rule-info,
+    .event-rule-editor,
+    .event-rule-list-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .event-rule-info {
+      padding: 16px;
+    }
+
+    .event-rule-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .event-rule-copy {
+      margin: 7px 0 0;
+      color: #3b4a60;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .event-rule-note {
+      margin: 8px 0 0;
+      color: #26364a;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .event-rule-note strong {
+      color: #1f2f46;
+      font-weight: 900;
+    }
+
+    .event-rule-form {
+      display: grid;
+      grid-template-columns: 180px 220px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: end;
+      padding: 16px;
+    }
+
+    .event-rule-field {
+      min-width: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .event-rule-field label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .event-rule-required {
+      color: var(--danger);
+      font-weight: 900;
+    }
+
+    .event-rule-field input {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 13px;
+    }
+
+    .event-rule-field input:focus {
+      border-color: var(--primary);
+    }
+
+    .event-rule-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .event-rule-feedback {
+      min-height: 18px;
+      margin: -6px 16px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .event-rule-feedback.is-error {
+      color: var(--danger);
+    }
+
+    .event-rule-list-panel {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .event-rule-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 16px;
+    }
+
+    .event-rule-list-title {
+      margin: 0;
+      color: #26364a;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .event-rule-count {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .event-rule-divider {
+      height: 1px;
+      margin: 0 16px;
+      background: var(--border);
+    }
+
+    .event-rule-scroll {
+      min-height: 0;
+      overflow: auto;
+      margin: 0 16px 16px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+
+    .event-rule-table {
+      width: 100%;
+      min-width: 960px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 13px;
+    }
+
+    .event-rule-table th,
+    .event-rule-table td {
+      padding: 10px 11px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .event-rule-table th:last-child,
+    .event-rule-table td:last-child {
+      border-right: 0;
+    }
+
+    .event-rule-table th {
+      background: var(--surface-subtle);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .event-rule-table td {
+      color: #253246;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event-rule-table .rule-col-no {
+      width: 64px;
+      text-align: center;
+    }
+
+    .event-rule-table .rule-col-condition {
+      width: 130px;
+    }
+
+    .event-rule-table .rule-col-error,
+    .event-rule-table .rule-col-transaction {
+      width: 150px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+
+    .event-rule-table .rule-col-date,
+    .event-rule-table .rule-col-owner {
+      width: 150px;
+    }
+
+    .event-rule-table .rule-col-remove {
+      width: 74px;
+      text-align: center;
+    }
+
+    .rule-condition-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #eef6ff;
+      color: var(--primary-strong);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .event-rule-remove {
+      min-height: 28px;
+      padding: 0 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #46566d;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .event-rule-remove:hover {
+      border-color: #f1b8b8;
+      background: #fff5f5;
+      color: #b42318;
+    }
+
     .event-result-panel {
       min-height: 0;
       display: flex;
@@ -1920,14 +2160,28 @@
 
       .workspace,
       .event-page,
+      .event-rule-page,
       .table-panel,
       .requirements-panel {
         min-height: calc(100vh - var(--header-height) - 32px);
       }
 
-      .event-search-grid {
+      .event-search-grid,
+      .event-rule-form {
         grid-template-columns: minmax(0, 1fr);
         padding: 12px;
+      }
+
+      .event-rule-actions {
+        justify-content: flex-start;
+      }
+
+      .event-rule-divider {
+        margin: 0 12px;
+      }
+
+      .event-rule-scroll {
+        margin: 0 12px 12px;
       }
 
       .event-date-range {
@@ -2284,7 +2538,63 @@
         </section>
 
         <section class="view" id="event-rule-management" aria-labelledby="page-heading">
-          <div class="workspace" aria-label="이벤트 룰 관리 빈 레이아웃"></div>
+          <div class="event-rule-page">
+            <section class="event-rule-info" aria-label="이벤트 룰 관리 설명">
+              <h2 class="event-rule-title">전일자 이벤트 취합 제외 룰</h2>
+              <p class="event-rule-copy">
+                오류상황판은 실시간으로 오류를 확인하는 화면이고, 이벤트 조회는 전일자 오류 데이터가 취합된 결과를 확인하는 화면입니다.
+                이벤트 룰 관리에 등록된 조건은 등록 이후 전일자 데이터 취합 단계에서 제외되며, 이미 적재된 이벤트는 삭제하지 않습니다.
+              </p>
+              <p class="event-rule-note">
+                <strong>거래코드 단독 등록</strong>은 불가합니다.
+              </p>
+            </section>
+            <section class="event-rule-editor" aria-label="이벤트 제외 룰 등록">
+              <form class="event-rule-form" id="event-rule-form">
+                <div class="event-rule-field">
+                  <label for="rule-error-code">에러코드<span class="event-rule-required">(필수)</span></label>
+                  <input id="rule-error-code" name="errorCode" type="text" autocomplete="off">
+                </div>
+                <div class="event-rule-field">
+                  <label for="rule-transaction-code">거래코드(선택)</label>
+                  <input id="rule-transaction-code" name="transactionCode" type="text" autocomplete="off">
+                </div>
+                <div class="event-rule-field">
+                  <label for="rule-memo">등록메모</label>
+                  <input id="rule-memo" name="memo" type="text" autocomplete="off">
+                </div>
+                <div class="event-rule-actions">
+                  <button class="event-search-button" type="reset">초기화</button>
+                  <button class="event-search-button is-primary" type="submit">룰 등록</button>
+                </div>
+              </form>
+              <p class="event-rule-feedback" id="event-rule-feedback" role="status" aria-live="polite"></p>
+            </section>
+            <section class="event-rule-list-panel" aria-label="등록된 이벤트 제외 룰">
+              <div class="event-rule-list-header">
+                <h2 class="event-rule-list-title">등록된 제외 룰</h2>
+                <span class="event-rule-count" id="event-rule-count">0건</span>
+              </div>
+              <div class="event-rule-divider" aria-hidden="true"></div>
+              <div class="event-rule-scroll">
+                <table class="event-rule-table" aria-label="등록된 이벤트 제외 룰 목록">
+                  <thead>
+                    <tr>
+                      <th class="rule-col-no" scope="col">NO</th>
+                      <th class="rule-col-condition" scope="col">적용조건</th>
+                      <th class="rule-col-error" scope="col">에러코드</th>
+                      <th class="rule-col-transaction" scope="col">거래코드</th>
+                      <th scope="col">등록메모</th>
+                      <th class="rule-col-owner" scope="col">등록자</th>
+                      <th class="rule-col-date" scope="col">등록일시</th>
+                      <th class="rule-col-remove" scope="col">삭제</th>
+                    </tr>
+                  </thead>
+                  <tbody id="event-rule-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
         </section>
 
         <section class="view" id="requirements" aria-labelledby="page-heading">
@@ -2518,6 +2828,20 @@
                     <td>이벤트 조회 결과에서 선택 가능한 이벤트를 선택한 뒤 결재요청을 실행하면 담당 셀장 결재요청 및 SWING 메일 전송 안내 팝업을 표시한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-032</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 룰 관리</td>
+                    <td>이벤트 룰 관리에 등록된 이벤트 조건은 전일자 데이터 취합 시 예외 처리하여 취합 대상에서 제외한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-033</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 룰 관리</td>
+                    <td>이벤트 룰 관리는 에러코드를 필수 입력값으로 하고 거래코드는 선택 입력값으로 하며, 거래코드 단독 등록은 허용하지 않는다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -2709,7 +3033,8 @@
     ];
 
     const currentUserProfile = {
-      cell: "디지털수신셀"
+      cell: "디지털수신셀",
+      employee: "20100061(구민준)"
     };
 
     const pageMeta = {
@@ -2735,6 +3060,13 @@
     const views = [...document.querySelectorAll(".view")];
     const eventResultBody = document.querySelector("#event-result-body");
     const eventApprovalButton = document.querySelector("[data-event-approval-button]");
+    const eventRuleForm = document.querySelector("#event-rule-form");
+    const eventRuleErrorCodeInput = document.querySelector("#rule-error-code");
+    const eventRuleTransactionCodeInput = document.querySelector("#rule-transaction-code");
+    const eventRuleMemoInput = document.querySelector("#rule-memo");
+    const eventRuleFeedback = document.querySelector("#event-rule-feedback");
+    const eventRuleBody = document.querySelector("#event-rule-body");
+    const eventRuleCount = document.querySelector("#event-rule-count");
     const pageHeading = document.querySelector("#page-heading");
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
@@ -2768,8 +3100,10 @@
     const eventDetailTabPanels = [eventDetailInfo, eventDetailHistory];
     const actionReceiptStates = new Map();
     const selectedEventRows = new Set();
+    const eventRuleRows = [];
     let statusRows = [];
     let eventRows = [];
+    let eventRuleSequence = 0;
     let lastFocusedElement = null;
     let lastEventDetailFocusedElement = null;
     let lastSettingsFocusedElement = null;
@@ -3322,8 +3656,146 @@
       if (eventSearchForm) {
         eventSearchForm.addEventListener("submit", (event) => {
           event.preventDefault();
+          refreshEventSearchResults();
         });
       }
+    }
+
+    function normalizeEventRuleValue(value) {
+      return String(value || "").trim().toUpperCase();
+    }
+
+    function formatEventRuleDate(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hour = String(date.getHours()).padStart(2, "0");
+      const minute = String(date.getMinutes()).padStart(2, "0");
+
+      return `${year}-${month}-${day} ${hour}:${minute}`;
+    }
+
+    function setEventRuleFeedback(message, isError = false) {
+      eventRuleFeedback.textContent = message;
+      eventRuleFeedback.classList.toggle("is-error", isError);
+    }
+
+    function refreshEventSearchResults() {
+      renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
+    }
+
+    function renderEventRuleRows() {
+      const fragment = document.createDocumentFragment();
+
+      eventRuleCount.textContent = `${eventRuleRows.length}건`;
+
+      if (eventRuleRows.length === 0) {
+        const emptyRow = document.createElement("tr");
+        const emptyCell = document.createElement("td");
+
+        emptyCell.colSpan = 8;
+        emptyCell.textContent = "등록된 제외 룰이 없습니다.";
+        emptyRow.append(emptyCell);
+        eventRuleBody.replaceChildren(emptyRow);
+        return;
+      }
+
+      eventRuleRows.forEach((rule, index) => {
+        const tableRow = document.createElement("tr");
+        const cells = [
+          { value: index + 1, className: "rule-col-no" },
+          { value: rule.transactionCode ? "에러+거래" : "에러코드", className: "rule-col-condition", badge: true },
+          { value: rule.errorCode, className: "rule-col-error" },
+          { value: rule.transactionCode || "-", className: "rule-col-transaction" },
+          { value: rule.memo || "-" },
+          { value: rule.registeredBy, className: "rule-col-owner" },
+          { value: rule.registeredAt, className: "rule-col-date" }
+        ];
+
+        cells.forEach((cellConfig) => {
+          const cell = document.createElement("td");
+
+          if (cellConfig.className) {
+            cell.className = cellConfig.className;
+          }
+
+          if (cellConfig.badge) {
+            const badge = document.createElement("span");
+
+            badge.className = "rule-condition-badge";
+            badge.textContent = cellConfig.value;
+            cell.append(badge);
+          } else {
+            cell.textContent = cellConfig.value;
+          }
+
+          tableRow.append(cell);
+        });
+
+        const removeCell = document.createElement("td");
+        const removeButton = document.createElement("button");
+
+        removeCell.className = "rule-col-remove";
+        removeButton.className = "event-rule-remove";
+        removeButton.type = "button";
+        removeButton.textContent = "삭제";
+        removeButton.addEventListener("click", () => {
+          const targetIndex = eventRuleRows.findIndex((item) => item.id === rule.id);
+
+          if (targetIndex >= 0) {
+            eventRuleRows.splice(targetIndex, 1);
+            renderEventRuleRows();
+            setEventRuleFeedback("룰이 삭제되었습니다. 기존 이벤트 조회 데이터에는 영향이 없습니다.");
+          }
+        });
+
+        removeCell.append(removeButton);
+        tableRow.append(removeCell);
+        fragment.append(tableRow);
+      });
+
+      eventRuleBody.replaceChildren(fragment);
+    }
+
+    function handleEventRuleSubmit(event) {
+      event.preventDefault();
+
+      const errorCode = normalizeEventRuleValue(eventRuleErrorCodeInput.value);
+      const transactionCode = normalizeEventRuleValue(eventRuleTransactionCodeInput.value);
+      const memo = String(eventRuleMemoInput.value || "").trim();
+
+      if (!errorCode && transactionCode) {
+        setEventRuleFeedback("거래코드만으로는 등록할 수 없습니다. 에러코드를 함께 입력해주세요.", true);
+        return;
+      }
+
+      if (!errorCode) {
+        setEventRuleFeedback("에러코드를 입력해주세요.", true);
+        return;
+      }
+
+      const isDuplicate = eventRuleRows.some((rule) => (
+        rule.errorCode === errorCode &&
+        rule.transactionCode === transactionCode
+      ));
+
+      if (isDuplicate) {
+        setEventRuleFeedback("이미 등록된 룰입니다.", true);
+        return;
+      }
+
+      const rule = {
+        id: `rule-${eventRuleSequence += 1}`,
+        errorCode,
+        transactionCode,
+        memo,
+        registeredBy: currentUserProfile.employee,
+        registeredAt: formatEventRuleDate()
+      };
+      eventRuleRows.unshift(rule);
+      eventRuleForm.reset();
+      renderEventRuleRows();
+      setEventRuleFeedback("룰이 등록되었습니다. 기존 이벤트 조회 데이터는 유지되고 다음 전일자 취합부터 제외됩니다.");
     }
 
     function createActionInputField(config) {
@@ -4113,6 +4585,11 @@
     });
     refreshSecondsInput.addEventListener("blur", normalizeRefreshSeconds);
 
+    eventRuleForm.addEventListener("submit", handleEventRuleSubmit);
+    eventRuleForm.addEventListener("reset", () => {
+      window.setTimeout(() => setEventRuleFeedback(""), 0);
+    });
+
     eventActionButton.addEventListener("click", handleEventActionClick);
     eventApprovalButton.addEventListener("click", handleEventApprovalRequestClick);
     eventActionEmptyCloseButton.addEventListener("click", closeEventActionEmptyModal);
@@ -4176,6 +4653,7 @@
     });
 
     initializeEventSearchControls();
+    renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
     showView("status-board");

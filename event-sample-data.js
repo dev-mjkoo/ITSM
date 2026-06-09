@@ -35,11 +35,9 @@
   }
 
   function makeOccurredAt(index) {
-    const hour = 17 - Math.floor(index / 12);
-    const minute = 58 - ((index * 7) % 55);
-    const second = 50 - ((index * 11) % 47);
+    const day = 9 - Math.floor(index / 6);
 
-    return `2026-06-09 ${pad(hour, 2)}:${pad(Math.max(minute, 0), 2)}:${pad(Math.max(second, 0), 2)}`;
+    return `2026-06-${pad(Math.max(day, 1), 2)}`;
   }
 
   function makeDate(index, offset) {
