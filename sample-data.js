@@ -2,6 +2,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 1,
     registeredAt: "2026-06-09 17:42:31",
+    stage: "미조치",
     channelType: "D0",
     errorType: "BXM",
     part: "디지털수신",
@@ -18,6 +19,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 2,
     registeredAt: "2026-06-09 17:40:08",
+    stage: "미조치",
     channelType: "A1",
     errorType: "PFM",
     part: "자동화업무",
@@ -34,6 +36,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 3,
     registeredAt: "2026-06-09 17:37:44",
+    stage: "조치예정",
     channelType: "DT",
     errorType: "BXM",
     part: "모바일라이프",
@@ -50,6 +53,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 4,
     registeredAt: "2026-06-09 17:35:19",
+    stage: "미조치",
     channelType: "A0",
     errorType: "PFM",
     part: "공통업무",
@@ -66,6 +70,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 5,
     registeredAt: "2026-06-09 17:32:55",
+    stage: "미조치",
     channelType: "DX",
     errorType: "BXM",
     part: "마이데이터",
@@ -82,6 +87,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 6,
     registeredAt: "2026-06-09 17:29:22",
+    stage: "미조치",
     channelType: "D0",
     errorType: "BXM",
     part: "디지털여신",
@@ -98,6 +104,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 7,
     registeredAt: "2026-06-09 17:25:47",
+    stage: "제외",
     channelType: "A1",
     errorType: "PFM",
     part: "자동화업무",
@@ -114,6 +121,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 8,
     registeredAt: "2026-06-09 17:22:16",
+    stage: "미조치",
     channelType: "DT",
     errorType: "BXM",
     part: "디지털수신",
@@ -130,6 +138,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 9,
     registeredAt: "2026-06-09 17:18:39",
+    stage: "미조치",
     channelType: "A0",
     errorType: "PFM",
     part: "공통업무",
@@ -146,6 +155,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 10,
     registeredAt: "2026-06-09 17:14:03",
+    stage: "조치예정",
     channelType: "DX",
     errorType: "BXM",
     part: "마이데이터",
@@ -162,6 +172,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 11,
     registeredAt: "2026-06-09 17:10:28",
+    stage: "미조치",
     channelType: "D0",
     errorType: "BXM",
     part: "모바일라이프",
@@ -178,6 +189,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 12,
     registeredAt: "2026-06-09 17:06:54",
+    stage: "미조치",
     channelType: "A1",
     errorType: "PFM",
     part: "자동화업무",
@@ -194,6 +206,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 13,
     registeredAt: "2026-06-09 17:03:17",
+    stage: "미조치",
     channelType: "DT",
     errorType: "BXM",
     part: "디지털여신",
@@ -210,6 +223,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 14,
     registeredAt: "2026-06-09 16:59:42",
+    stage: "미조치",
     channelType: "DX",
     errorType: "BXM",
     part: "디지털수신",
@@ -226,6 +240,7 @@ window.ERROR_BOARD_ROWS = [
   {
     no: 15,
     registeredAt: "2026-06-09 16:55:09",
+    stage: "미조치",
     channelType: "A0",
     errorType: "PFM",
     part: "공통업무",

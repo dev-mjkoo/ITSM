@@ -276,7 +276,7 @@
 
     .data-table {
       width: 100%;
-      min-width: 1880px;
+      min-width: 1980px;
       border-collapse: separate;
       border-spacing: 0;
       table-layout: fixed;
@@ -324,6 +324,10 @@
 
     .data-table .col-time {
       width: 150px;
+    }
+
+    .data-table .col-stage {
+      width: 100px;
     }
 
     .data-table .col-channel,
@@ -438,6 +442,33 @@
       color: #314154;
       font-weight: 700;
       vertical-align: middle;
+    }
+
+    .stage-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      height: 24px;
+      padding: 0 8px;
+      border: 1px solid #c8d3e0;
+      border-radius: 999px;
+      background: #f3f6fa;
+      color: #314154;
+      font-weight: 800;
+      vertical-align: middle;
+    }
+
+    .stage-badge.is-pending {
+      border-color: #f2c16d;
+      background: #fff8e8;
+      color: #8a5b10;
+    }
+
+    .stage-badge.is-excluded {
+      border-color: #d7dce4;
+      background: #f5f6f8;
+      color: #667386;
     }
 
     .detail-modal[hidden] {
@@ -928,6 +959,7 @@
                     <th class="col-select" scope="col">선택</th>
                     <th class="col-no" scope="col">NO</th>
                     <th class="col-time" scope="col">등록시간</th>
+                    <th class="col-stage" scope="col">단계</th>
                     <th class="col-channel" scope="col">채널유형</th>
                     <th class="col-part" scope="col">파트</th>
                     <th class="col-actor" scope="col">최종이행자</th>
@@ -1018,6 +1050,7 @@
       { key: "select", className: "col-select", selectable: true },
       { key: "no", className: "col-no" },
       { key: "registeredAt", className: "col-time" },
+      { key: "stage", className: "col-stage", stageBadge: true },
       { key: "channelType", className: "col-channel" },
       { key: "part", className: "col-part" },
       { key: "lastActor", className: "col-actor" },
@@ -1384,6 +1417,23 @@
       if (column.typeBadge) {
         const badge = document.createElement("span");
         badge.className = "error-type";
+        badge.textContent = value;
+        cell.append(badge);
+        return cell;
+      }
+
+      if (column.stageBadge) {
+        const badge = document.createElement("span");
+        badge.className = "stage-badge";
+
+        if (value === "조치예정") {
+          badge.classList.add("is-pending");
+        }
+
+        if (value === "제외") {
+          badge.classList.add("is-excluded");
+        }
+
         badge.textContent = value;
         cell.append(badge);
         return cell;
