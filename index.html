@@ -413,8 +413,13 @@
       justify-content: flex-end;
       gap: 8px;
       padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
       background: var(--surface);
+    }
+
+    .event-result-divider {
+      height: 1px;
+      margin: 0 14px;
+      background: var(--border);
     }
 
     .event-result-action {
@@ -454,7 +459,10 @@
       flex: 1 1 auto;
       min-height: 0;
       overflow: auto;
-      border-radius: inherit;
+      margin: 0 14px 14px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
       background: var(--surface);
     }
 
@@ -1756,8 +1764,13 @@
         margin: 0 10px 10px;
       }
 
-      .table-divider {
+      .table-divider,
+      .event-result-divider {
         margin: 0 10px;
+      }
+
+      .event-result-scroll {
+        margin: 0 10px 10px;
       }
 
       .workspace,
@@ -2086,6 +2099,7 @@
                 <button class="event-result-action" type="button">Excel다운로드</button>
                 <button class="event-result-action is-primary" type="button">결재요청</button>
               </div>
+              <div class="event-result-divider" aria-hidden="true"></div>
               <div class="event-result-scroll">
                 <table class="event-result-table" aria-label="이벤트 조회 결과 목록">
                   <thead>
