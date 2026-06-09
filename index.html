@@ -122,8 +122,78 @@
 
     .nav-button.is-active {
       background: rgba(47, 129, 247, 0.18);
-      border-color: rgba(47, 129, 247, 0.44);
+      border-color: transparent;
       color: #ffffff;
+    }
+
+    .nav-group {
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav-group-button {
+      justify-content: flex-start;
+    }
+
+    .nav-expander {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      margin-left: auto;
+      color: currentColor;
+      transition: transform 180ms ease;
+    }
+
+    .nav-group.is-open .nav-expander {
+      transform: rotate(90deg);
+    }
+
+    .nav-submenu {
+      display: none;
+      gap: 4px;
+      margin-left: 18px;
+      padding: 2px 0 2px 12px;
+    }
+
+    .nav-group.is-open .nav-submenu {
+      display: grid;
+    }
+
+    .nav-sub-button {
+      min-height: 36px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: #aebbcf;
+      text-align: left;
+      font-size: 14px;
+      transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+    }
+
+    .nav-sub-button:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: #ffffff;
+    }
+
+    .nav-sub-button.is-active {
+      border-color: transparent;
+      background: rgba(47, 129, 247, 0.14);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .nav-sub-mark {
+      width: 6px;
+      height: 6px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.75;
     }
 
     .nav-icon {
@@ -1515,13 +1585,28 @@
           </svg>
           <span>오류상황판</span>
         </button>
-        <button class="nav-button" type="button" data-view-target="event-management">
-          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-            <path d="M6 6h12M6 12h12M6 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <path d="m16 16 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>이벤트 관리</span>
-        </button>
+        <div class="nav-group" data-nav-group="event-management">
+          <button class="nav-button nav-group-button" type="button" data-view-target="event-search" data-nav-group-button="event-management" aria-expanded="false" aria-controls="event-management-submenu">
+            <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6h12M6 12h12M6 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="m16 16 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>이벤트 관리</span>
+            <svg class="nav-expander" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-submenu" id="event-management-submenu">
+            <button class="nav-sub-button" type="button" data-view-target="event-search">
+              <span class="nav-sub-mark" aria-hidden="true"></span>
+              <span>이벤트 조회</span>
+            </button>
+            <button class="nav-sub-button" type="button" data-view-target="event-rule-management">
+              <span class="nav-sub-mark" aria-hidden="true"></span>
+              <span>이벤트 룰 관리</span>
+            </button>
+          </div>
+        </div>
         <button class="nav-button" type="button" data-view-target="requirements">
           <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
             <path d="M7 3.5h7l3 3v14H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
@@ -1612,8 +1697,12 @@
           </div>
         </section>
 
-        <section class="view" id="event-management" aria-labelledby="page-heading">
-          <div class="workspace" aria-label="이벤트 관리 빈 레이아웃"></div>
+        <section class="view" id="event-search" aria-labelledby="page-heading">
+          <div class="workspace" aria-label="이벤트 조회 빈 레이아웃"></div>
+        </section>
+
+        <section class="view" id="event-rule-management" aria-labelledby="page-heading">
+          <div class="workspace" aria-label="이벤트 룰 관리 빈 레이아웃"></div>
         </section>
 
         <section class="view" id="requirements" aria-labelledby="page-heading">
@@ -1763,6 +1852,13 @@
                     <td>결재요청 실행 시 조치완료일, 조치담당자, 조치구분, 조치내용 중 하나라도 입력되지 않으면 결재요청하지 않고 입력 안내를 표시한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-020</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">메뉴</td>
+                    <td>이벤트 관리 탭을 클릭하면 하위 메뉴로 이벤트 조회와 이벤트 룰 관리를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1892,8 +1988,11 @@
       "status-board": {
         title: "오류상황판"
       },
-      "event-management": {
-        title: "이벤트 관리"
+      "event-search": {
+        title: "이벤트 조회"
+      },
+      "event-rule-management": {
+        title: "이벤트 룰 관리"
       },
       "requirements": {
         title: "개발요건"
@@ -1902,7 +2001,9 @@
 
     const body = document.body;
     const selectedStatusRows = new Set();
+    const eventManagementViewIds = new Set(["event-search", "event-rule-management"]);
     const navButtons = [...document.querySelectorAll("[data-view-target]")];
+    const navGroups = [...document.querySelectorAll("[data-nav-group]")];
     const views = [...document.querySelectorAll(".view")];
     const pageHeading = document.querySelector("#page-heading");
     const menuButton = document.querySelector(".mobile-menu");
@@ -2884,15 +2985,29 @@
 
     function showView(viewId) {
       const meta = pageMeta[viewId];
+      const isEventManagementView = eventManagementViewIds.has(viewId);
 
       views.forEach((view) => {
         view.classList.toggle("is-active", view.id === viewId);
       });
 
       navButtons.forEach((button) => {
-        const isActive = button.dataset.viewTarget === viewId;
+        const isGroupButton = button.dataset.navGroupButton === "event-management";
+        const isActive = button.dataset.viewTarget === viewId || (isGroupButton && isEventManagementView);
+
         button.classList.toggle("is-active", isActive);
-        button.setAttribute("aria-current", isActive ? "page" : "false");
+        button.setAttribute("aria-current", isActive && !isGroupButton ? "page" : "false");
+      });
+
+      navGroups.forEach((group) => {
+        const isOpen = group.dataset.navGroup === "event-management" && isEventManagementView;
+        const groupButton = group.querySelector("[data-nav-group-button]");
+
+        group.classList.toggle("is-open", isOpen);
+
+        if (groupButton) {
+          groupButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
       });
 
       pageHeading.textContent = meta.title;
