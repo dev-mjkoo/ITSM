@@ -519,6 +519,10 @@
       cursor: pointer;
     }
 
+    .event-result-table tbody tr.is-selected td {
+      background: #eef6ff;
+    }
+
     .event-result-table .event-col-select {
       width: 56px;
       padding: 0;
@@ -2242,7 +2246,7 @@
             <section class="event-result-panel" aria-label="이벤트 조회 결과">
               <div class="event-result-toolbar" aria-label="이벤트 조회 결과 작업">
                 <button class="event-result-action" type="button">Excel다운로드</button>
-                <button class="event-result-action is-primary" type="button">결재요청</button>
+                <button class="event-result-action is-primary" type="button" data-event-approval-button>결재요청</button>
               </div>
               <div class="event-result-divider" aria-hidden="true"></div>
               <div class="event-result-scroll">
@@ -2500,6 +2504,20 @@
                     <td>서비스에 대한 부서와 셀 정보는 서비스담당자의 소속 정보로 가져온다.</td>
                     <td class="req-status is-pending">대기</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-030</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 결과의 선택 체크박스는 현재 사용자와 같은 셀 소속 이벤트에만 표시하며, 다른 셀 이벤트에는 선택 체크박스를 표시하지 않는다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-031</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 결과에서 선택 가능한 이벤트를 선택한 뒤 결재요청을 실행하면 담당 셀장 결재요청 및 SWING 메일 전송 안내 팝업을 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -2690,6 +2708,10 @@
       { label: "조치구분", key: "actionType" }
     ];
 
+    const currentUserProfile = {
+      cell: "디지털수신셀"
+    };
+
     const pageMeta = {
       "status-board": {
         title: "오류상황판"
@@ -2712,6 +2734,7 @@
     const navGroups = [...document.querySelectorAll("[data-nav-group]")];
     const views = [...document.querySelectorAll(".view")];
     const eventResultBody = document.querySelector("#event-result-body");
+    const eventApprovalButton = document.querySelector("[data-event-approval-button]");
     const pageHeading = document.querySelector("#page-heading");
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
@@ -2744,6 +2767,7 @@
     const eventDetailTabButtons = [...eventDetailModal.querySelectorAll("[data-event-detail-tab-target]")];
     const eventDetailTabPanels = [eventDetailInfo, eventDetailHistory];
     const actionReceiptStates = new Map();
+    const selectedEventRows = new Set();
     let statusRows = [];
     let eventRows = [];
     let lastFocusedElement = null;
@@ -3812,6 +3836,40 @@
       updateRowSelectionState();
     }
 
+    function getSelectedEventRows() {
+      return eventRows.filter((row) => selectedEventRows.has(String(row.no)));
+    }
+
+    function handleEventResultSelect(row, selector) {
+      const rowId = String(row.no);
+      const tableRow = selector.closest("tr");
+
+      if (selector.checked) {
+        selectedEventRows.add(rowId);
+      } else {
+        selectedEventRows.delete(rowId);
+      }
+
+      tableRow.classList.toggle("is-selected", selector.checked);
+    }
+
+    function handleEventApprovalRequestClick() {
+      const approvalRows = getSelectedEventRows();
+      const hasOtherCellRow = approvalRows.some((row) => row.cell !== currentUserProfile.cell);
+
+      if (approvalRows.length === 0) {
+        openEventActionEmptyModal("결재요청할 이벤트를 선택해주세요");
+        return;
+      }
+
+      if (hasOtherCellRow) {
+        openEventActionEmptyModal("같은 셀 소속 이벤트만 결재요청할 수 있습니다");
+        return;
+      }
+
+      openEventActionEmptyModal("담당 셀장에게 결재 요청을 하고 SWING 메일이 전송되면 좋겠습니다");
+    }
+
     function createStatusCell(row, column) {
       const cell = document.createElement("td");
       const value = row[column.key] ?? "";
@@ -3819,6 +3877,11 @@
       cell.className = column.className;
 
       if (column.selectable) {
+        if (row.cell !== currentUserProfile.cell) {
+          cell.title = "현재 사용자와 같은 셀의 이벤트만 선택할 수 있습니다.";
+          return cell;
+        }
+
         const label = document.createElement("label");
         const checkbox = document.createElement("input");
         const hiddenText = document.createElement("span");
@@ -3891,8 +3954,11 @@
         label.className = "select-control";
         checkbox.className = "row-select";
         checkbox.type = "checkbox";
+        checkbox.dataset.eventRowSelect = "true";
+        checkbox.dataset.rowId = String(row.no);
         hiddenText.className = "sr-only";
         hiddenText.textContent = `${row.no}번 이벤트 선택`;
+        checkbox.addEventListener("change", () => handleEventResultSelect(row, checkbox));
         label.append(checkbox, hiddenText);
         cell.append(label);
 
@@ -3909,6 +3975,7 @@
       const fragment = document.createDocumentFragment();
 
       eventRows = window.EVENT_SEARCH_ROWS || rows;
+      selectedEventRows.clear();
 
       rows.forEach((row) => {
         const tableRow = document.createElement("tr");
@@ -4047,6 +4114,7 @@
     refreshSecondsInput.addEventListener("blur", normalizeRefreshSeconds);
 
     eventActionButton.addEventListener("click", handleEventActionClick);
+    eventApprovalButton.addEventListener("click", handleEventApprovalRequestClick);
     eventActionEmptyCloseButton.addEventListener("click", closeEventActionEmptyModal);
     eventActionEmptyModal.addEventListener("click", (event) => {
       if (event.target === eventActionEmptyModal) {
