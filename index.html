@@ -629,6 +629,10 @@
       transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
     }
 
+    .detail-tab[hidden] {
+      display: none;
+    }
+
     .detail-tab:hover {
       background: #f7f9fc;
       color: #26364a;
@@ -717,6 +721,76 @@
     }
 
     .action-receipt {
+      display: grid;
+      gap: 16px;
+    }
+
+    .action-target-summary {
+      min-width: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .action-target-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .action-target-count {
+      color: #26364a;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .action-target-subtitle {
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .action-target-table-wrap {
+      max-height: 164px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .action-target-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .action-target-table th,
+    .action-target-table td {
+      padding: 7px 9px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .action-target-table th {
+      background: var(--surface-subtle);
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .action-target-table td {
+      color: #253246;
+    }
+
+    .action-target-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .action-form-grid {
       display: grid;
       grid-template-columns: 210px 160px 220px 160px;
       gap: 10px 12px;
@@ -1223,7 +1297,7 @@
       }
 
       .detail-grid,
-      .action-receipt {
+      .action-form-grid {
         grid-template-columns: minmax(0, 1fr);
       }
 
@@ -1404,7 +1478,7 @@
                   <tr>
                     <td class="req-id">REQ-002</td>
                     <td class="req-category">선택 제한</td>
-                    <td>오류상황판에서는 같은 거래코드와 에러코드를 가진 행만 동시에 여러 건 선택할 수 있다.</td>
+                    <td>오류상황판에서는 같은 거래코드와 에러코드를 가진 행만 동시에 여러 건 선택할 수 있으며, 조건이 다른 행은 선택할 수 없도록 비활성화한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                   <tr>
@@ -1453,6 +1527,12 @@
                     <td class="req-id">REQ-010</td>
                     <td class="req-category">이벤트 조치</td>
                     <td>조치 예정일과 조치완료일은 직접 입력하지 않고 달력에서 유효한 날짜를 선택한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-011</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>여러 오류상황판 행을 선택해 이벤트 조치하기를 실행한 경우 상세내용 탭은 표시하지 않는다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                 </tbody>
@@ -1808,15 +1888,28 @@
     }
 
     function setDetailTab(panelId) {
+      const targetButton = detailTabButtons.find((button) => button.dataset.detailTabTarget === panelId);
+      const activePanelId = targetButton?.hidden ? "detail-action-panel" : panelId;
+
       detailTabButtons.forEach((button) => {
-        const isActive = button.dataset.detailTabTarget === panelId;
+        const isActive = button.dataset.detailTabTarget === activePanelId;
 
         button.classList.toggle("is-active", isActive);
         button.setAttribute("aria-selected", String(isActive));
       });
 
       detailTabPanels.forEach((panel) => {
-        panel.hidden = panel.id !== panelId;
+        panel.hidden = panel.id !== activePanelId;
+      });
+    }
+
+    function setDetailTabAvailability(actionRows) {
+      const isBatchAction = actionRows.length > 1;
+
+      detailTabButtons.forEach((button) => {
+        const isDetailTab = button.dataset.detailTabTarget === "detail-body";
+
+        button.hidden = isBatchAction && isDetailTab;
       });
     }
 
@@ -1927,12 +2020,73 @@
       return field;
     }
 
-    function createActionReceiptPanel(row) {
+    function createActionTargetSummary(actionRows) {
+      const summary = document.createElement("section");
+      const heading = document.createElement("div");
+      const count = document.createElement("div");
+      const subtitle = document.createElement("div");
+      const tableWrap = document.createElement("div");
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const tbody = document.createElement("tbody");
+      const headerRow = document.createElement("tr");
+      const firstRow = actionRows[0];
+      const columns = [
+        ["NO", "no"],
+        ["등록시간", "registeredAt"],
+        ["채널유형", "channelType"],
+        ["거래점", "store"],
+        ["호스트명", "hostName"],
+        ["PID", "pid"]
+      ];
+
+      summary.className = "action-target-summary";
+      heading.className = "action-target-heading";
+      count.className = "action-target-count";
+      subtitle.className = "action-target-subtitle";
+      tableWrap.className = "action-target-table-wrap";
+      table.className = "action-target-table";
+      count.textContent = `선택된 이벤트 ${actionRows.length}건`;
+      subtitle.textContent = `${firstRow.transactionCode} / ${firstRow.errorCode}`;
+
+      columns.forEach(([label]) => {
+        const headerCell = document.createElement("th");
+
+        headerCell.scope = "col";
+        headerCell.textContent = label;
+        headerRow.append(headerCell);
+      });
+
+      actionRows.forEach((row) => {
+        const tableRow = document.createElement("tr");
+
+        columns.forEach(([, key]) => {
+          const cell = document.createElement("td");
+
+          cell.textContent = row[key] ?? "";
+          tableRow.append(cell);
+        });
+
+        tbody.append(tableRow);
+      });
+
+      thead.append(headerRow);
+      table.append(thead, tbody);
+      tableWrap.append(table);
+      heading.append(count, subtitle);
+      summary.append(heading, tableWrap);
+
+      return summary;
+    }
+
+    function createActionReceiptPanel(row, actionRows = [row]) {
       const wrapper = document.createElement("div");
+      const formGrid = document.createElement("div");
       const fieldPrefix = `action-receipt-${row.no}`;
 
       wrapper.className = "action-receipt";
-      wrapper.append(
+      formGrid.className = "action-form-grid";
+      formGrid.append(
         createActionInputField({
           id: `${fieldPrefix}-owner`,
           label: "조치담당자",
@@ -1962,11 +2116,12 @@
           full: true
         })
       );
+      wrapper.append(createActionTargetSummary(actionRows), formGrid);
 
       return wrapper;
     }
 
-    function openDetailModal(row, initialTabId = "detail-body") {
+    function openDetailModal(row, initialTabId = "detail-body", actionRows = [row]) {
       const detail = getDetailRecord(row);
       const fragment = document.createDocumentFragment();
 
@@ -1983,7 +2138,8 @@
       });
 
       detailBody.replaceChildren(fragment);
-      detailActionPanel.replaceChildren(createActionReceiptPanel(row));
+      detailActionPanel.replaceChildren(createActionReceiptPanel(row, actionRows));
+      setDetailTabAvailability(actionRows);
       setDetailTab(initialTabId);
       detailModal.hidden = false;
       body.classList.add("detail-open");
@@ -2048,7 +2204,7 @@
       const actionRows = getSelectedStatusRows();
 
       if (actionRows.length > 0) {
-        openDetailModal(actionRows[0], "detail-action-panel");
+        openDetailModal(actionRows[0], "detail-action-panel", actionRows);
       }
     }
 
@@ -2268,6 +2424,10 @@
 
     detailTabButtons.forEach((button) => {
       button.addEventListener("click", () => {
+        if (button.hidden) {
+          return;
+        }
+
         setDetailTab(button.dataset.detailTabTarget);
       });
     });
