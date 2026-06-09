@@ -48,6 +48,40 @@
     return `2026-06-${pad(day, 2)}`;
   }
 
+  function makeAppliedAt(sampleIndex) {
+    const day = 1 + (sampleIndex % 8);
+    const hour = 20 + (sampleIndex % 3);
+    const minute = (sampleIndex * 7) % 60;
+
+    return `2026-06-${pad(day, 2)} ${pad(hour, 2)}:${pad(minute, 2)}`;
+  }
+
+  function getFailureCause(errorCode) {
+    if (errorCode === "PFM03030") {
+      return "서비스 응답 제한시간 초과";
+    }
+
+    if (errorCode === "DEP10051") {
+      return "원장 처리 예외";
+    }
+
+    if (errorCode === "BXM30002") {
+      return "일시적 거래 지연";
+    }
+
+    return "업무 처리 중 예외 발생";
+  }
+
+  function makeSourceLocation(transactionCode, errorCode, sampleIndex) {
+    const moduleName = transactionCode.slice(0, -2).toLowerCase();
+
+    return [
+      `/app/itsm/channel/${moduleName}/service/${moduleName}Service.java:${120 + sampleIndex * 7}`,
+      `/app/itsm/channel/${moduleName}/mapper/${moduleName}ErrorMapper.xml:${40 + sampleIndex * 3}`,
+      `errorCode=${errorCode}, transactionCode=${transactionCode}`
+    ].join("\n");
+  }
+
   function getDepartment(channelType, businessGroup) {
     if (channelType.startsWith("D")) {
       return "디지털서비스개발부";
@@ -66,7 +100,8 @@
 
   window.EVENT_SEARCH_ROWS = Array.from({ length: 50 }, (_, index) => {
     const itemIndex = index + 1;
-    const sample = transactionSamples[index % transactionSamples.length];
+    const sampleIndex = index % transactionSamples.length;
+    const sample = transactionSamples[sampleIndex];
     const status = statuses[index % statuses.length];
     const actionType = status === "미조치" ? "" : actionTypes[(index % (actionTypes.length - 1)) + 1];
     const plannedDate = status === "미조치" ? "" : makeDate(index, 1);
@@ -87,6 +122,10 @@
       transactionCode,
       transactionName: sample[3],
       serviceName: transactionCode.slice(0, -2),
+      programDescription: `${sample[3]} 처리 프로그램`,
+      recentAppliedAt: makeAppliedAt(sampleIndex),
+      failureCause: getFailureCause(errorCode),
+      sourceLocation: makeSourceLocation(transactionCode, errorCode, sampleIndex),
       globalId: makeGlobalId(itemIndex),
       hostName: sample[6],
       errorCode,

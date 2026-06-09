@@ -515,6 +515,10 @@
       background: #f7fbff;
     }
 
+    .event-result-table tbody tr.is-clickable {
+      cursor: pointer;
+    }
+
     .event-result-table .event-col-select {
       width: 56px;
       padding: 0;
@@ -1036,12 +1040,13 @@
     }
 
     .detail-section h3 {
-      margin: 0 0 14px;
-      padding-bottom: 9px;
+      margin: 0 0 16px;
+      padding-bottom: 11px;
       border-bottom: 1px solid var(--border);
       color: #26364a;
-      font-size: 14px;
-      line-height: 1.3;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.35;
     }
 
     .detail-grid {
@@ -1083,9 +1088,59 @@
       line-height: 1.35;
     }
 
+    .detail-readonly-textarea {
+      width: 100%;
+      min-height: 96px;
+      max-height: 140px;
+      padding: 8px 10px;
+      overflow: auto;
+      border: 0;
+      background: transparent;
+      color: #1d2a3a;
+      font: inherit;
+      line-height: 1.45;
+      resize: none;
+    }
+
+    .detail-readonly-textarea:focus {
+      outline: none;
+    }
+
     .detail-field.is-code dd {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 12px;
+    }
+
+    .event-history-table-wrap {
+      overflow: auto;
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .event-history-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .event-history-table th,
+    .event-history-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .event-history-table th {
+      background: var(--surface-subtle);
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .event-history-table tbody tr:last-child td {
+      border-bottom: 0;
     }
 
     .detail-action-panel {
@@ -1168,6 +1223,11 @@
       grid-template-columns: 210px 160px 220px 160px;
       gap: 10px 12px;
       justify-content: start;
+    }
+
+    .event-action-receipt .action-form-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      justify-content: stretch;
     }
 
     .action-field {
@@ -2431,6 +2491,27 @@
       <div class="detail-action-panel detail-tab-panel" id="detail-action-panel" role="tabpanel" aria-labelledby="detail-tab-action" hidden></div>
     </div>
   </div>
+  <div class="detail-modal" id="event-detail-modal" role="dialog" aria-modal="true" aria-labelledby="event-detail-title" hidden>
+    <div class="detail-dialog">
+      <header class="detail-header">
+        <div class="detail-title-block">
+          <h2 class="detail-title" id="event-detail-title"></h2>
+          <div class="detail-subtitle" id="event-detail-subtitle"></div>
+        </div>
+        <button class="detail-close" type="button" aria-label="이벤트 상세 닫기" data-event-detail-close>
+          <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+      <div class="detail-tabs" role="tablist" aria-label="이벤트 조회 상세 탭">
+        <button class="detail-tab is-active" type="button" role="tab" id="event-detail-tab-info" aria-selected="true" aria-controls="event-detail-info" data-event-detail-tab-target="event-detail-info">상세정보</button>
+        <button class="detail-tab" type="button" role="tab" id="event-detail-tab-history" aria-selected="false" aria-controls="event-detail-history" data-event-detail-tab-target="event-detail-history">최근내역</button>
+      </div>
+      <div class="detail-body detail-tab-panel" id="event-detail-info" role="tabpanel" aria-labelledby="event-detail-tab-info"></div>
+      <div class="detail-body detail-tab-panel" id="event-detail-history" role="tabpanel" aria-labelledby="event-detail-tab-history" hidden></div>
+    </div>
+  </div>
 
   <script src="sample-data.js"></script>
   <script src="event-sample-data.js"></script>
@@ -2515,17 +2596,26 @@
     const settingsForm = document.querySelector("#settings-form");
     const refreshSecondsInput = document.querySelector("#refresh-seconds");
     const detailModal = document.querySelector("#detail-modal");
-    const detailCloseButton = document.querySelector(".detail-close");
+    const detailCloseButton = detailModal.querySelector(".detail-close");
     const detailTitle = document.querySelector("#detail-title");
     const detailSubtitle = document.querySelector("#detail-subtitle");
     const detailMeta = document.querySelector("#detail-meta");
     const detailBody = document.querySelector("#detail-body");
     const detailActionPanel = document.querySelector("#detail-action-panel");
-    const detailTabButtons = [...document.querySelectorAll("[data-detail-tab-target]")];
-    const detailTabPanels = [...document.querySelectorAll(".detail-tab-panel")];
+    const detailTabButtons = [...detailModal.querySelectorAll("[data-detail-tab-target]")];
+    const detailTabPanels = [...detailModal.querySelectorAll(".detail-tab-panel")];
+    const eventDetailModal = document.querySelector("#event-detail-modal");
+    const eventDetailCloseButton = eventDetailModal.querySelector("[data-event-detail-close]");
+    const eventDetailTitle = document.querySelector("#event-detail-title");
+    const eventDetailSubtitle = document.querySelector("#event-detail-subtitle");
+    const eventDetailInfo = document.querySelector("#event-detail-info");
+    const eventDetailHistory = document.querySelector("#event-detail-history");
+    const eventDetailTabButtons = [...eventDetailModal.querySelectorAll("[data-event-detail-tab-target]")];
+    const eventDetailTabPanels = [eventDetailInfo, eventDetailHistory];
     const actionReceiptStates = new Map();
     let statusRows = [];
     let lastFocusedElement = null;
+    let lastEventDetailFocusedElement = null;
     let lastSettingsFocusedElement = null;
     let lastNoticeFocusedElement = null;
 
@@ -2581,6 +2671,22 @@
           { label: "담당자", key: "owner" },
           { label: "에러코드 설정위치", key: "errorCodeLocation", wide: true, code: true },
           { label: "에러발생정보", key: "errorOccurrenceInfo", full: true }
+        ]
+      }
+    ];
+
+    const eventDetailSections = [
+      {
+        title: "상세정보",
+        fields: [
+          { label: "부서명", key: "department" },
+          { label: "셀명", key: "cell" },
+          { label: "발생일시", key: "occurredAt", code: true },
+          { label: "담당자", key: "owner" },
+          { label: "글로벌ID", key: "globalId", code: true },
+          { label: "에러코드", key: "errorCode", code: true },
+          { label: "에러내용", key: "errorMessage", wide: true },
+          { label: "발생한 소스 위치정보", key: "sourceLocation", full: true, code: true, textarea: true }
         ]
       }
     ];
@@ -2672,7 +2778,19 @@
       }
 
       label.textContent = field.label;
-      value.textContent = detail[field.key] ?? "";
+
+      if (field.textarea) {
+        const textarea = document.createElement("textarea");
+
+        textarea.className = "detail-readonly-textarea";
+        textarea.readOnly = true;
+        textarea.setAttribute("aria-readonly", "true");
+        textarea.value = detail[field.key] ?? "";
+        value.append(textarea);
+      } else {
+        value.textContent = detail[field.key] ?? "";
+      }
+
       wrapper.append(label, value);
 
       return wrapper;
@@ -2693,6 +2811,51 @@
 
       sectionElement.append(title, grid);
       return sectionElement;
+    }
+
+    function createEventHistoryTable(row) {
+      const tableWrap = document.createElement("div");
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const tbody = document.createElement("tbody");
+      const headerRow = document.createElement("tr");
+      const columns = ["일시", "상태", "처리자", "내용"];
+      const histories = [
+        [row.occurredAt, "이벤트 발생", "시스템", `${row.transactionName} ${row.errorCode} 발생`],
+        [row.recentAppliedAt, "최근 적용", row.owner, row.programDescription],
+        [row.plannedDate || "-", row.actionType ? "조치 예정" : "미조치", row.owner, row.actionType || "조치 접수 전"],
+        [row.completedDate || "-", row.completedDate ? "조치 완료" : row.status, row.owner, row.completedDate ? "조치 완료 처리" : "최근 상태 유지"]
+      ];
+
+      tableWrap.className = "event-history-table-wrap";
+      table.className = "event-history-table";
+
+      columns.forEach((column) => {
+        const cell = document.createElement("th");
+
+        cell.scope = "col";
+        cell.textContent = column;
+        headerRow.append(cell);
+      });
+
+      histories.forEach((history) => {
+        const rowElement = document.createElement("tr");
+
+        history.forEach((value) => {
+          const cell = document.createElement("td");
+
+          cell.textContent = value;
+          rowElement.append(cell);
+        });
+
+        tbody.append(rowElement);
+      });
+
+      thead.append(headerRow);
+      table.append(thead, tbody);
+      tableWrap.append(table);
+
+      return tableWrap;
     }
 
     function createDetailMetaToken(label, value, variant = "") {
@@ -2739,15 +2902,17 @@
       });
     }
 
-    function getActionReceiptKey(actionRows) {
-      return actionRows
+    function getActionReceiptKey(actionRows, keyPrefix = "status") {
+      const rowKey = actionRows
         .map((row) => String(row.no))
         .sort((left, right) => Number(left) - Number(right))
         .join("-");
+
+      return `${keyPrefix}:${rowKey}`;
     }
 
-    function getActionReceiptState(actionRows) {
-      const key = getActionReceiptKey(actionRows);
+    function getActionReceiptState(actionRows, keyPrefix) {
+      const key = getActionReceiptKey(actionRows, keyPrefix);
 
       if (!actionReceiptStates.has(key)) {
         actionReceiptStates.set(key, {
@@ -3161,13 +3326,18 @@
         .map(({ label }) => label);
     }
 
-    function createActionReceiptPanel(row, actionRows = [row]) {
+    function createActionReceiptPanel(row, actionRows = [row], options = {}) {
+      const {
+        includeTargetSummary = true,
+        keyPrefix = "status",
+        onInitialSave = null
+      } = options;
       const wrapper = document.createElement("div");
       const formGrid = document.createElement("div");
       const saveRow = document.createElement("div");
       const saveButton = document.createElement("button");
-      const fieldPrefix = `action-receipt-${row.no}`;
-      const state = getActionReceiptState(actionRows);
+      const fieldPrefix = `action-receipt-${keyPrefix.replaceAll(/[^a-z0-9]/gi, "-")}-${row.no}`;
+      const state = getActionReceiptState(actionRows, keyPrefix);
       const ownerField = createActionInputField({
         id: `${fieldPrefix}-owner`,
         label: "조치담당자",
@@ -3262,16 +3432,92 @@
           return;
         }
 
-        detailActionPanel.replaceChildren(createActionReceiptPanel(row, actionRows));
-        setDetailTab("detail-action-panel");
+        if (typeof onInitialSave === "function") {
+          onInitialSave();
+        } else {
+          detailActionPanel.replaceChildren(createActionReceiptPanel(row, actionRows, options));
+          setDetailTab("detail-action-panel");
+        }
+
         openEventActionEmptyModal("저장되었습니다");
       });
 
       saveRow.append(saveButton);
       formGrid.append(ownerField, typeField, plannedDateField, completedDateField, commentField, saveRow);
-      wrapper.append(createActionTargetSummary(actionRows), formGrid);
+
+      if (includeTargetSummary) {
+        wrapper.append(createActionTargetSummary(actionRows), formGrid);
+      } else {
+        wrapper.append(formGrid);
+      }
 
       return wrapper;
+    }
+
+    function setEventDetailTab(panelId) {
+      eventDetailTabButtons.forEach((button) => {
+        const isActive = button.dataset.eventDetailTabTarget === panelId;
+
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-selected", String(isActive));
+      });
+
+      eventDetailTabPanels.forEach((panel) => {
+        panel.hidden = panel.id !== panelId;
+      });
+    }
+
+    function createEventDetailInfoPanel(row) {
+      const fragment = document.createDocumentFragment();
+      const receiptSection = document.createElement("section");
+      const receiptTitle = document.createElement("h3");
+
+      eventDetailSections.forEach((section) => {
+        fragment.append(createDetailSection(row, section));
+      });
+
+      receiptSection.className = "detail-section";
+      receiptSection.classList.add("event-action-receipt");
+      receiptTitle.textContent = "이벤트 접수";
+      receiptSection.append(
+        receiptTitle,
+        createActionReceiptPanel(row, [row], {
+          includeTargetSummary: false,
+          keyPrefix: "event-search",
+          onInitialSave: () => {
+            eventDetailInfo.replaceChildren(createEventDetailInfoPanel(row));
+            setEventDetailTab("event-detail-info");
+          }
+        })
+      );
+      fragment.append(receiptSection);
+
+      return fragment;
+    }
+
+    function openEventDetailModal(row) {
+      const historyFragment = document.createDocumentFragment();
+
+      lastEventDetailFocusedElement = document.activeElement;
+      eventDetailTitle.textContent = row.transactionName;
+      eventDetailSubtitle.textContent = `${row.transactionCode} · ${row.occurredAt}`;
+
+      historyFragment.append(createEventHistoryTable(row));
+      eventDetailInfo.replaceChildren(createEventDetailInfoPanel(row));
+      eventDetailHistory.replaceChildren(historyFragment);
+      setEventDetailTab("event-detail-info");
+      eventDetailModal.hidden = false;
+      body.classList.add("detail-open");
+      eventDetailCloseButton.focus();
+    }
+
+    function closeEventDetailModal() {
+      eventDetailModal.hidden = true;
+      body.classList.remove("detail-open");
+
+      if (lastEventDetailFocusedElement && document.contains(lastEventDetailFocusedElement)) {
+        lastEventDetailFocusedElement.focus();
+      }
     }
 
     function openDetailModal(row, initialTabId = "detail-body", actionRows = [row]) {
@@ -3517,6 +3763,26 @@
           tableRow.append(createEventResultCell(row, column));
         });
 
+        tableRow.className = "is-clickable";
+        tableRow.tabIndex = 0;
+        tableRow.setAttribute("aria-label", `${row.no}번 이벤트 상세 열기`);
+        tableRow.addEventListener("click", (event) => {
+          if (event.target.closest(".select-control, .row-select")) {
+            return;
+          }
+
+          openEventDetailModal(row);
+        });
+        tableRow.addEventListener("keydown", (event) => {
+          if (event.target.closest(".select-control, .row-select")) {
+            return;
+          }
+
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openEventDetailModal(row);
+          }
+        });
         fragment.append(tableRow);
       });
 
@@ -3652,6 +3918,20 @@
       }
     });
 
+    eventDetailTabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setEventDetailTab(button.dataset.eventDetailTabTarget);
+      });
+    });
+
+    eventDetailCloseButton.addEventListener("click", closeEventDetailModal);
+
+    eventDetailModal.addEventListener("click", (event) => {
+      if (event.target === eventDetailModal) {
+        closeEventDetailModal();
+      }
+    });
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !eventActionEmptyModal.hidden) {
         closeEventActionEmptyModal();
@@ -3665,6 +3945,11 @@
 
       if (event.key === "Escape" && !detailModal.hidden) {
         closeDetailModal();
+        return;
+      }
+
+      if (event.key === "Escape" && !eventDetailModal.hidden) {
+        closeEventDetailModal();
       }
     });
 
