@@ -616,76 +616,22 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="req-id">REQ-000</td>
-                    <td class="req-category">관리 원칙</td>
-                    <td>신규 개발요건은 화면의 개발요건 탭과 REQUIREMENTS.md에 함께 누적한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
                     <td class="req-id">REQ-001</td>
-                    <td class="req-category">배포</td>
-                    <td>HTML, CSS, JavaScript 파일만으로 로컬에서 실행 가능한 MVP 시연본으로 구성한다.</td>
+                    <td class="req-category">행 선택</td>
+                    <td>오류상황판 각 행의 첫 번째 컬럼에는 이벤트 조치 대상을 선택할 수 있는 체크박스를 제공한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                   <tr>
                     <td class="req-id">REQ-002</td>
-                    <td class="req-category">화면</td>
-                    <td>좌측 메뉴에는 오류상황판, 이벤트 관리, 개발요건 탭을 제공한다.</td>
+                    <td class="req-category">선택 제한</td>
+                    <td>오류상황판에서는 같은 거래코드와 에러코드를 가진 행만 동시에 여러 건 선택할 수 있다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                   <tr>
                     <td class="req-id">REQ-003</td>
-                    <td class="req-category">오류상황판</td>
-                    <td>오류상황판은 선택, NO, 등록시간, 채널유형, 파트, 최종이행자, 담당자, 거래코드, 거래명, 오류구분, 에러코드, 에러메시지, 거래점, 호스트명, PID 컬럼을 제공한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-004</td>
-                    <td class="req-category">행 선택</td>
-                    <td>오류상황판 첫 컬럼에는 체크박스를 제공하고, 같은 거래코드와 에러코드를 가진 행만 동시에 여러 건 선택할 수 있다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-005</td>
                     <td class="req-category">이벤트 조치</td>
                     <td>선택된 오류상황판 행은 추후 이벤트 조치 대상이 된다.</td>
                     <td class="req-status is-pending">대기</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-006</td>
-                    <td class="req-category">샘플 데이터</td>
-                    <td>샘플 데이터는 sample-data.js로 분리하고, 로컬 파일 실행에서도 읽히도록 script 방식으로 연결한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-007</td>
-                    <td class="req-category">데이터 규칙</td>
-                    <td>채널유형은 A1, A0, DT, D0, DX를 사용하며 D 계열은 BXM 오류, A 계열은 PFM 오류로 구분한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-008</td>
-                    <td class="req-category">데이터 규칙</td>
-                    <td>D 계열 거래코드는 RSMDE0000A01 형식, A 계열 거래코드는 GSSDD0000A01 또는 GSTYJ0000A01 형식을 사용한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-009</td>
-                    <td class="req-category">데이터 규칙</td>
-                    <td>D 계열 파트는 디지털수신, 모바일라이프, 마이데이터, 디지털여신 값을 섞어서 사용한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-010</td>
-                    <td class="req-category">데이터 규칙</td>
-                    <td>A 계열 호스트명은 coreap1p부터 coreap4p, D 계열 호스트명은 solwa01p부터 solwa05p 또는 dtnwa21p부터 dtnwa25p를 사용한다.</td>
-                    <td class="req-status">적용</td>
-                  </tr>
-                  <tr>
-                    <td class="req-id">REQ-011</td>
-                    <td class="req-category">데이터 규칙</td>
-                    <td>거래점은 한글 지점명이 아니라 1000부터 7999 사이의 4자리 숫자 값을 사용한다.</td>
-                    <td class="req-status">적용</td>
                   </tr>
                 </tbody>
               </table>
