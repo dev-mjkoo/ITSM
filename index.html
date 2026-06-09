@@ -713,36 +713,14 @@
 
     .detail-action-panel {
       overflow: auto;
-      padding: 20px 24px 22px;
+      padding: 16px 24px 22px;
     }
 
     .action-receipt {
       display: grid;
-      gap: 18px;
-    }
-
-    .action-receipt-section {
-      padding-bottom: 18px;
-    }
-
-    .action-receipt-section:last-child {
-      padding-bottom: 0;
-    }
-
-    .action-receipt-section h3 {
-      margin: 0 0 14px;
-      padding-bottom: 9px;
-      border-bottom: 1px solid var(--border);
-      color: #26364a;
-      font-size: 14px;
-      line-height: 1.3;
-    }
-
-    .action-target-grid,
-    .action-form-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px 16px;
+      grid-template-columns: 210px 160px 220px 160px;
+      gap: 10px 12px;
+      justify-content: start;
     }
 
     .action-field {
@@ -759,25 +737,11 @@
       grid-column: 1 / -1;
     }
 
-    .action-field label,
-    .action-field dt {
+    .action-field label {
       margin: 0;
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
-    }
-
-    .action-field dd {
-      min-height: 32px;
-      margin: 0;
-      padding: 7px 10px;
-      overflow-wrap: anywhere;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: #fbfcfe;
-      color: #1d2a3a;
-      font-size: 13px;
-      line-height: 1.35;
     }
 
     .action-field input,
@@ -793,59 +757,72 @@
 
     .action-field input,
     .action-field select {
-      min-height: 36px;
-      padding: 0 10px;
+      min-height: 32px;
+      padding: 0 9px;
     }
 
     .action-field textarea {
-      min-height: 108px;
+      min-height: 96px;
       padding: 9px 10px;
       resize: vertical;
       line-height: 1.45;
+    }
+
+    .action-search-control,
+    .action-date-control {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 34px;
+    }
+
+    .action-date-control {
+      position: relative;
+    }
+
+    .action-search-control input,
+    .action-date-control input {
+      border-radius: 6px 0 0 6px;
+    }
+
+    .action-field input[readonly] {
+      background: #fbfcfe;
+      cursor: default;
+    }
+
+    .action-native-date {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .action-search-button,
+    .action-date-button {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-left: 0;
+      border-radius: 0 6px 6px 0;
+      background: var(--surface-subtle);
+      color: #253246;
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .action-search-button:hover,
+    .action-date-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
     }
 
     .action-field input:focus,
     .action-field select:focus,
     .action-field textarea:focus {
       border-color: var(--primary);
-    }
-
-    .action-receipt-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .action-button {
-      min-width: 76px;
-      min-height: 36px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 14px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--surface);
-      color: #253246;
-      font-size: 13px;
-      font-weight: 800;
-      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
-    }
-
-    .action-button:hover {
-      border-color: var(--border-strong);
-      background: #f7fbff;
-    }
-
-    .action-button.is-primary {
-      border-color: var(--primary);
-      background: var(--primary);
-      color: #ffffff;
-    }
-
-    .action-button.is-primary:hover {
-      border-color: var(--primary-strong);
-      background: var(--primary-strong);
     }
 
     .settings-modal[hidden] {
@@ -1246,8 +1223,7 @@
       }
 
       .detail-grid,
-      .action-target-grid,
-      .action-form-grid {
+      .action-receipt {
         grid-template-columns: minmax(0, 1fr);
       }
 
@@ -1459,6 +1435,24 @@
                     <td class="req-id">REQ-007</td>
                     <td class="req-category">이벤트 조치</td>
                     <td>이벤트 조치하기 실행 시 선택된 오류상황판 행의 상세 페이지를 열고 이벤트 조치접수 탭으로 바로 이동한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-008</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>이벤트 조치접수의 조치담당자는 직접 입력할 수 없으며 돋보기 검색을 통해서만 선택한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-009</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>조치담당자 검색 결과는 SWING, ITBPI 등 인사정보 데이터에서 가져온 정보만 사용한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-010</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>조치 예정일과 조치완료일은 직접 입력하지 않고 달력에서 유효한 날짜를 선택한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                 </tbody>
@@ -1826,31 +1820,10 @@
       });
     }
 
-    function createActionReadonlyField(labelText, value, options = {}) {
-      const field = document.createElement("dl");
-      const label = document.createElement("dt");
-      const content = document.createElement("dd");
-
-      field.className = "action-field";
-
-      if (options.wide) {
-        field.classList.add("is-wide");
-      }
-
-      if (options.full) {
-        field.classList.add("is-full");
-      }
-
-      label.textContent = labelText;
-      content.textContent = value ?? "";
-      field.append(label, content);
-
-      return field;
-    }
-
     function createActionInputField(config) {
       const field = document.createElement("div");
       const label = document.createElement("label");
+      let fieldContent;
       let control;
 
       field.className = "action-field";
@@ -1863,8 +1836,37 @@
         field.classList.add("is-full");
       }
 
-      if (config.type === "select") {
+      if (config.search) {
+        const searchWrapper = document.createElement("div");
+        const searchButton = document.createElement("button");
+
+        control = document.createElement("input");
+        control.type = "text";
+        control.value = "";
+        control.readOnly = true;
+        control.setAttribute("aria-readonly", "true");
+        searchWrapper.className = "action-search-control";
+        searchButton.className = "action-search-button";
+        searchButton.type = "button";
+        searchButton.setAttribute("aria-label", `${config.label} 검색`);
+        searchButton.innerHTML = `
+          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        `;
+        searchWrapper.append(control, searchButton);
+        fieldContent = searchWrapper;
+      } else if (config.type === "select") {
         control = document.createElement("select");
+
+        if (config.emptyOption) {
+          const emptyOption = document.createElement("option");
+
+          emptyOption.value = "";
+          emptyOption.textContent = "";
+          emptyOption.selected = true;
+          control.append(emptyOption);
+        }
 
         config.options.forEach((optionValue) => {
           const option = document.createElement("option");
@@ -1877,6 +1879,40 @@
       } else if (config.type === "textarea") {
         control = document.createElement("textarea");
         control.value = config.value || "";
+      } else if (config.type === "date") {
+        const dateWrapper = document.createElement("div");
+        const dateButton = document.createElement("button");
+        const datePicker = document.createElement("input");
+
+        control = document.createElement("input");
+        control.type = "text";
+        control.value = "";
+        control.readOnly = true;
+        control.setAttribute("aria-readonly", "true");
+        datePicker.type = "date";
+        datePicker.className = "action-native-date";
+        datePicker.tabIndex = -1;
+        dateWrapper.className = "action-date-control";
+        dateButton.className = "action-date-button";
+        dateButton.type = "button";
+        dateButton.setAttribute("aria-label", `${config.label} 달력 열기`);
+        dateButton.innerHTML = `
+          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="M7 3v4M17 3v4M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        `;
+        dateButton.addEventListener("click", () => {
+          if (typeof datePicker.showPicker === "function") {
+            datePicker.showPicker();
+          } else {
+            datePicker.focus();
+          }
+        });
+        datePicker.addEventListener("change", () => {
+          control.value = datePicker.value;
+        });
+        dateWrapper.append(control, dateButton, datePicker);
+        fieldContent = dateWrapper;
       } else {
         control = document.createElement("input");
         control.type = "text";
@@ -1886,81 +1922,51 @@
       control.id = config.id;
       label.setAttribute("for", config.id);
       label.textContent = config.label;
-      field.append(label, control);
+      field.append(label, fieldContent || control);
 
       return field;
     }
 
-    function createActionReceiptPanel(row, detail, actionRows = [row]) {
+    function createActionReceiptPanel(row) {
       const wrapper = document.createElement("div");
-      const targetSection = document.createElement("section");
-      const targetTitle = document.createElement("h3");
-      const targetGrid = document.createElement("div");
-      const receiptSection = document.createElement("section");
-      const receiptTitle = document.createElement("h3");
-      const receiptGrid = document.createElement("div");
-      const defaultStage = row.stage === "제외" ? "제외" : "조치예정";
       const fieldPrefix = `action-receipt-${row.no}`;
 
       wrapper.className = "action-receipt";
-      targetSection.className = "action-receipt-section";
-      targetTitle.textContent = "접수 대상";
-      targetGrid.className = "action-target-grid";
-      receiptSection.className = "action-receipt-section";
-      receiptTitle.textContent = "접수 정보";
-      receiptGrid.className = "action-form-grid";
-
-      targetGrid.append(
-        createActionReadonlyField("대상건수", `${actionRows.length}건`),
-        createActionReadonlyField("대상 NO", actionRows.map((item) => item.no).join(", ")),
-        createActionReadonlyField("거래명", row.transactionName, { wide: true }),
-        createActionReadonlyField("거래코드", row.transactionCode),
-        createActionReadonlyField("에러코드", row.errorCode),
-        createActionReadonlyField("오류구분", row.errorType),
-        createActionReadonlyField("호스트명", row.hostName),
-        createActionReadonlyField("PID", row.pid),
-        createActionReadonlyField("글로벌 ID", detail.globalId, { wide: true })
-      );
-
-      receiptGrid.append(
-        createActionInputField({
-          id: `${fieldPrefix}-stage`,
-          label: "조치단계",
-          type: "select",
-          value: defaultStage,
-          options: ["조치예정", "제외"]
-        }),
+      wrapper.append(
         createActionInputField({
           id: `${fieldPrefix}-owner`,
-          label: "담당자",
-          value: row.owner
+          label: "조치담당자",
+          search: true
         }),
         createActionInputField({
-          id: `${fieldPrefix}-part`,
-          label: "파트명",
-          value: row.part
+          id: `${fieldPrefix}-type`,
+          label: "조치구분",
+          type: "select",
+          emptyOption: true,
+          options: ["프로그램수정", "DB조치", "시스템설정", "그외조치", "원인불명", "외부기관응답지연", "타시스템응답지연", "조치대상아님"]
         }),
         createActionInputField({
-          id: `${fieldPrefix}-actor`,
-          label: "접수자",
-          value: row.lastActor
+          id: `${fieldPrefix}-planned-date`,
+          label: "조치 예정일",
+          type: "date"
+        }),
+        createActionInputField({
+          id: `${fieldPrefix}-completed-date`,
+          label: "조치완료일",
+          type: "date"
         }),
         createActionInputField({
           id: `${fieldPrefix}-comment`,
-          label: "접수내용",
+          label: "조치내용",
           type: "textarea",
           full: true
         })
       );
 
-      targetSection.append(targetTitle, targetGrid);
-      receiptSection.append(receiptTitle, receiptGrid);
-      wrapper.append(targetSection, receiptSection);
-
       return wrapper;
     }
 
-    function openDetailModal(row, initialTabId = "detail-body", actionRows = [row]) {
+    function openDetailModal(row, initialTabId = "detail-body") {
       const detail = getDetailRecord(row);
       const fragment = document.createDocumentFragment();
 
@@ -1977,7 +1983,7 @@
       });
 
       detailBody.replaceChildren(fragment);
-      detailActionPanel.replaceChildren(createActionReceiptPanel(row, detail, actionRows));
+      detailActionPanel.replaceChildren(createActionReceiptPanel(row));
       setDetailTab(initialTabId);
       detailModal.hidden = false;
       body.classList.add("detail-open");
@@ -2042,7 +2048,7 @@
       const actionRows = getSelectedStatusRows();
 
       if (actionRows.length > 0) {
-        openDetailModal(actionRows[0], "detail-action-panel", actionRows);
+        openDetailModal(actionRows[0], "detail-action-panel");
       }
     }
 
