@@ -403,6 +403,140 @@
 
     .event-result-panel {
       min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .event-result-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .event-result-action {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .event-result-action:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .event-result-action.is-primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .event-result-action.is-primary:hover {
+      border-color: var(--primary-strong);
+      background: var(--primary-strong);
+    }
+
+    .event-result-scroll {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      border-radius: inherit;
+      background: var(--surface);
+    }
+
+    .event-result-table {
+      width: 100%;
+      min-width: 2920px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .event-result-table th,
+    .event-result-table td {
+      height: 42px;
+      padding: 0 12px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .event-result-table th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--surface-subtle);
+      color: #38475a;
+      font-weight: 800;
+    }
+
+    .event-result-table th:last-child,
+    .event-result-table td:last-child {
+      border-right: 0;
+    }
+
+    .event-result-table .event-col-select {
+      width: 56px;
+      padding: 0;
+      text-align: center;
+    }
+
+    .event-result-table .event-col-status,
+    .event-result-table .event-col-error-type,
+    .event-result-table .event-col-channel,
+    .event-result-table .event-col-duplicate {
+      width: 96px;
+    }
+
+    .event-result-table .event-col-occurred,
+    .event-result-table .event-col-department,
+    .event-result-table .event-col-transaction-name {
+      width: 160px;
+    }
+
+    .event-result-table .event-col-cell,
+    .event-result-table .event-col-owner,
+    .event-result-table .event-col-host,
+    .event-result-table .event-col-error-code,
+    .event-result-table .event-col-action-type,
+    .event-result-table .event-col-planned,
+    .event-result-table .event-col-completed,
+    .event-result-table .event-col-business-group,
+    .event-result-table .event-col-business {
+      width: 130px;
+    }
+
+    .event-result-table .event-col-transaction-code,
+    .event-result-table .event-col-service {
+      width: 150px;
+    }
+
+    .event-result-table .event-col-global {
+      width: 250px;
+    }
+
+    .event-result-table .event-col-message {
+      width: 280px;
     }
 
     .table-panel {
@@ -1947,7 +2081,42 @@
                 </div>
               </form>
             </section>
-            <section class="event-result-panel" aria-label="이벤트 조회 결과"></section>
+            <section class="event-result-panel" aria-label="이벤트 조회 결과">
+              <div class="event-result-toolbar" aria-label="이벤트 조회 결과 작업">
+                <button class="event-result-action" type="button">Excel다운로드</button>
+                <button class="event-result-action is-primary" type="button">결재요청</button>
+              </div>
+              <div class="event-result-scroll">
+                <table class="event-result-table" aria-label="이벤트 조회 결과 목록">
+                  <thead>
+                    <tr>
+                      <th class="event-col-select" scope="col">선택</th>
+                      <th class="event-col-status" scope="col">진행상태</th>
+                      <th class="event-col-error-type" scope="col">오류구분</th>
+                      <th class="event-col-occurred" scope="col">발생일시</th>
+                      <th class="event-col-channel" scope="col">채널유형</th>
+                      <th class="event-col-department" scope="col">담당부서</th>
+                      <th class="event-col-cell" scope="col">담당셀</th>
+                      <th class="event-col-owner" scope="col">담당자</th>
+                      <th class="event-col-transaction-code" scope="col">거래코드</th>
+                      <th class="event-col-transaction-name" scope="col">거래명</th>
+                      <th class="event-col-service" scope="col">서비스명</th>
+                      <th class="event-col-global" scope="col">글로벌ID</th>
+                      <th class="event-col-host" scope="col">호스트명</th>
+                      <th class="event-col-error-code" scope="col">에러코드</th>
+                      <th class="event-col-message" scope="col">에러메시지</th>
+                      <th class="event-col-duplicate" scope="col">중복건수</th>
+                      <th class="event-col-action-type" scope="col">조치구분</th>
+                      <th class="event-col-planned" scope="col">조치예정일</th>
+                      <th class="event-col-completed" scope="col">조치완료일</th>
+                      <th class="event-col-business-group" scope="col">업무 그룹</th>
+                      <th class="event-col-business" scope="col">업무</th>
+                    </tr>
+                  </thead>
+                  <tbody id="event-result-body"></tbody>
+                </table>
+              </div>
+            </section>
           </div>
         </section>
 
