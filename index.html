@@ -215,7 +215,7 @@
 
     .data-table {
       width: 100%;
-      min-width: 1820px;
+      min-width: 1880px;
       border-collapse: separate;
       border-spacing: 0;
       table-layout: fixed;
@@ -248,6 +248,12 @@
     .data-table th:last-child,
     .data-table td:last-child {
       border-right: 0;
+    }
+
+    .data-table .col-select {
+      width: 56px;
+      padding: 0;
+      text-align: center;
     }
 
     .data-table .col-no {
@@ -298,6 +304,37 @@
       background: #f7fbff;
     }
 
+    .data-table tbody tr.is-selected td {
+      background: #eef6ff;
+    }
+
+    .data-table tbody tr.is-locked td {
+      color: #9aa7b8;
+    }
+
+    .select-control {
+      min-height: 42px;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .row-select {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .row-select:disabled,
+    .row-select:disabled + .sr-only,
+    .select-control:has(.row-select:disabled) {
+      cursor: not-allowed;
+    }
+
     .data-table td.col-code,
     .data-table td.col-error-type,
     .data-table td.col-error-code,
@@ -336,6 +373,69 @@
       color: #314154;
       font-weight: 700;
       vertical-align: middle;
+    }
+
+    .requirements-panel {
+      min-height: calc(100vh - var(--header-height) - 48px);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .requirements-scroll {
+      overflow: auto;
+    }
+
+    .requirements-table {
+      width: 100%;
+      min-width: 960px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      font-size: 14px;
+    }
+
+    .requirements-table th,
+    .requirements-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .requirements-table th {
+      position: sticky;
+      top: 0;
+      background: var(--surface-subtle);
+      color: #38475a;
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 10;
+    }
+
+    .requirements-table .req-id {
+      width: 104px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      color: #394b61;
+    }
+
+    .requirements-table .req-category {
+      width: 140px;
+      color: #4c5d72;
+      font-weight: 700;
+    }
+
+    .requirements-table .req-status {
+      width: 104px;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .requirements-table .req-status.is-pending {
+      color: var(--warning);
     }
 
     .scrim {
@@ -407,7 +507,8 @@
       }
 
       .workspace,
-      .table-panel {
+      .table-panel,
+      .requirements-panel {
         min-height: calc(100vh - var(--header-height) - 32px);
       }
     }
@@ -445,6 +546,13 @@
           </svg>
           <span>이벤트 관리</span>
         </button>
+        <button class="nav-button" type="button" data-view-target="requirements">
+          <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="M7 3.5h7l3 3v14H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M14 3.5v4h4M8.5 12h7M8.5 15.5h7M8.5 19h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>개발요건</span>
+        </button>
       </nav>
     </aside>
 
@@ -467,6 +575,7 @@
               <table class="data-table" aria-label="오류상황판 목록">
                 <thead>
                   <tr>
+                    <th class="col-select" scope="col">선택</th>
                     <th class="col-no" scope="col">NO</th>
                     <th class="col-time" scope="col">등록시간</th>
                     <th class="col-channel" scope="col">채널유형</th>
@@ -492,6 +601,97 @@
         <section class="view" id="event-management" aria-labelledby="page-heading">
           <div class="workspace" aria-label="이벤트 관리 빈 레이아웃"></div>
         </section>
+
+        <section class="view" id="requirements" aria-labelledby="page-heading">
+          <div class="requirements-panel">
+            <div class="requirements-scroll">
+              <table class="requirements-table" aria-label="개발요건 목록">
+                <thead>
+                  <tr>
+                    <th class="req-id" scope="col">ID</th>
+                    <th class="req-category" scope="col">구분</th>
+                    <th scope="col">요건</th>
+                    <th class="req-status" scope="col">상태</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="req-id">REQ-000</td>
+                    <td class="req-category">관리 원칙</td>
+                    <td>신규 개발요건은 화면의 개발요건 탭과 REQUIREMENTS.md에 함께 누적한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-001</td>
+                    <td class="req-category">배포</td>
+                    <td>HTML, CSS, JavaScript 파일만으로 로컬에서 실행 가능한 MVP 시연본으로 구성한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-002</td>
+                    <td class="req-category">화면</td>
+                    <td>좌측 메뉴에는 오류상황판, 이벤트 관리, 개발요건 탭을 제공한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-003</td>
+                    <td class="req-category">오류상황판</td>
+                    <td>오류상황판은 선택, NO, 등록시간, 채널유형, 파트, 최종이행자, 담당자, 거래코드, 거래명, 오류구분, 에러코드, 에러메시지, 거래점, 호스트명, PID 컬럼을 제공한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-004</td>
+                    <td class="req-category">행 선택</td>
+                    <td>오류상황판 첫 컬럼에는 체크박스를 제공하고, 같은 거래코드와 에러코드를 가진 행만 동시에 여러 건 선택할 수 있다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-005</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>선택된 오류상황판 행은 추후 이벤트 조치 대상이 된다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-006</td>
+                    <td class="req-category">샘플 데이터</td>
+                    <td>샘플 데이터는 sample-data.js로 분리하고, 로컬 파일 실행에서도 읽히도록 script 방식으로 연결한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-007</td>
+                    <td class="req-category">데이터 규칙</td>
+                    <td>채널유형은 A1, A0, DT, D0, DX를 사용하며 D 계열은 BXM 오류, A 계열은 PFM 오류로 구분한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-008</td>
+                    <td class="req-category">데이터 규칙</td>
+                    <td>D 계열 거래코드는 RSMDE0000A01 형식, A 계열 거래코드는 GSSDD0000A01 또는 GSTYJ0000A01 형식을 사용한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-009</td>
+                    <td class="req-category">데이터 규칙</td>
+                    <td>D 계열 파트는 디지털수신, 모바일라이프, 마이데이터, 디지털여신 값을 섞어서 사용한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-010</td>
+                    <td class="req-category">데이터 규칙</td>
+                    <td>A 계열 호스트명은 coreap1p부터 coreap4p, D 계열 호스트명은 solwa01p부터 solwa05p 또는 dtnwa21p부터 dtnwa25p를 사용한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-011</td>
+                    <td class="req-category">데이터 규칙</td>
+                    <td>거래점은 한글 지점명이 아니라 1000부터 7999 사이의 4자리 숫자 값을 사용한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   </div>
@@ -501,6 +701,7 @@
   <script src="sample-data.js"></script>
   <script>
     const statusBoardColumns = [
+      { key: "select", className: "col-select", selectable: true },
       { key: "no", className: "col-no" },
       { key: "registeredAt", className: "col-time" },
       { key: "channelType", className: "col-channel" },
@@ -523,22 +724,96 @@
       },
       "event-management": {
         title: "이벤트 관리"
+      },
+      "requirements": {
+        title: "개발요건"
       }
     };
 
     const body = document.body;
+    const selectedStatusRows = new Set();
     const navButtons = [...document.querySelectorAll("[data-view-target]")];
     const views = [...document.querySelectorAll(".view")];
     const pageHeading = document.querySelector("#page-heading");
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
     const statusBoardBody = document.querySelector("#status-board-body");
+    let statusRows = [];
+
+    function getSelectionKey(row) {
+      return `${row.transactionCode}::${row.errorCode}`;
+    }
+
+    function getActiveSelectionKey() {
+      const selectedId = [...selectedStatusRows][0];
+      const row = statusRows.find((item) => String(item.no) === selectedId);
+
+      return row ? getSelectionKey(row) : "";
+    }
+
+    function updateRowSelectionState() {
+      const activeKey = getActiveSelectionKey();
+      const selectors = [...document.querySelectorAll("[data-row-select]")];
+
+      selectors.forEach((selector) => {
+        const row = statusRows.find((item) => String(item.no) === selector.dataset.rowId);
+        const rowKey = row ? getSelectionKey(row) : "";
+        const isSelected = selectedStatusRows.has(selector.dataset.rowId);
+        const isLocked = Boolean(activeKey && rowKey !== activeKey && !isSelected);
+        const tableRow = selector.closest("tr");
+
+        selector.checked = isSelected;
+        selector.disabled = isLocked;
+        tableRow.classList.toggle("is-selected", isSelected);
+        tableRow.classList.toggle("is-locked", isLocked);
+      });
+    }
+
+    function handleRowSelect(row, selector) {
+      const rowId = String(row.no);
+      const activeKey = getActiveSelectionKey();
+      const rowKey = getSelectionKey(row);
+
+      if (selector.checked && activeKey && rowKey !== activeKey) {
+        selector.checked = false;
+        return;
+      }
+
+      if (selector.checked) {
+        selectedStatusRows.add(rowId);
+      } else {
+        selectedStatusRows.delete(rowId);
+      }
+
+      updateRowSelectionState();
+    }
 
     function createStatusCell(row, column) {
       const cell = document.createElement("td");
       const value = row[column.key] ?? "";
 
       cell.className = column.className;
+
+      if (column.selectable) {
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        const hiddenText = document.createElement("span");
+
+        label.className = "select-control";
+        checkbox.className = "row-select";
+        checkbox.type = "checkbox";
+        checkbox.dataset.rowSelect = "true";
+        checkbox.dataset.rowId = String(row.no);
+        hiddenText.className = "sr-only";
+        hiddenText.textContent = `${row.no}번 오류 이벤트 선택`;
+
+        checkbox.addEventListener("change", () => handleRowSelect(row, checkbox));
+        label.append(checkbox, hiddenText);
+        cell.append(label);
+
+        return cell;
+      }
+
       cell.title = String(value);
 
       if (column.badge) {
@@ -564,6 +839,9 @@
     function renderStatusBoardRows(rows) {
       const fragment = document.createDocumentFragment();
 
+      statusRows = rows;
+      selectedStatusRows.clear();
+
       rows.forEach((row) => {
         const tableRow = document.createElement("tr");
 
@@ -575,6 +853,7 @@
       });
 
       statusBoardBody.replaceChildren(fragment);
+      updateRowSelectionState();
     }
 
     function showView(viewId) {

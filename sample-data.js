@@ -11,7 +11,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "비대면 수신 계좌 개설",
     errorCode: "BXM30011",
     errorMessage: "거래 처리도중 오류가 발생했습니다.",
-    store: "비대면",
+    store: "1042",
     hostName: "solwa01p",
     pid: "18421"
   },
@@ -27,7 +27,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "자동화기기 출금 승인",
     errorCode: "PFM03030",
     errorMessage: "서비스 타임아웃이 발생했습니다",
-    store: "강남중앙",
+    store: "2381",
     hostName: "coreap1p",
     pid: "23690"
   },
@@ -43,7 +43,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "모바일 쿠폰 발급",
     errorCode: "BXM40101",
     errorMessage: "업무처리중 오류가 발생했습니다.",
-    store: "모바일",
+    store: "3150",
     hostName: "dtnwa21p",
     pid: "11208"
   },
@@ -59,7 +59,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "영업점 거래 조회",
     errorCode: "DEP10051",
     errorMessage: "원장 처리시 오류입니다. 전산담당자에게 문의하세요",
-    store: "본점",
+    store: "4729",
     hostName: "coreap2p",
     pid: "29844"
   },
@@ -75,7 +75,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "자산 정보 동기화",
     errorCode: "BXM30002",
     errorMessage: "거래 처리 중 일시적인 지연이 발생했습니다.",
-    store: "마이데이터",
+    store: "6894",
     hostName: "solwa03p",
     pid: "32477"
   },
@@ -87,11 +87,11 @@ window.ERROR_BOARD_ROWS = [
     part: "디지털여신",
     lastActor: "서민규",
     owner: "장서우",
-    transactionCode: "RSMDE0319A01",
-    transactionName: "비대면 대출 한도 조회",
+    transactionCode: "RSMDE1842A01",
+    transactionName: "비대면 수신 계좌 개설",
     errorCode: "BXM30011",
     errorMessage: "거래 처리도중 오류가 발생했습니다.",
-    store: "비대면",
+    store: "1577",
     hostName: "dtnwa23p",
     pid: "9076"
   },
@@ -107,7 +107,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "자동화기기 입금 처리",
     errorCode: "DEP10051",
     errorMessage: "원장 처리시 오류입니다. 전산담당자에게 문의하세요",
-    store: "분당서현",
+    store: "5206",
     hostName: "coreap3p",
     pid: "15502"
   },
@@ -123,7 +123,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "수신 상품 가입",
     errorCode: "BXM40101",
     errorMessage: "업무처리중 오류가 발생했습니다.",
-    store: "모바일",
+    store: "7431",
     hostName: "solwa05p",
     pid: "27631"
   },
@@ -139,7 +139,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "고객 정보 변경",
     errorCode: "PFM03030",
     errorMessage: "서비스 타임아웃이 발생했습니다",
-    store: "잠실역",
+    store: "2665",
     hostName: "coreap4p",
     pid: "11984"
   },
@@ -155,7 +155,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "연결 기관 목록 조회",
     errorCode: "BXM30002",
     errorMessage: "거래 처리 중 일시적인 지연이 발생했습니다.",
-    store: "마이데이터",
+    store: "3982",
     hostName: "dtnwa25p",
     pid: "40318"
   },
@@ -171,7 +171,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "생활서비스 포인트 적립",
     errorCode: "BXM30011",
     errorMessage: "거래 처리도중 오류가 발생했습니다.",
-    store: "모바일",
+    store: "6148",
     hostName: "solwa02p",
     pid: "16723"
   },
@@ -183,11 +183,11 @@ window.ERROR_BOARD_ROWS = [
     part: "자동화업무",
     lastActor: "백승우",
     owner: "민서준",
-    transactionCode: "GSSDD7058A01",
-    transactionName: "자동화기기 이체 실행",
+    transactionCode: "GSSDD2704A01",
+    transactionName: "자동화기기 출금 승인",
     errorCode: "PFM03030",
     errorMessage: "서비스 타임아웃이 발생했습니다",
-    store: "홍대입구",
+    store: "7013",
     hostName: "coreap1p",
     pid: "22104"
   },
@@ -203,7 +203,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "대출 약정 정보 저장",
     errorCode: "BXM40101",
     errorMessage: "업무처리중 오류가 발생했습니다.",
-    store: "비대면",
+    store: "1296",
     hostName: "dtnwa22p",
     pid: "33419"
   },
@@ -219,7 +219,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "예금 거래 내역 조회",
     errorCode: "BXM30002",
     errorMessage: "거래 처리 중 일시적인 지연이 발생했습니다.",
-    store: "모바일",
+    store: "5840",
     hostName: "solwa04p",
     pid: "19482"
   },
@@ -235,7 +235,7 @@ window.ERROR_BOARD_ROWS = [
     transactionName: "영업점 수납 처리",
     errorCode: "DEP10051",
     errorMessage: "원장 처리시 오류입니다. 전산담당자에게 문의하세요",
-    store: "부산중앙",
+    store: "7962",
     hostName: "coreap2p",
     pid: "28735"
   }
