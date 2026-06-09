@@ -44,6 +44,18 @@
       letter-spacing: 0;
     }
 
+    body.is-dark-mode {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-subtle: #1f2630;
+      --border: #30363d;
+      --border-strong: #4b5563;
+      --text: #e6edf3;
+      --muted: #9aa7b8;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      color-scheme: dark;
+    }
+
     button,
     input,
     select {
@@ -234,6 +246,9 @@
 
     .page-title {
       min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .page-title h1 {
@@ -243,6 +258,78 @@
       font-weight: 700;
       letter-spacing: 0;
       line-height: 1.25;
+    }
+
+    .theme-toggle {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: #46566d;
+      font-size: 12px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .theme-toggle[hidden] {
+      display: none;
+    }
+
+    .theme-toggle-track {
+      width: 34px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px;
+      border-radius: 999px;
+      background: #cbd5e1;
+      transition: background 180ms ease;
+    }
+
+    .theme-toggle-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.22);
+      transition: transform 180ms ease;
+    }
+
+    .theme-toggle[aria-pressed="true"] {
+      border-color: #4f8cff;
+      background: #16243a;
+      color: #d8e6ff;
+    }
+
+    .theme-toggle[aria-pressed="true"] .theme-toggle-track {
+      background: #2f81f7;
+    }
+
+    .theme-toggle[aria-pressed="true"] .theme-toggle-thumb {
+      transform: translateX(16px);
+    }
+
+    body.is-dark-mode .app {
+      background: var(--bg);
+    }
+
+    body.is-dark-mode .topbar {
+      border-bottom-color: var(--border);
+      background: rgba(13, 17, 23, 0.92);
+    }
+
+    body.is-dark-mode .mobile-menu {
+      border-color: var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    body.is-dark-mode .content {
+      background: var(--bg);
     }
 
     .content {
@@ -1092,6 +1179,103 @@
       color: #667386;
     }
 
+    body.is-dark-mode .table-panel {
+      border-color: #303947;
+      background: #12171f;
+      box-shadow: 0 18px 42px rgba(8, 12, 18, 0.22);
+    }
+
+    body.is-dark-mode .board-toolbar,
+    body.is-dark-mode .table-scroll {
+      background: #12171f;
+    }
+
+    body.is-dark-mode .table-divider {
+      background: #303947;
+    }
+
+    body.is-dark-mode .toolbar-button {
+      border-color: #354052;
+      background: #1a202b;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .toolbar-button:hover {
+      border-color: #506078;
+      background: #222a37;
+      box-shadow: none;
+    }
+
+    body.is-dark-mode .toolbar-button.is-primary {
+      border-color: #2f81f7;
+      background: #2f81f7;
+      color: #ffffff;
+    }
+
+    body.is-dark-mode .table-scroll {
+      border-color: #303947;
+    }
+
+    body.is-dark-mode .data-table th,
+    body.is-dark-mode .data-table td {
+      border-color: #2f3847;
+    }
+
+    body.is-dark-mode .data-table th {
+      background: #1b2330;
+      color: #d8e1ee;
+    }
+
+    body.is-dark-mode .data-table tbody td {
+      background: #151b24;
+      color: #cbd5e1;
+    }
+
+    body.is-dark-mode .data-table tbody tr:nth-child(even) td {
+      background: #18202b;
+    }
+
+    body.is-dark-mode .data-table tbody tr:hover td {
+      background: #223047;
+    }
+
+    body.is-dark-mode .data-table tbody tr.is-selected td {
+      background: #173659;
+    }
+
+    body.is-dark-mode .data-table tbody tr.is-locked td {
+      color: #6f7f94;
+    }
+
+    body.is-dark-mode .row-select {
+      accent-color: #58a6ff;
+    }
+
+    body.is-dark-mode .error-code {
+      border-color: #7f343c;
+      background: #351920;
+      color: #ffb4bd;
+    }
+
+    body.is-dark-mode .error-type,
+    body.is-dark-mode .stage-badge {
+      border-color: #3d4a5d;
+      background: #212a38;
+      color: #d4dfef;
+    }
+
+    body.is-dark-mode .stage-badge.is-pending {
+      border-color: #86672d;
+      background: #312812;
+      color: #f4cf7c;
+    }
+
+    body.is-dark-mode .stage-badge.is-excluded {
+      border-color: #4a5361;
+      background: #20262f;
+      color: #9eacbf;
+    }
+
     .detail-modal[hidden] {
       display: none;
     }
@@ -1166,20 +1350,19 @@
     .detail-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px 14px;
       margin-top: 12px;
     }
 
     .detail-meta-token {
-      min-height: 30px;
+      min-height: 22px;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 0 10px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface);
-      color: #2d3c50;
+      gap: 6px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #26364a;
       font-size: 12px;
       font-weight: 800;
     }
@@ -1194,8 +1377,6 @@
     }
 
     .detail-meta-token.is-danger {
-      border-color: #f3b8bf;
-      background: #fff1f3;
       color: #b4232f;
     }
 
@@ -1750,6 +1931,180 @@
       cursor: not-allowed;
     }
 
+    body.is-dark-mode .detail-modal {
+      background: rgba(2, 6, 12, 0.68);
+    }
+
+    body.is-dark-mode .detail-dialog {
+      border-color: #303947;
+      background: #12171f;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    body.is-dark-mode .detail-header,
+    body.is-dark-mode .detail-tabs {
+      border-color: #303947;
+      background: #171e29;
+    }
+
+    body.is-dark-mode .detail-tabs::after,
+    body.is-dark-mode .detail-section h3,
+    body.is-dark-mode .action-target-heading {
+      border-color: #303947;
+    }
+
+    body.is-dark-mode .detail-title {
+      color: #edf4ff;
+    }
+
+    body.is-dark-mode .detail-meta-token {
+      color: #d8e5f5;
+    }
+
+    body.is-dark-mode .detail-meta-token strong {
+      color: #91a4bc;
+    }
+
+    body.is-dark-mode .detail-meta-token.is-code {
+      color: #9dccff;
+    }
+
+    body.is-dark-mode .detail-meta-token.is-danger {
+      color: #ffb4bd;
+    }
+
+    body.is-dark-mode .detail-meta-token.is-type {
+      color: #d6c7ff;
+    }
+
+    body.is-dark-mode .detail-subtitle,
+    body.is-dark-mode .detail-field dt,
+    body.is-dark-mode .action-field label,
+    body.is-dark-mode .action-target-subtitle {
+      color: #9aa7b8;
+    }
+
+    body.is-dark-mode .detail-close,
+    body.is-dark-mode .detail-tab,
+    body.is-dark-mode .action-search-button,
+    body.is-dark-mode .action-date-button,
+    body.is-dark-mode .action-calendar-nav {
+      border-color: #354052;
+      background: #1a202b;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .detail-close:hover,
+    body.is-dark-mode .detail-tab:hover,
+    body.is-dark-mode .action-search-button:hover,
+    body.is-dark-mode .action-date-button:hover,
+    body.is-dark-mode .action-calendar-nav:hover {
+      border-color: #506078;
+      background: #222a37;
+      color: #ffffff;
+      box-shadow: none;
+    }
+
+    body.is-dark-mode .detail-tab.is-active {
+      border-color: #303947;
+      background: #12171f;
+      color: #8ab4ff;
+    }
+
+    body.is-dark-mode .detail-section h3,
+    body.is-dark-mode .action-target-count {
+      color: #e6edf3;
+    }
+
+    body.is-dark-mode .detail-field dd,
+    body.is-dark-mode .action-field input,
+    body.is-dark-mode .action-field select,
+    body.is-dark-mode .action-field textarea {
+      border-color: #354052;
+      background: #111821;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .detail-readonly-textarea {
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .action-field input[readonly] {
+      background: #111821;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .action-field input:disabled,
+    body.is-dark-mode .action-field select:disabled,
+    body.is-dark-mode .action-field textarea:disabled,
+    body.is-dark-mode .action-search-button:disabled,
+    body.is-dark-mode .action-date-button:disabled,
+    body.is-dark-mode .action-calendar-nav:disabled {
+      border-color: #2b3340;
+      background: #171e29;
+      color: #6f7f94;
+    }
+
+    body.is-dark-mode .action-target-table-wrap,
+    body.is-dark-mode .event-history-table-wrap {
+      border-color: #303947;
+    }
+
+    body.is-dark-mode .action-target-table th,
+    body.is-dark-mode .event-history-table th {
+      border-color: #303947;
+      background: #1b2330;
+      color: #9aa7b8;
+    }
+
+    body.is-dark-mode .action-target-table td,
+    body.is-dark-mode .event-history-table td {
+      border-color: #303947;
+      color: #cbd5e1;
+    }
+
+    body.is-dark-mode .action-date-popover {
+      border-color: #303947;
+      background: #12171f;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.42);
+    }
+
+    body.is-dark-mode .action-calendar-month {
+      color: #e6edf3;
+    }
+
+    body.is-dark-mode .action-calendar-day {
+      color: #cbd5e1;
+    }
+
+    body.is-dark-mode .action-calendar-day:hover:not(:disabled) {
+      border-color: #506078;
+      background: #223047;
+    }
+
+    body.is-dark-mode .action-calendar-day.is-outside {
+      color: #6f7f94;
+    }
+
+    body.is-dark-mode .action-calendar-day.is-today {
+      border-color: #58a6ff;
+    }
+
+    body.is-dark-mode .action-calendar-day:disabled {
+      background: #171e29;
+      color: #536174;
+    }
+
+    body.is-dark-mode .notice-dialog {
+      border-color: #303947;
+      background: #161b22;
+      color: #e6edf3;
+    }
+
+    body.is-dark-mode .notice-message {
+      color: #e6edf3;
+    }
+
     .action-save-row {
       grid-column: 1 / -1;
       display: flex;
@@ -2011,6 +2366,45 @@
       box-shadow: var(--shadow);
     }
 
+    .requirements-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .requirements-filter {
+      display: inline-grid;
+      grid-template-columns: auto 180px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .requirements-filter label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .requirements-filter select {
+      height: 34px;
+      padding: 0 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 13px;
+    }
+
+    .requirements-count {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .requirements-scroll {
       overflow: auto;
     }
@@ -2164,6 +2558,24 @@
       .table-panel,
       .requirements-panel {
         min-height: calc(100vh - var(--header-height) - 32px);
+      }
+
+      .requirements-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px;
+      }
+
+      .requirements-filter {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .requirements-filter select {
+        width: 100%;
+      }
+
+      .requirements-count {
+        align-self: flex-end;
       }
 
       .event-search-grid,
@@ -2334,6 +2746,12 @@
         </button>
         <div class="page-title" aria-live="polite">
           <h1 id="page-heading">오류상황판</h1>
+          <button class="theme-toggle" type="button" id="status-theme-toggle" aria-pressed="false" aria-label="오류상황판 다크모드 전환">
+            <span class="theme-toggle-track" aria-hidden="true">
+              <span class="theme-toggle-thumb"></span>
+            </span>
+            <span class="theme-toggle-label">다크</span>
+          </button>
         </div>
       </header>
 
@@ -2599,6 +3017,18 @@
 
         <section class="view" id="requirements" aria-labelledby="page-heading">
           <div class="requirements-panel">
+            <div class="requirements-toolbar" aria-label="개발요건 필터">
+              <div class="requirements-filter">
+                <label for="requirements-screen-filter">화면/탭</label>
+                <select id="requirements-screen-filter">
+                  <option value="전체">전체</option>
+                  <option value="오류상황판">오류상황판</option>
+                  <option value="이벤트관리">이벤트관리</option>
+                  <option value="오류상황판/이벤트관리">오류상황판/이벤트관리</option>
+                </select>
+              </div>
+              <span class="requirements-count" id="requirements-filter-count"></span>
+            </div>
             <div class="requirements-scroll">
               <table class="requirements-table" aria-label="개발요건 목록">
                 <thead>
@@ -2842,6 +3272,13 @@
                     <td>이벤트 룰 관리는 에러코드를 필수 입력값으로 하고 거래코드는 선택 입력값으로 하며, 거래코드 단독 등록은 허용하지 않는다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-034</td>
+                    <td class="req-screen">오류상황판</td>
+                    <td class="req-category">화면모드</td>
+                    <td>오류상황판은 사용자가 라이트모드와 다크모드를 선택할 수 있는 화면모드 전환 기능을 제공한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -3067,7 +3504,11 @@
     const eventRuleFeedback = document.querySelector("#event-rule-feedback");
     const eventRuleBody = document.querySelector("#event-rule-body");
     const eventRuleCount = document.querySelector("#event-rule-count");
+    const requirementsScreenFilter = document.querySelector("#requirements-screen-filter");
+    const requirementsFilterCount = document.querySelector("#requirements-filter-count");
+    const requirementRows = [...document.querySelectorAll(".requirements-table tbody tr")];
     const pageHeading = document.querySelector("#page-heading");
+    const statusThemeToggle = document.querySelector("#status-theme-toggle");
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
     const statusBoardBody = document.querySelector("#status-board-body");
@@ -4178,7 +4619,7 @@
       detailMeta.replaceChildren(
         createDetailMetaToken("거래코드", row.transactionCode, "is-code"),
         createDetailMetaToken("에러코드", row.errorCode, "is-danger"),
-        createDetailMetaToken("오류구분", row.errorType)
+        createDetailMetaToken("오류구분", row.errorType, "is-type")
       );
       detailSections.forEach((section) => {
         fragment.append(createDetailSection(detail, section));
@@ -4224,6 +4665,11 @@
       if (Number.isNaN(value) || value < 30) {
         refreshSecondsInput.value = "30";
       }
+    }
+
+    function applyStatusBoardTheme(isDark) {
+      body.classList.toggle("is-dark-mode", isDark);
+      statusThemeToggle.setAttribute("aria-pressed", String(isDark));
     }
 
     function openEventActionEmptyModal(message = "조치할 이벤트를 선택해주세요") {
@@ -4522,9 +4968,28 @@
       updateRowSelectionState();
     }
 
+    function applyRequirementsFilter() {
+      const filterValue = requirementsScreenFilter.value;
+      let visibleCount = 0;
+
+      requirementRows.forEach((row) => {
+        const screenValue = row.querySelector(".req-screen")?.textContent.trim() || "";
+        const isVisible = filterValue === "전체" || screenValue === filterValue;
+
+        row.hidden = !isVisible;
+
+        if (isVisible) {
+          visibleCount += 1;
+        }
+      });
+
+      requirementsFilterCount.textContent = `${visibleCount} / ${requirementRows.length}건`;
+    }
+
     function showView(viewId) {
       const meta = pageMeta[viewId];
       const isEventManagementView = eventManagementViewIds.has(viewId);
+      const isStatusBoardView = viewId === "status-board";
 
       views.forEach((view) => {
         view.classList.toggle("is-active", view.id === viewId);
@@ -4550,6 +5015,11 @@
       });
 
       pageHeading.textContent = meta.title;
+      statusThemeToggle.hidden = !isStatusBoardView;
+      body.classList.toggle(
+        "is-dark-mode",
+        isStatusBoardView && statusThemeToggle.getAttribute("aria-pressed") === "true"
+      );
       body.classList.remove("nav-open");
     }
 
@@ -4564,6 +5034,12 @@
     scrim.addEventListener("click", () => {
       body.classList.remove("nav-open");
     });
+
+    statusThemeToggle.addEventListener("click", () => {
+      applyStatusBoardTheme(!body.classList.contains("is-dark-mode"));
+    });
+
+    requirementsScreenFilter.addEventListener("change", applyRequirementsFilter);
 
     settingsOpenButton.addEventListener("click", openSettingsModal);
     settingsCloseButton.addEventListener("click", closeSettingsModal);
@@ -4656,6 +5132,7 @@
     renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
+    applyRequirementsFilter();
     showView("status-board");
   </script>
 </body>
