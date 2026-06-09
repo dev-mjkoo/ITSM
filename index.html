@@ -862,15 +862,12 @@
       cursor: default;
     }
 
-    .action-native-date {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      opacity: 0;
-      pointer-events: none;
+    .action-field input:disabled,
+    .action-field select:disabled,
+    .action-field textarea:disabled {
+      background: #f2f5f8;
+      color: #7a8797;
+      cursor: not-allowed;
     }
 
     .action-search-button,
@@ -893,10 +890,167 @@
       background: #f7fbff;
     }
 
+    .action-search-button:disabled,
+    .action-date-button:disabled {
+      border-color: var(--border);
+      background: #edf1f5;
+      color: #9aa6b4;
+      cursor: not-allowed;
+    }
+
     .action-field input:focus,
     .action-field select:focus,
     .action-field textarea:focus {
       border-color: var(--primary);
+    }
+
+    .action-date-popover[hidden] {
+      display: none;
+    }
+
+    .action-date-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 20;
+      width: min(262px, calc(100vw - 48px));
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+    }
+
+    .action-calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .action-calendar-month {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .action-calendar-nav {
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface-subtle);
+      color: #253246;
+    }
+
+    .action-calendar-nav:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .action-calendar-nav:disabled {
+      border-color: var(--border);
+      background: #edf1f5;
+      color: #b5bfcc;
+      cursor: not-allowed;
+    }
+
+    .action-calendar-weekdays,
+    .action-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    .action-calendar-weekdays {
+      margin-bottom: 5px;
+    }
+
+    .action-calendar-weekday {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .action-calendar-day {
+      min-height: 28px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: #253246;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .action-calendar-day:hover:not(:disabled) {
+      border-color: var(--border-strong);
+      background: #eef6ff;
+    }
+
+    .action-calendar-day.is-outside {
+      color: #9aa6b4;
+    }
+
+    .action-calendar-day.is-today {
+      border-color: #9bbfea;
+    }
+
+    .action-calendar-day.is-selected {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .action-calendar-day:disabled {
+      background: #f6f8fb;
+      color: #c3ccd8;
+      cursor: not-allowed;
+    }
+
+    .action-save-row {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 2px;
+    }
+
+    .action-save-button {
+      min-width: 86px;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 14px;
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .action-save-button:hover {
+      border-color: var(--primary-strong);
+      background: var(--primary-strong);
+    }
+
+    .action-save-button.is-approval {
+      border-color: #0f766e;
+      background: #0f766e;
+    }
+
+    .action-save-button.is-approval:hover {
+      border-color: #115e59;
+      background: #115e59;
     }
 
     .settings-modal[hidden] {
@@ -1535,6 +1689,54 @@
                     <td>여러 오류상황판 행을 선택해 이벤트 조치하기를 실행한 경우 상세내용 탭은 표시하지 않는다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-012</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>이벤트 조치접수는 조치담당자, 조치 예정일, 조치구분, 조치내용을 입력해 저장한 뒤 조치완료일을 입력할 수 있으며, 저장 이후 조치 예정일은 수정할 수 없고 조치담당자, 조치구분, 조치내용은 계속 수정할 수 있다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-013</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>이벤트 조치접수에서는 조치 예정일 입력 단계에 저장 버튼을 표시하고, 조치완료일 입력 단계에 결재요청 버튼을 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-014</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>결재요청 버튼 실행 시 담당 셀장 결재를 위해 SWING, ITBPI 등 인사정보 데이터에서 담당 셀장 정보를 조회한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-015</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>결재요청 버튼 실행 시 결재자에게 SWING 메일을 전송하며, 메일 내용은 추후 협의 예정이다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-016</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>이벤트 조치접수 저장 시 조치담당자, 조치구분, 조치 예정일, 조치내용 중 하나라도 입력되지 않으면 저장하지 않고 입력 안내를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-017</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>조치 예정일은 과거 날짜를 선택할 수 없으며 오늘 또는 이후 날짜만 선택할 수 있다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-018</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>조치완료일은 과거 날짜를 선택할 수 없으며 오늘 또는 이후 날짜만 선택할 수 있다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-019</td>
+                    <td class="req-category">이벤트 조치</td>
+                    <td>결재요청 실행 시 조치완료일, 조치담당자, 조치구분, 조치내용 중 하나라도 입력되지 않으면 결재요청하지 않고 입력 안내를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1682,6 +1884,7 @@
     const statusBoardBody = document.querySelector("#status-board-body");
     const eventActionButton = document.querySelector("#event-action-button");
     const eventActionEmptyModal = document.querySelector("#event-action-empty-modal");
+    const eventActionEmptyMessage = document.querySelector("#event-action-empty-message");
     const eventActionEmptyCloseButton = document.querySelector("[data-event-action-empty-close]");
     const settingsOpenButton = document.querySelector("#settings-open-button");
     const settingsModal = document.querySelector("#settings-modal");
@@ -1698,6 +1901,7 @@
     const detailActionPanel = document.querySelector("#detail-action-panel");
     const detailTabButtons = [...document.querySelectorAll("[data-detail-tab-target]")];
     const detailTabPanels = [...document.querySelectorAll(".detail-tab-panel")];
+    const actionReceiptStates = new Map();
     let statusRows = [];
     let lastFocusedElement = null;
     let lastSettingsFocusedElement = null;
@@ -1913,6 +2117,212 @@
       });
     }
 
+    function getActionReceiptKey(actionRows) {
+      return actionRows
+        .map((row) => String(row.no))
+        .sort((left, right) => Number(left) - Number(right))
+        .join("-");
+    }
+
+    function getActionReceiptState(actionRows) {
+      const key = getActionReceiptKey(actionRows);
+
+      if (!actionReceiptStates.has(key)) {
+        actionReceiptStates.set(key, {
+          owner: "",
+          actionType: "",
+          plannedDate: "",
+          completedDate: "",
+          comment: "",
+          isReceiptSaved: false
+        });
+      }
+
+      return actionReceiptStates.get(key);
+    }
+
+    function getTodayDateValue() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    function isPastDateValue(dateValue) {
+      return Boolean(dateValue && dateValue < getTodayDateValue());
+    }
+
+    function createDateFromValue(dateValue) {
+      const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateValue);
+
+      if (!match) {
+        return null;
+      }
+
+      return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    }
+
+    function formatDateValue(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+
+      return `${year}-${month}-${day}`;
+    }
+
+    function createMonthDate(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1);
+    }
+
+    function createActionDateCalendar({ control, dateButton, dateWrapper, label }) {
+      const popover = document.createElement("div");
+      const header = document.createElement("div");
+      const previousButton = document.createElement("button");
+      const nextButton = document.createElement("button");
+      const monthLabel = document.createElement("div");
+      const weekdays = document.createElement("div");
+      const dayGrid = document.createElement("div");
+      const weekdayLabels = ["일", "월", "화", "수", "목", "금", "토"];
+      const todayValue = getTodayDateValue();
+      let visibleMonth = createMonthDate(createDateFromValue(control.value) || new Date());
+
+      popover.className = "action-date-popover";
+      popover.hidden = true;
+      popover.setAttribute("role", "dialog");
+      popover.setAttribute("aria-label", `${label} 선택 달력`);
+      header.className = "action-calendar-header";
+      previousButton.className = "action-calendar-nav";
+      previousButton.type = "button";
+      previousButton.setAttribute("aria-label", "이전 달");
+      previousButton.innerHTML = `
+        <svg width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `;
+      nextButton.className = "action-calendar-nav";
+      nextButton.type = "button";
+      nextButton.setAttribute("aria-label", "다음 달");
+      nextButton.innerHTML = `
+        <svg width="16" height="16" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `;
+      monthLabel.className = "action-calendar-month";
+      weekdays.className = "action-calendar-weekdays";
+      dayGrid.className = "action-calendar-grid";
+
+      weekdayLabels.forEach((weekday) => {
+        const weekdayCell = document.createElement("div");
+
+        weekdayCell.className = "action-calendar-weekday";
+        weekdayCell.textContent = weekday;
+        weekdays.append(weekdayCell);
+      });
+
+      function closeCalendar(options = {}) {
+        const { restoreFocus = true } = options;
+
+        if (popover.hidden) {
+          return;
+        }
+
+        popover.hidden = true;
+        dateButton.setAttribute("aria-expanded", "false");
+        document.removeEventListener("pointerdown", handleOutsidePointerDown);
+
+        if (restoreFocus) {
+          dateButton.focus();
+        }
+      }
+
+      function handleOutsidePointerDown(event) {
+        if (!dateWrapper.contains(event.target)) {
+          closeCalendar({ restoreFocus: false });
+        }
+      }
+
+      function renderCalendar() {
+        const selectedValue = control.value;
+        const firstDay = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
+        const startOffset = firstDay.getDay();
+        const currentMonth = createMonthDate(new Date());
+
+        monthLabel.textContent = `${visibleMonth.getFullYear()}년 ${visibleMonth.getMonth() + 1}월`;
+        previousButton.disabled = visibleMonth <= currentMonth;
+        dayGrid.replaceChildren();
+
+        for (let index = 0; index < 42; index += 1) {
+          const dayDate = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), index - startOffset + 1);
+          const dayValue = formatDateValue(dayDate);
+          const dayButton = document.createElement("button");
+          const isOutsideMonth = dayDate.getMonth() !== visibleMonth.getMonth();
+          const isPastDate = dayValue < todayValue;
+
+          dayButton.className = "action-calendar-day";
+          dayButton.type = "button";
+          dayButton.textContent = String(dayDate.getDate());
+          dayButton.disabled = isPastDate;
+          dayButton.setAttribute("aria-label", `${dayValue} 선택`);
+          dayButton.setAttribute("aria-pressed", dayValue === selectedValue ? "true" : "false");
+          dayButton.classList.toggle("is-outside", isOutsideMonth);
+          dayButton.classList.toggle("is-today", dayValue === todayValue);
+          dayButton.classList.toggle("is-selected", dayValue === selectedValue);
+          dayButton.addEventListener("click", () => {
+            control.value = dayValue;
+            control.dispatchEvent(new Event("input", { bubbles: true }));
+            control.dispatchEvent(new Event("change", { bubbles: true }));
+            closeCalendar();
+          });
+          dayGrid.append(dayButton);
+        }
+      }
+
+      function openCalendar() {
+        visibleMonth = createMonthDate(createDateFromValue(control.value) || new Date());
+        renderCalendar();
+        popover.hidden = false;
+        dateButton.setAttribute("aria-expanded", "true");
+        document.addEventListener("pointerdown", handleOutsidePointerDown);
+        window.setTimeout(() => {
+          const focusTarget = dayGrid.querySelector(".action-calendar-day.is-selected:not(:disabled)")
+            || dayGrid.querySelector(".action-calendar-day:not(:disabled)");
+
+          if (focusTarget) {
+            focusTarget.focus();
+          }
+        }, 0);
+      }
+
+      dateButton.addEventListener("click", () => {
+        if (popover.hidden) {
+          openCalendar();
+        } else {
+          closeCalendar();
+        }
+      });
+      previousButton.addEventListener("click", () => {
+        visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1);
+        renderCalendar();
+      });
+      nextButton.addEventListener("click", () => {
+        visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1);
+        renderCalendar();
+      });
+      dateWrapper.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !popover.hidden) {
+          event.stopPropagation();
+          closeCalendar();
+        }
+      });
+
+      header.append(previousButton, monthLabel, nextButton);
+      popover.append(header, weekdays, dayGrid);
+
+      return popover;
+    }
+
     function createActionInputField(config) {
       const field = document.createElement("div");
       const label = document.createElement("label");
@@ -1935,18 +2345,22 @@
 
         control = document.createElement("input");
         control.type = "text";
-        control.value = "";
+        control.value = config.value || "";
         control.readOnly = true;
         control.setAttribute("aria-readonly", "true");
         searchWrapper.className = "action-search-control";
         searchButton.className = "action-search-button";
         searchButton.type = "button";
+        searchButton.disabled = Boolean(config.disabled);
         searchButton.setAttribute("aria-label", `${config.label} 검색`);
         searchButton.innerHTML = `
           <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
             <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         `;
+        searchButton.addEventListener("click", () => {
+          control.value = config.searchValue || "20100061(구민준)";
+        });
         searchWrapper.append(control, searchButton);
         fieldContent = searchWrapper;
       } else if (config.type === "select") {
@@ -1975,36 +2389,33 @@
       } else if (config.type === "date") {
         const dateWrapper = document.createElement("div");
         const dateButton = document.createElement("button");
-        const datePicker = document.createElement("input");
+        let dateCalendar;
 
         control = document.createElement("input");
         control.type = "text";
-        control.value = "";
+        control.value = config.value || "";
         control.readOnly = true;
         control.setAttribute("aria-readonly", "true");
-        datePicker.type = "date";
-        datePicker.className = "action-native-date";
-        datePicker.tabIndex = -1;
         dateWrapper.className = "action-date-control";
         dateButton.className = "action-date-button";
         dateButton.type = "button";
+        dateButton.disabled = Boolean(config.disabled);
+        control.disabled = Boolean(config.disabled);
         dateButton.setAttribute("aria-label", `${config.label} 달력 열기`);
+        dateButton.setAttribute("aria-haspopup", "dialog");
+        dateButton.setAttribute("aria-expanded", "false");
         dateButton.innerHTML = `
           <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
             <path d="M7 3v4M17 3v4M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         `;
-        dateButton.addEventListener("click", () => {
-          if (typeof datePicker.showPicker === "function") {
-            datePicker.showPicker();
-          } else {
-            datePicker.focus();
-          }
+        dateCalendar = createActionDateCalendar({
+          control,
+          dateButton,
+          dateWrapper,
+          label: config.label
         });
-        datePicker.addEventListener("change", () => {
-          control.value = datePicker.value;
-        });
-        dateWrapper.append(control, dateButton, datePicker);
+        dateWrapper.append(control, dateButton, dateCalendar);
         fieldContent = dateWrapper;
       } else {
         control = document.createElement("input");
@@ -2013,9 +2424,11 @@
       }
 
       control.id = config.id;
+      control.disabled = control.disabled || Boolean(config.disabled);
       label.setAttribute("for", config.id);
       label.textContent = config.label;
       field.append(label, fieldContent || control);
+      field.inputControl = control;
 
       return field;
     }
@@ -2079,43 +2492,120 @@
       return summary;
     }
 
+    function getMissingActionReceiptFields(fields) {
+      return fields
+        .filter(({ field }) => !String(field.inputControl.value || "").trim())
+        .map(({ label }) => label);
+    }
+
     function createActionReceiptPanel(row, actionRows = [row]) {
       const wrapper = document.createElement("div");
       const formGrid = document.createElement("div");
+      const saveRow = document.createElement("div");
+      const saveButton = document.createElement("button");
       const fieldPrefix = `action-receipt-${row.no}`;
+      const state = getActionReceiptState(actionRows);
+      const ownerField = createActionInputField({
+        id: `${fieldPrefix}-owner`,
+        label: "조치담당자",
+        value: state.owner,
+        search: true
+      });
+      const typeField = createActionInputField({
+        id: `${fieldPrefix}-type`,
+        label: "조치구분",
+        type: "select",
+        value: state.actionType,
+        emptyOption: true,
+        options: ["프로그램수정", "DB조치", "시스템설정", "그외조치", "원인불명", "외부기관응답지연", "타시스템응답지연", "조치대상아님"]
+      });
+      const plannedDateField = createActionInputField({
+        id: `${fieldPrefix}-planned-date`,
+        label: "조치 예정일",
+        type: "date",
+        value: state.plannedDate,
+        disabled: state.isReceiptSaved
+      });
+      const completedDateField = createActionInputField({
+        id: `${fieldPrefix}-completed-date`,
+        label: "조치완료일",
+        type: "date",
+        value: state.completedDate,
+        disabled: !state.isReceiptSaved
+      });
+      const commentField = createActionInputField({
+        id: `${fieldPrefix}-comment`,
+        label: "조치내용",
+        type: "textarea",
+        value: state.comment,
+        full: true
+      });
 
       wrapper.className = "action-receipt";
       formGrid.className = "action-form-grid";
-      formGrid.append(
-        createActionInputField({
-          id: `${fieldPrefix}-owner`,
-          label: "조치담당자",
-          search: true
-        }),
-        createActionInputField({
-          id: `${fieldPrefix}-type`,
-          label: "조치구분",
-          type: "select",
-          emptyOption: true,
-          options: ["프로그램수정", "DB조치", "시스템설정", "그외조치", "원인불명", "외부기관응답지연", "타시스템응답지연", "조치대상아님"]
-        }),
-        createActionInputField({
-          id: `${fieldPrefix}-planned-date`,
-          label: "조치 예정일",
-          type: "date"
-        }),
-        createActionInputField({
-          id: `${fieldPrefix}-completed-date`,
-          label: "조치완료일",
-          type: "date"
-        }),
-        createActionInputField({
-          id: `${fieldPrefix}-comment`,
-          label: "조치내용",
-          type: "textarea",
-          full: true
-        })
-      );
+      saveRow.className = "action-save-row";
+      saveButton.className = "action-save-button";
+      saveButton.type = "button";
+      saveButton.textContent = state.isReceiptSaved ? "결재요청" : "저장";
+      saveButton.classList.toggle("is-approval", state.isReceiptSaved);
+      saveButton.addEventListener("click", () => {
+        const wasReceiptSaved = state.isReceiptSaved;
+
+        if (!wasReceiptSaved) {
+          const missingFields = getMissingActionReceiptFields([
+            { label: "조치담당자", field: ownerField },
+            { label: "조치구분", field: typeField },
+            { label: "조치 예정일", field: plannedDateField },
+            { label: "조치내용", field: commentField }
+          ]);
+
+          if (missingFields.length > 0) {
+            openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+            return;
+          }
+
+          if (isPastDateValue(plannedDateField.inputControl.value)) {
+            openEventActionEmptyModal("조치 예정일은 오늘 또는 이후 날짜만 선택할 수 있습니다");
+            return;
+          }
+        } else {
+          const missingFields = getMissingActionReceiptFields([
+            { label: "조치완료일", field: completedDateField },
+            { label: "조치담당자", field: ownerField },
+            { label: "조치구분", field: typeField },
+            { label: "조치내용", field: commentField }
+          ]);
+
+          if (missingFields.length > 0) {
+            openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+            return;
+          }
+
+          if (isPastDateValue(completedDateField.inputControl.value)) {
+            openEventActionEmptyModal("조치완료일은 오늘 또는 이후 날짜만 선택할 수 있습니다");
+            return;
+          }
+        }
+
+        state.owner = ownerField.inputControl.value;
+        state.actionType = typeField.inputControl.value;
+        state.plannedDate = plannedDateField.inputControl.value;
+        state.completedDate = completedDateField.inputControl.value;
+        state.comment = commentField.inputControl.value;
+        state.isReceiptSaved = true;
+
+        if (wasReceiptSaved) {
+          openEventActionEmptyModal("담당 셀장에게 결재 요청을 하고 SWING 메일이 전송되면 좋겠습니다");
+          return;
+        }
+
+        detailActionPanel.replaceChildren(createActionReceiptPanel(row, actionRows));
+        setDetailTab("detail-action-panel");
+        openEventActionEmptyModal("저장되었습니다");
+      });
+
+      saveRow.append(saveButton);
+      formGrid.append(ownerField, typeField, plannedDateField, completedDateField, commentField, saveRow);
       wrapper.append(createActionTargetSummary(actionRows), formGrid);
 
       return wrapper;
@@ -2179,8 +2669,9 @@
       }
     }
 
-    function openEventActionEmptyModal() {
+    function openEventActionEmptyModal(message = "조치할 이벤트를 선택해주세요") {
       lastNoticeFocusedElement = document.activeElement;
+      eventActionEmptyMessage.textContent = message;
       eventActionEmptyModal.hidden = false;
       body.classList.add("notice-open");
       eventActionEmptyCloseButton.focus();
