@@ -266,6 +266,145 @@
       box-shadow: var(--shadow);
     }
 
+    .event-page {
+      min-height: calc(100vh - var(--header-height) - 48px);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .event-search-panel,
+    .event-result-panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .event-search-panel {
+      overflow: visible;
+    }
+
+    .event-search-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .event-search-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      align-items: end;
+      padding: 16px;
+    }
+
+    .event-search-field {
+      min-width: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .event-search-field.is-date-range {
+      grid-column: span 2;
+    }
+
+    .event-search-field label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .event-search-field input,
+    .event-search-field select {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 13px;
+    }
+
+    .event-search-field input:focus,
+    .event-search-field select:focus {
+      border-color: var(--primary);
+    }
+
+    .event-search-field input[readonly] {
+      background: #fbfcfe;
+      cursor: default;
+    }
+
+    .event-search-field .action-search-control,
+    .event-search-field .action-date-control {
+      grid-template-columns: minmax(0, 1fr) 38px;
+    }
+
+    .event-search-field .action-search-button,
+    .event-search-field .action-date-button {
+      min-height: 36px;
+      height: 36px;
+    }
+
+    .event-date-range {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 6px;
+      align-items: center;
+    }
+
+    .event-date-range-separator {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .event-search-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 0 16px 16px;
+    }
+
+    .event-search-button {
+      min-width: 76px;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .event-search-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .event-search-button.is-primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .event-search-button.is-primary:hover {
+      border-color: var(--primary-strong);
+      background: var(--primary-strong);
+    }
+
+    .event-result-panel {
+      min-height: 0;
+    }
+
     .table-panel {
       min-height: calc(100vh - var(--header-height) - 48px);
       display: flex;
@@ -1488,9 +1627,27 @@
       }
 
       .workspace,
+      .event-page,
       .table-panel,
       .requirements-panel {
         min-height: calc(100vh - var(--header-height) - 32px);
+      }
+
+      .event-search-grid {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 12px;
+      }
+
+      .event-date-range {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .event-date-range-separator {
+        display: none;
+      }
+
+      .event-search-actions {
+        padding: 0 12px 12px;
       }
 
       .detail-modal {
@@ -1527,6 +1684,7 @@
       }
 
       .detail-grid,
+      .event-search-grid,
       .action-form-grid {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -1698,7 +1856,99 @@
         </section>
 
         <section class="view" id="event-search" aria-labelledby="page-heading">
-          <div class="workspace" aria-label="이벤트 조회 빈 레이아웃"></div>
+          <div class="event-page">
+            <section class="event-search-panel" aria-label="이벤트 조회 검색 조건">
+              <form class="event-search-form" id="event-search-form">
+                <div class="event-search-grid">
+                  <div class="event-search-field">
+                    <label for="event-error-type">오류구분</label>
+                    <select id="event-error-type" name="errorType">
+                      <option value="전체">전체</option>
+                      <option value="PFM">PFM</option>
+                      <option value="BXM">BXM</option>
+                    </select>
+                  </div>
+                  <div class="event-search-field">
+                    <label for="event-action-type">조치구분</label>
+                    <select id="event-action-type" name="actionType">
+                      <option value="전체">전체</option>
+                      <option value="프로그램수정">프로그램수정</option>
+                      <option value="DB조치">DB조치</option>
+                      <option value="시스템설정">시스템설정</option>
+                      <option value="그외조치">그외조치</option>
+                      <option value="원인불명">원인불명</option>
+                      <option value="외부기관응답지연">외부기관응답지연</option>
+                      <option value="타시스템응답지연">타시스템응답지연</option>
+                      <option value="조치대상아님">조치대상아님</option>
+                    </select>
+                  </div>
+                  <div class="event-search-field is-date-range">
+                    <label>발생일시</label>
+                    <div class="event-date-range">
+                      <div class="action-date-control" data-event-search-date>
+                        <input id="event-start-date" name="startDate" type="text" readonly aria-readonly="true">
+                        <button class="action-date-button" type="button" aria-label="발생일시 시작일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="발생일시 시작일자">
+                          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 3v4M17 3v4M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </button>
+                      </div>
+                      <span class="event-date-range-separator" aria-hidden="true">~</span>
+                      <div class="action-date-control" data-event-search-date>
+                        <input id="event-end-date" name="endDate" type="text" readonly aria-readonly="true">
+                        <button class="action-date-button" type="button" aria-label="발생일시 종료일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="발생일시 종료일자">
+                          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 3v4M17 3v4M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="event-search-field">
+                    <label for="event-department">담당부서</label>
+                    <div class="action-search-control">
+                      <input id="event-department" name="department" type="text" readonly aria-readonly="true">
+                      <button class="action-search-button" type="button" aria-label="담당부서 검색" data-event-search-lookup data-target="event-department" data-value="디지털서비스개발부">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="event-search-field">
+                    <label for="event-owner">담당자</label>
+                    <div class="action-search-control">
+                      <input id="event-owner" name="owner" type="text" readonly aria-readonly="true">
+                      <button class="action-search-button" type="button" aria-label="담당자 검색" data-event-search-lookup data-target="event-owner" data-value="20100061(구민준)">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="event-search-field">
+                    <label for="event-service-name">서비스명</label>
+                    <input id="event-service-name" name="serviceName" type="text">
+                  </div>
+                  <div class="event-search-field">
+                    <label for="event-status">진행상태</label>
+                    <select id="event-status" name="status">
+                      <option value="전체">전체</option>
+                      <option value="미조치" selected>미조치</option>
+                      <option value="조치중">조치중</option>
+                      <option value="결재요청">결재요청</option>
+                      <option value="조치완료">조치완료</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="event-search-actions">
+                  <button class="event-search-button" type="reset">초기화</button>
+                  <button class="event-search-button is-primary" type="submit">조회</button>
+                </div>
+              </form>
+            </section>
+            <section class="event-result-panel" aria-label="이벤트 조회 결과"></section>
+          </div>
         </section>
 
         <section class="view" id="event-rule-management" aria-labelledby="page-heading">
@@ -1857,6 +2107,20 @@
                     <td class="req-screen">이벤트관리</td>
                     <td class="req-category">메뉴</td>
                     <td>이벤트 관리 탭을 클릭하면 하위 메뉴로 이벤트 조회와 이벤트 룰 관리를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-021</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 페이지 상단 검색 영역은 오류구분, 조치구분, 발생일시 시작일자와 종료일자, 담당부서, 담당자, 서비스명, 진행상태 조건을 제공하며, 담당부서와 담당자는 돋보기 검색으로만 선택하고 SWING 또는 ITBPI 정보를 사용한다. 서비스명은 거래코드에서 뒤 2자리를 제외한 값으로 조회하며, 진행상태는 미조치를 기본값으로 한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-022</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 검색 조건은 필수 입력 항목 없이 선택적으로 입력하며, 조건을 입력하지 않아도 조회할 수 있다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                 </tbody>
@@ -2303,7 +2567,7 @@
       return new Date(date.getFullYear(), date.getMonth(), 1);
     }
 
-    function createActionDateCalendar({ control, dateButton, dateWrapper, label }) {
+    function createActionDateCalendar({ control, dateButton, dateWrapper, label, minDateValue = getTodayDateValue() }) {
       const popover = document.createElement("div");
       const header = document.createElement("div");
       const previousButton = document.createElement("button");
@@ -2313,6 +2577,7 @@
       const dayGrid = document.createElement("div");
       const weekdayLabels = ["일", "월", "화", "수", "목", "금", "토"];
       const todayValue = getTodayDateValue();
+      const minimumDateValue = minDateValue || "";
       let visibleMonth = createMonthDate(createDateFromValue(control.value) || new Date());
 
       popover.className = "action-date-popover";
@@ -2374,10 +2639,10 @@
         const selectedValue = control.value;
         const firstDay = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
         const startOffset = firstDay.getDay();
-        const currentMonth = createMonthDate(new Date());
+        const minimumMonth = minimumDateValue ? createMonthDate(createDateFromValue(minimumDateValue)) : null;
 
         monthLabel.textContent = `${visibleMonth.getFullYear()}년 ${visibleMonth.getMonth() + 1}월`;
-        previousButton.disabled = visibleMonth <= currentMonth;
+        previousButton.disabled = Boolean(minimumMonth && visibleMonth <= minimumMonth);
         dayGrid.replaceChildren();
 
         for (let index = 0; index < 42; index += 1) {
@@ -2385,12 +2650,12 @@
           const dayValue = formatDateValue(dayDate);
           const dayButton = document.createElement("button");
           const isOutsideMonth = dayDate.getMonth() !== visibleMonth.getMonth();
-          const isPastDate = dayValue < todayValue;
+          const isBeforeMinimumDate = Boolean(minimumDateValue && dayValue < minimumDateValue);
 
           dayButton.className = "action-calendar-day";
           dayButton.type = "button";
           dayButton.textContent = String(dayDate.getDate());
-          dayButton.disabled = isPastDate;
+          dayButton.disabled = isBeforeMinimumDate;
           dayButton.setAttribute("aria-label", `${dayValue} 선택`);
           dayButton.setAttribute("aria-pressed", dayValue === selectedValue ? "true" : "false");
           dayButton.classList.toggle("is-outside", isOutsideMonth);
@@ -2448,6 +2713,45 @@
       popover.append(header, weekdays, dayGrid);
 
       return popover;
+    }
+
+    function initializeEventSearchControls() {
+      const eventSearchForm = document.querySelector("#event-search-form");
+      const eventSearchDateControls = [...document.querySelectorAll("[data-event-search-date]")];
+      const eventSearchLookupButtons = [...document.querySelectorAll("[data-event-search-lookup]")];
+
+      eventSearchDateControls.forEach((dateWrapper) => {
+        const control = dateWrapper.querySelector("input");
+        const dateButton = dateWrapper.querySelector(".action-date-button");
+
+        if (!control || !dateButton || dateWrapper.querySelector(".action-date-popover")) {
+          return;
+        }
+
+        dateWrapper.append(createActionDateCalendar({
+          control,
+          dateButton,
+          dateWrapper,
+          label: dateButton.dataset.dateLabel || "발생일시",
+          minDateValue: ""
+        }));
+      });
+
+      eventSearchLookupButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.target);
+
+          if (target) {
+            target.value = button.dataset.value || "";
+          }
+        });
+      });
+
+      if (eventSearchForm) {
+        eventSearchForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+        });
+      }
     }
 
     function createActionInputField(config) {
@@ -2540,7 +2844,8 @@
           control,
           dateButton,
           dateWrapper,
-          label: config.label
+          label: config.label,
+          minDateValue: config.minDateValue
         });
         dateWrapper.append(control, dateButton, dateCalendar);
         fieldContent = dateWrapper;
@@ -3088,6 +3393,7 @@
       }
     });
 
+    initializeEventSearchControls();
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
     showView("status-board");
   </script>
