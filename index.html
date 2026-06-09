@@ -304,6 +304,10 @@
       background: #f7fbff;
     }
 
+    .data-table tbody tr.is-clickable {
+      cursor: pointer;
+    }
+
     .data-table tbody tr.is-selected td {
       background: #eef6ff;
     }
@@ -373,6 +377,212 @@
       color: #314154;
       font-weight: 700;
       vertical-align: middle;
+    }
+
+    .detail-modal[hidden] {
+      display: none;
+    }
+
+    .detail-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.52);
+    }
+
+    body.detail-open {
+      overflow: hidden;
+    }
+
+    .detail-dialog {
+      width: min(1120px, 100%);
+      max-height: min(820px, calc(100vh - 48px));
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-subtle);
+    }
+
+    .detail-title-block {
+      min-width: 0;
+    }
+
+    .detail-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .detail-subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .detail-meta-token {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: #2d3c50;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .detail-meta-token strong {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .detail-meta-token.is-code span {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    .detail-meta-token.is-danger {
+      border-color: #f3b8bf;
+      background: #fff1f3;
+      color: #b4232f;
+    }
+
+    .detail-close {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .detail-close:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    }
+
+    .detail-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-chip {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #f7f9fc;
+      color: #344255;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .detail-chip strong {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .detail-body {
+      overflow: auto;
+      padding: 0 24px 22px;
+    }
+
+    .detail-section {
+      padding: 20px 0 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-section:last-child {
+      border-bottom: 0;
+    }
+
+    .detail-section h3 {
+      margin: 0 0 12px;
+      color: #26364a;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px 16px;
+    }
+
+    .detail-field {
+      min-width: 0;
+      margin: 0;
+    }
+
+    .detail-field.is-wide {
+      grid-column: span 2;
+    }
+
+    .detail-field.is-full {
+      grid-column: 1 / -1;
+    }
+
+    .detail-field dt {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .detail-field dd {
+      min-height: 32px;
+      margin: 0;
+      padding: 7px 10px;
+      overflow-wrap: anywhere;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fbfcfe;
+      color: #1d2a3a;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .detail-field.is-code dd {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
     }
 
     .requirements-panel {
@@ -511,6 +721,34 @@
       .requirements-panel {
         min-height: calc(100vh - var(--header-height) - 32px);
       }
+
+      .detail-modal {
+        padding: 12px;
+      }
+
+      .detail-dialog {
+        max-height: calc(100vh - 24px);
+      }
+
+      .detail-header,
+      .detail-summary,
+      .detail-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .detail-title {
+        font-size: 20px;
+      }
+
+      .detail-field.is-wide,
+      .detail-field.is-full {
+        grid-column: 1 / -1;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -643,6 +881,24 @@
   </div>
 
   <div class="scrim" aria-hidden="true"></div>
+  <div class="detail-modal" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden>
+    <div class="detail-dialog">
+      <header class="detail-header">
+        <div class="detail-title-block">
+          <h2 class="detail-title" id="detail-title"></h2>
+          <div class="detail-subtitle" id="detail-subtitle"></div>
+          <div class="detail-meta" id="detail-meta"></div>
+        </div>
+        <button class="detail-close" type="button" aria-label="상세 닫기">
+          <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+      <div class="detail-summary" id="detail-summary"></div>
+      <div class="detail-body" id="detail-body"></div>
+    </div>
+  </div>
 
   <script src="sample-data.js"></script>
   <script>
@@ -684,7 +940,250 @@
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
     const statusBoardBody = document.querySelector("#status-board-body");
+    const detailModal = document.querySelector("#detail-modal");
+    const detailCloseButton = document.querySelector(".detail-close");
+    const detailTitle = document.querySelector("#detail-title");
+    const detailSubtitle = document.querySelector("#detail-subtitle");
+    const detailMeta = document.querySelector("#detail-meta");
+    const detailSummary = document.querySelector("#detail-summary");
+    const detailBody = document.querySelector("#detail-body");
     let statusRows = [];
+    let lastFocusedElement = null;
+
+    const errorDetailMessages = {
+      BXM30011: "서비스 계층에서 거래 처리 도중 예외가 반환되었습니다. 호스트 로그와 전문 응답 상태 확인이 필요합니다.",
+      BXM40101: "업무 처리 모듈에서 처리 결과를 정상 수신하지 못했습니다. 서비스 호출 경로와 입력 전문 검증이 필요합니다.",
+      BXM30002: "거래 처리 중 일시적인 지연이 감지되었습니다. 동일 거래 재시도 여부와 후속 응답 수신 여부 확인이 필요합니다.",
+      PFM03030: "서비스 호출 제한 시간을 초과했습니다. 네트워크 지연, 호스트 부하, 전문 응답 지연 여부를 확인해야 합니다.",
+      DEP10051: "원장 처리 중 예외가 발생했습니다. 계정계 원장 반영 결과와 보정 처리 필요 여부를 확인해야 합니다."
+    };
+
+    const detailSections = [
+      {
+        title: "오류 요약",
+        fields: [
+          { label: "호스트명", key: "hostName", code: true },
+          { label: "에러코드", key: "errorCode", code: true },
+          { label: "에러메시지", key: "errorMessage", wide: true },
+          { label: "에러메시지상세내용", key: "errorMessageDetail", full: true }
+        ]
+      },
+      {
+        title: "거래 정보",
+        fields: [
+          { label: "거래코드", key: "transactionCode", code: true },
+          { label: "거래명", key: "transactionName" },
+          { label: "화면 ID", key: "screenId", code: true },
+          { label: "글로벌 ID", key: "globalId", code: true },
+          { label: "서비스명", key: "serviceName", code: true },
+          { label: "거래점번호", key: "storeNumber", code: true },
+          { label: "거래기번", key: "terminalNumber", code: true },
+          { label: "채널유형", key: "channelType", code: true }
+        ]
+      },
+      {
+        title: "일시 및 전문",
+        fields: [
+          { label: "형상관리 최종이행일자", key: "deployDate", code: true },
+          { label: "형상관리 최종이행시간", key: "deployTime", code: true },
+          { label: "영업일자", key: "businessDate", code: true },
+          { label: "시스템일자", key: "systemDate", code: true },
+          { label: "전문전송일시", key: "telegramSentAt", code: true },
+          { label: "로깅시각", key: "loggingTime", code: true }
+        ]
+      },
+      {
+        title: "운영 정보",
+        fields: [
+          { label: "PID", key: "pid", code: true },
+          { label: "조작자행원번호", key: "operatorEmployee", code: true },
+          { label: "파트명", key: "partName" },
+          { label: "최종이행자", key: "lastActor" },
+          { label: "담당자", key: "owner" },
+          { label: "에러코드 설정위치", key: "errorCodeLocation", wide: true, code: true },
+          { label: "에러발생정보", key: "errorOccurrenceInfo", full: true }
+        ]
+      }
+    ];
+
+    function toCompactDate(dateText) {
+      return dateText.replaceAll("-", "");
+    }
+
+    function toCompactTime(timeText) {
+      return timeText.replaceAll(":", "");
+    }
+
+    function getServiceName(transactionCode) {
+      return transactionCode.slice(0, -2);
+    }
+
+    function getScreenId(row) {
+      return `${String(100000 + row.no).slice(-6)}0001`;
+    }
+
+    function getGlobalId(row, businessDate, compactTime) {
+      const sequence = String(row.no).padStart(8, "0");
+      const pid = String(row.pid).padStart(6, "0").slice(-6);
+      const store = String(row.store).padStart(4, "0").slice(-4);
+
+      return `${businessDate}${compactTime}${pid}${store}${sequence}`.slice(0, 32);
+    }
+
+    function getDeployTime(row) {
+      const hour = String(9 + (row.no % 8)).padStart(2, "0");
+      const minute = String((row.no * 7) % 60).padStart(2, "0");
+      const second = String((row.no * 11) % 60).padStart(2, "0");
+
+      return `${hour}:${minute}:${second}`;
+    }
+
+    function getDetailRecord(row) {
+      const [dateText, timeText] = row.registeredAt.split(" ");
+      const businessDate = toCompactDate(dateText);
+      const compactTime = toCompactTime(timeText);
+      const serviceName = getServiceName(row.transactionCode);
+
+      return {
+        hostName: row.hostName,
+        errorCode: row.errorCode,
+        errorMessage: row.errorMessage,
+        errorMessageDetail: errorDetailMessages[row.errorCode] || row.errorMessage,
+        transactionCode: row.transactionCode,
+        transactionName: row.transactionName,
+        screenId: getScreenId(row),
+        globalId: getGlobalId(row, businessDate, compactTime),
+        deployDate: dateText,
+        deployTime: getDeployTime(row),
+        pid: row.pid,
+        businessDate,
+        systemDate: businessDate,
+        serviceName,
+        storeNumber: row.store,
+        terminalNumber: String(8100 + row.no),
+        channelType: row.channelType,
+        telegramSentAt: `${businessDate}${compactTime}${row.no % 10}`,
+        operatorEmployee: "20100061(구민준)",
+        loggingTime: `${compactTime}${String(40000 + row.no * 277).slice(-5)}`,
+        partName: row.part,
+        lastActor: row.lastActor,
+        owner: row.owner,
+        errorCodeLocation: `${serviceName}/error-map/${row.errorCode}`,
+        errorOccurrenceInfo: `${row.channelType} 채널 ${row.part}에서 ${row.transactionName} 처리 중 ${row.hostName} PID ${row.pid}에서 ${row.errorCode}가 발생했습니다.`
+      };
+    }
+
+    function createDetailField(detail, field) {
+      const wrapper = document.createElement("dl");
+      const label = document.createElement("dt");
+      const value = document.createElement("dd");
+
+      wrapper.className = "detail-field";
+
+      if (field.wide) {
+        wrapper.classList.add("is-wide");
+      }
+
+      if (field.full) {
+        wrapper.classList.add("is-full");
+      }
+
+      if (field.code) {
+        wrapper.classList.add("is-code");
+      }
+
+      label.textContent = field.label;
+      value.textContent = detail[field.key] ?? "";
+      wrapper.append(label, value);
+
+      return wrapper;
+    }
+
+    function createDetailSection(detail, section) {
+      const sectionElement = document.createElement("section");
+      const title = document.createElement("h3");
+      const grid = document.createElement("div");
+
+      sectionElement.className = "detail-section";
+      title.textContent = section.title;
+      grid.className = "detail-grid";
+
+      section.fields.forEach((field) => {
+        grid.append(createDetailField(detail, field));
+      });
+
+      sectionElement.append(title, grid);
+      return sectionElement;
+    }
+
+    function createDetailMetaToken(label, value, variant = "") {
+      const token = document.createElement("span");
+      const tokenLabel = document.createElement("strong");
+      const tokenValue = document.createElement("span");
+
+      token.className = "detail-meta-token";
+
+      if (variant) {
+        token.classList.add(variant);
+      }
+
+      tokenLabel.textContent = label;
+      tokenValue.textContent = value;
+      token.append(tokenLabel, tokenValue);
+
+      return token;
+    }
+
+    function createDetailChip(label, value) {
+      const chip = document.createElement("span");
+      const chipLabel = document.createElement("strong");
+      const chipValue = document.createElement("span");
+
+      chip.className = "detail-chip";
+      chipLabel.textContent = label;
+      chipValue.textContent = value;
+      chip.append(chipLabel, chipValue);
+
+      return chip;
+    }
+
+    function openDetailModal(row) {
+      const detail = getDetailRecord(row);
+      const fragment = document.createDocumentFragment();
+
+      lastFocusedElement = document.activeElement;
+      detailTitle.textContent = row.transactionName;
+      detailSubtitle.textContent = `${row.hostName} · ${row.registeredAt}`;
+      detailMeta.replaceChildren(
+        createDetailMetaToken("거래코드", row.transactionCode, "is-code"),
+        createDetailMetaToken("에러코드", row.errorCode, "is-danger"),
+        createDetailMetaToken("오류구분", row.errorType)
+      );
+      detailSummary.replaceChildren(
+        createDetailChip("채널", row.channelType),
+        createDetailChip("오류구분", row.errorType),
+        createDetailChip("거래점", row.store),
+        createDetailChip("PID", row.pid)
+      );
+
+      detailSections.forEach((section) => {
+        fragment.append(createDetailSection(detail, section));
+      });
+
+      detailBody.replaceChildren(fragment);
+      detailModal.hidden = false;
+      body.classList.add("detail-open");
+      detailCloseButton.focus();
+    }
+
+    function closeDetailModal() {
+      detailModal.hidden = true;
+      body.classList.remove("detail-open");
+
+      if (lastFocusedElement && document.contains(lastFocusedElement)) {
+        lastFocusedElement.focus();
+      }
+    }
 
     function getSelectionKey(row) {
       return `${row.transactionCode}::${row.errorCode}`;
@@ -795,6 +1294,26 @@
           tableRow.append(createStatusCell(row, column));
         });
 
+        tableRow.className = "is-clickable";
+        tableRow.tabIndex = 0;
+        tableRow.setAttribute("aria-label", `${row.no}번 오류 상세 열기`);
+        tableRow.addEventListener("click", (event) => {
+          if (event.target.closest(".select-control, .row-select")) {
+            return;
+          }
+
+          openDetailModal(row);
+        });
+        tableRow.addEventListener("keydown", (event) => {
+          if (event.target.closest(".select-control, .row-select")) {
+            return;
+          }
+
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openDetailModal(row);
+          }
+        });
         fragment.append(tableRow);
       });
 
@@ -829,6 +1348,20 @@
 
     scrim.addEventListener("click", () => {
       body.classList.remove("nav-open");
+    });
+
+    detailCloseButton.addEventListener("click", closeDetailModal);
+
+    detailModal.addEventListener("click", (event) => {
+      if (event.target === detailModal) {
+        closeDetailModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !detailModal.hidden) {
+        closeDetailModal();
+      }
     });
 
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
