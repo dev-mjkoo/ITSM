@@ -886,6 +886,10 @@
       box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
     }
 
+    .event-detail-dialog {
+      height: min(820px, calc(100vh - 48px));
+    }
+
     .detail-header {
       display: flex;
       align-items: flex-start;
@@ -1006,6 +1010,56 @@
       transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
     }
 
+    .detail-tab.has-help {
+      gap: 6px;
+    }
+
+    .history-help {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #c7d2e1;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #637083;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .history-help::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      z-index: 4;
+      width: 310px;
+      padding: 9px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #ffffff;
+      box-shadow: 0 12px 24px rgba(31, 46, 70, 0.16);
+      color: #26364a;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-align: left;
+      white-space: normal;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -4px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .history-help:hover::after,
+    .history-help:focus-visible::after {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
     .detail-tab[hidden] {
       display: none;
     }
@@ -1120,7 +1174,7 @@
 
     .event-history-table {
       width: 100%;
-      min-width: 720px;
+      min-width: 1360px;
       border-collapse: collapse;
       font-size: 13px;
     }
@@ -1137,6 +1191,11 @@
       background: var(--surface-subtle);
       color: var(--muted);
       font-weight: 800;
+    }
+
+    .event-history-table .history-col-no {
+      width: 64px;
+      text-align: center;
     }
 
     .event-history-table tbody tr:last-child td {
@@ -1895,6 +1954,10 @@
         max-height: calc(100vh - 24px);
       }
 
+      .event-detail-dialog {
+        height: calc(100vh - 24px);
+      }
+
       .settings-dialog {
         max-height: calc(100vh - 24px);
       }
@@ -2388,6 +2451,55 @@
                     <td>이벤트 조회 검색 조건은 필수 입력 항목 없이 선택적으로 입력하며, 조건을 입력하지 않아도 조회할 수 있다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-023</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 상세의 최근내역 탭은 현재 선택한 이벤트를 제외하고 동일한 거래코드 12자리로 발생한 이벤트를 에러코드, 담당자, 중복조건이 달라도 함께 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-024</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 상세의 최근내역 탭은 동일 거래코드 기준 이벤트를 최대 100건까지 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-025</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 상세의 최근내역 탭에는 최근내역 표시 기준을 확인할 수 있는 도움말을 제공한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-026</td>
+                    <td class="req-screen">오류상황판/이벤트관리</td>
+                    <td class="req-category">담당 정보</td>
+                    <td>담당자, 담당셀, 담당부서는 이벤트 발생시점의 서비스담당자 기준으로 확인하여 저장 및 관리한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-027</td>
+                    <td class="req-screen">오류상황판/이벤트관리</td>
+                    <td class="req-category">조치 권한</td>
+                    <td>조치 관련 정보는 같은 셀 소속 인원도 업데이트할 수 있다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-028</td>
+                    <td class="req-screen">오류상황판/이벤트관리</td>
+                    <td class="req-category">담당 변경</td>
+                    <td>이미 등록된 담당자 변경은 ITSM에 직접 요청한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-029</td>
+                    <td class="req-screen">오류상황판/이벤트관리</td>
+                    <td class="req-category">담당 정보</td>
+                    <td>서비스에 대한 부서와 셀 정보는 서비스담당자의 소속 정보로 가져온다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -2492,7 +2604,7 @@
     </div>
   </div>
   <div class="detail-modal" id="event-detail-modal" role="dialog" aria-modal="true" aria-labelledby="event-detail-title" hidden>
-    <div class="detail-dialog">
+    <div class="detail-dialog event-detail-dialog">
       <header class="detail-header">
         <div class="detail-title-block">
           <h2 class="detail-title" id="event-detail-title"></h2>
@@ -2506,7 +2618,10 @@
       </header>
       <div class="detail-tabs" role="tablist" aria-label="이벤트 조회 상세 탭">
         <button class="detail-tab is-active" type="button" role="tab" id="event-detail-tab-info" aria-selected="true" aria-controls="event-detail-info" data-event-detail-tab-target="event-detail-info">상세정보</button>
-        <button class="detail-tab" type="button" role="tab" id="event-detail-tab-history" aria-selected="false" aria-controls="event-detail-history" data-event-detail-tab-target="event-detail-history">최근내역</button>
+        <button class="detail-tab has-help" type="button" role="tab" id="event-detail-tab-history" aria-selected="false" aria-controls="event-detail-history" data-event-detail-tab-target="event-detail-history">
+          <span>최근내역</span>
+          <span class="history-help" aria-label="최근내역 기준" data-tooltip="현재 선택한 이벤트는 제외하고 동일 거래코드 12자리 기준으로 발생한 이벤트를 최대 100건까지 표시합니다.">?</span>
+        </button>
       </div>
       <div class="detail-body detail-tab-panel" id="event-detail-info" role="tabpanel" aria-labelledby="event-detail-tab-info"></div>
       <div class="detail-body detail-tab-panel" id="event-detail-history" role="tabpanel" aria-labelledby="event-detail-tab-history" hidden></div>
@@ -2557,6 +2672,22 @@
       { key: "completedDate", className: "event-col-completed" },
       { key: "businessGroup", className: "event-col-business-group" },
       { key: "business", className: "event-col-business" }
+    ];
+
+    const eventHistoryColumns = [
+      { label: "번호", key: "no", className: "history-col-no" },
+      { label: "발생일시", key: "occurredAt" },
+      { label: "채널유형", key: "channelType" },
+      { label: "조치예정일", key: "plannedDate" },
+      { label: "조치완료일", key: "completedDate" },
+      { label: "조치담당자", key: "owner" },
+      { label: "거래코드", key: "transactionCode" },
+      { label: "거래명", key: "transactionName" },
+      { label: "서비스명", key: "serviceName" },
+      { label: "호스트명", key: "hostName" },
+      { label: "에러코드", key: "errorCode" },
+      { label: "중복건수", key: "duplicateCount" },
+      { label: "조치구분", key: "actionType" }
     ];
 
     const pageMeta = {
@@ -2614,6 +2745,7 @@
     const eventDetailTabPanels = [eventDetailInfo, eventDetailHistory];
     const actionReceiptStates = new Map();
     let statusRows = [];
+    let eventRows = [];
     let lastFocusedElement = null;
     let lastEventDetailFocusedElement = null;
     let lastSettingsFocusedElement = null;
@@ -2819,32 +2951,52 @@
       const thead = document.createElement("thead");
       const tbody = document.createElement("tbody");
       const headerRow = document.createElement("tr");
-      const columns = ["일시", "상태", "처리자", "내용"];
-      const histories = [
-        [row.occurredAt, "이벤트 발생", "시스템", `${row.transactionName} ${row.errorCode} 발생`],
-        [row.recentAppliedAt, "최근 적용", row.owner, row.programDescription],
-        [row.plannedDate || "-", row.actionType ? "조치 예정" : "미조치", row.owner, row.actionType || "조치 접수 전"],
-        [row.completedDate || "-", row.completedDate ? "조치 완료" : row.status, row.owner, row.completedDate ? "조치 완료 처리" : "최근 상태 유지"]
-      ];
+      const historyRows = eventRows
+        .filter((historyRow) => (
+          historyRow.transactionCode === row.transactionCode &&
+          String(historyRow.no) !== String(row.no)
+        ))
+        .sort((left, right) => right.occurredAt.localeCompare(left.occurredAt))
+        .slice(0, 100);
 
       tableWrap.className = "event-history-table-wrap";
       table.className = "event-history-table";
 
-      columns.forEach((column) => {
+      eventHistoryColumns.forEach((column) => {
         const cell = document.createElement("th");
 
         cell.scope = "col";
-        cell.textContent = column;
+        cell.textContent = column.label;
+
+        if (column.className) {
+          cell.className = column.className;
+        }
+
         headerRow.append(cell);
       });
 
-      histories.forEach((history) => {
+      if (historyRows.length === 0) {
+        const emptyRow = document.createElement("tr");
+        const emptyCell = document.createElement("td");
+
+        emptyCell.colSpan = eventHistoryColumns.length;
+        emptyCell.textContent = "최근내역이 없습니다.";
+        emptyRow.append(emptyCell);
+        tbody.append(emptyRow);
+      }
+
+      historyRows.forEach((historyRow) => {
         const rowElement = document.createElement("tr");
 
-        history.forEach((value) => {
+        eventHistoryColumns.forEach((column) => {
           const cell = document.createElement("td");
+          const value = historyRow[column.key];
 
-          cell.textContent = value;
+          if (column.className) {
+            cell.className = column.className;
+          }
+
+          cell.textContent = value || "-";
           rowElement.append(cell);
         });
 
@@ -3755,6 +3907,8 @@
 
     function renderEventResultRows(rows) {
       const fragment = document.createDocumentFragment();
+
+      eventRows = window.EVENT_SEARCH_ROWS || rows;
 
       rows.forEach((row) => {
         const tableRow = document.createElement("tr");
