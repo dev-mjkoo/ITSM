@@ -1227,28 +1227,29 @@
       overflow: auto;
       margin: 0 14px 14px;
       border-top: 0;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      border-left: 1px solid var(--border);
-      background: var(--surface);
+      border-right: 1px solid #b9c3d0;
+      border-bottom: 1px solid #b9c3d0;
+      border-left: 1px solid #b9c3d0;
+      background: #f8fafc;
     }
 
     .data-table {
       width: 100%;
-      min-width: 1980px;
+      min-width: 1900px;
       border-collapse: separate;
       border-spacing: 0;
       table-layout: fixed;
-      font-size: 13px;
-      line-height: 1.35;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.3;
     }
 
     .data-table th,
     .data-table td {
-      height: 42px;
-      padding: 0 12px;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
+      height: 36px;
+      padding: 0 10px;
+      border-bottom: 1px solid #dde4ed;
+      border-right: 1px solid #e3e8ef;
       overflow: hidden;
       text-align: left;
       text-overflow: ellipsis;
@@ -1260,9 +1261,12 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background: var(--surface-subtle);
-      color: #38475a;
-      font-weight: 700;
+      height: 34px;
+      background: #edf2f7;
+      box-shadow: inset 0 -1px 0 #b9c3d0;
+      color: #243044;
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .data-table th:last-child,
@@ -1271,27 +1275,34 @@
     }
 
     .data-table .col-select {
-      width: 56px;
+      position: sticky;
+      left: 0;
+      z-index: 6;
+      width: 50px;
       padding: 0;
       text-align: center;
     }
 
+    .data-table th.col-select {
+      z-index: 16;
+    }
+
     .data-table .col-no {
-      width: 64px;
+      width: 56px;
       text-align: center;
     }
 
     .data-table .col-time {
-      width: 150px;
+      width: 142px;
     }
 
     .data-table .col-stage {
-      width: 100px;
+      width: 88px;
     }
 
     .data-table .col-channel,
     .data-table .col-part {
-      width: 110px;
+      width: 104px;
     }
 
     .data-table .col-actor,
@@ -1309,7 +1320,7 @@
     }
 
     .data-table .col-name {
-      width: 180px;
+      width: 170px;
     }
 
     .data-table .col-message {
@@ -1317,15 +1328,16 @@
     }
 
     .data-table tbody td {
+      background: #ffffff;
       color: #253246;
     }
 
     .data-table tbody tr:nth-child(even) td {
-      background: #fbfcfe;
+      background: #f9fbfd;
     }
 
     .data-table tbody tr:hover td {
-      background: #f7fbff;
+      background: #eef6ff;
     }
 
     .data-table tbody tr.is-clickable {
@@ -1333,15 +1345,27 @@
     }
 
     .data-table tbody tr.is-selected td {
-      background: #eef6ff;
+      background: #e6f1ff;
     }
 
     .data-table tbody tr.is-locked td {
       color: #9aa7b8;
     }
 
+    .data-table tbody tr.is-unhandled td:first-child {
+      box-shadow: inset 4px 0 0 #d73a49, inset -1px 0 0 #b9c3d0;
+    }
+
+    .data-table tbody tr.is-pending-row td:first-child {
+      box-shadow: inset 4px 0 0 #d99a21, inset -1px 0 0 #b9c3d0;
+    }
+
+    .data-table tbody tr.is-excluded-row td:first-child {
+      box-shadow: inset 4px 0 0 #8b98a8, inset -1px 0 0 #b9c3d0;
+    }
+
     .select-control {
-      min-height: 42px;
+      min-height: 36px;
       width: 100%;
       display: inline-flex;
       align-items: center;
@@ -1350,8 +1374,8 @@
     }
 
     .row-select {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       margin: 0;
       accent-color: var(--primary);
       cursor: pointer;
@@ -1372,34 +1396,39 @@
       font-size: 12px;
     }
 
+    .data-table td.col-channel,
+    .data-table td.col-store {
+      font-weight: 800;
+    }
+
+    .data-table td.col-message {
+      color: #5b2630;
+    }
+
     .error-code {
-      display: inline-flex;
-      align-items: center;
+      display: inline-block;
       max-width: 100%;
-      height: 24px;
-      padding: 0 8px;
+      padding: 0;
       overflow: hidden;
-      border: 1px solid #f3b8bf;
-      border-radius: 999px;
-      background: #fff1f3;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: #b4232f;
-      font-weight: 700;
+      font-weight: 900;
       text-overflow: ellipsis;
       white-space: nowrap;
       vertical-align: middle;
     }
 
     .error-type {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 56px;
-      height: 24px;
-      border: 1px solid #c8d3e0;
-      border-radius: 999px;
-      background: #f3f6fa;
-      color: #314154;
-      font-weight: 700;
+      display: inline-block;
+      width: auto;
+      height: auto;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #34445a;
+      font-weight: 900;
       vertical-align: middle;
     }
 
@@ -1408,12 +1437,12 @@
       align-items: center;
       justify-content: center;
       min-width: 64px;
-      height: 24px;
+      height: 22px;
       padding: 0 8px;
-      border: 1px solid #c8d3e0;
-      border-radius: 999px;
-      background: #f3f6fa;
-      color: #314154;
+      border: 1px solid #e09aa1;
+      border-radius: 4px;
+      background: #fff1f3;
+      color: #b4232f;
       font-weight: 800;
       vertical-align: middle;
     }
@@ -1492,7 +1521,20 @@
 
     body.is-dark-mode .data-table th {
       background: #1b2330;
+      box-shadow: inset 0 -1px 0 #3a4658;
       color: #d8e1ee;
+    }
+
+    body.is-dark-mode .data-table tbody tr.is-unhandled td:first-child {
+      box-shadow: inset 4px 0 0 #d73a49, inset -1px 0 0 #3a4658;
+    }
+
+    body.is-dark-mode .data-table tbody tr.is-pending-row td:first-child {
+      box-shadow: inset 4px 0 0 #d99a21, inset -1px 0 0 #3a4658;
+    }
+
+    body.is-dark-mode .data-table tbody tr.is-excluded-row td:first-child {
+      box-shadow: inset 4px 0 0 #8b98a8, inset -1px 0 0 #3a4658;
     }
 
     body.is-dark-mode .data-table tbody td {
@@ -1516,21 +1558,30 @@
       color: #6f7f94;
     }
 
+    body.is-dark-mode .data-table td.col-message {
+      color: #f0b8c0;
+    }
+
     body.is-dark-mode .row-select {
       accent-color: #58a6ff;
     }
 
     body.is-dark-mode .error-code {
-      border-color: #7f343c;
-      background: #351920;
+      border-color: transparent;
+      background: transparent;
       color: #ffb4bd;
     }
 
-    body.is-dark-mode .error-type,
+    body.is-dark-mode .error-type {
+      border-color: transparent;
+      background: transparent;
+      color: #d8e1ee;
+    }
+
     body.is-dark-mode .stage-badge {
-      border-color: #3d4a5d;
-      background: #212a38;
-      color: #d4dfef;
+      border-color: #8f3841;
+      background: #351920;
+      color: #ffb4bd;
     }
 
     body.is-dark-mode .stage-badge.is-pending {
@@ -3623,6 +3674,20 @@
                     <td>오류상황판은 사용자가 라이트모드와 다크모드를 선택할 수 있는 화면모드 전환 기능을 제공한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-035</td>
+                    <td class="req-screen">오류상황판</td>
+                    <td class="req-category">화면 구성</td>
+                    <td>오류상황판은 단순 정보 제공성 테이블이 아니라 실제 운영 오류상황판으로 인지되도록 상태, 오류코드, 미조치 여부, 조회 기준을 시각적으로 구분하고 관제 화면의 밀도와 가시성을 유지한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-036</td>
+                    <td class="req-screen">오류상황판</td>
+                    <td class="req-category">그리드 사용성</td>
+                    <td>오류상황판 그리드는 가로 스크롤 시 이벤트 조치 대상 선택을 유지할 수 있도록 선택 컬럼만 고정하고, 나머지 컬럼은 스크롤 흐름에 따라 이동한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -5372,7 +5437,20 @@
           tableRow.append(createStatusCell(row, column));
         });
 
-        tableRow.className = "is-clickable";
+        tableRow.classList.add("is-clickable");
+
+        if (row.stage === "미조치") {
+          tableRow.classList.add("is-unhandled");
+        }
+
+        if (row.stage === "조치예정") {
+          tableRow.classList.add("is-pending-row");
+        }
+
+        if (row.stage === "제외") {
+          tableRow.classList.add("is-excluded-row");
+        }
+
         tableRow.tabIndex = 0;
         tableRow.setAttribute("aria-label", `${row.no}번 오류 상세 열기`);
         tableRow.addEventListener("click", (event) => {
