@@ -503,6 +503,96 @@
       box-shadow: var(--shadow);
     }
 
+    .problem-register-page {
+      min-height: calc(100vh - var(--header-height) - 48px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .problem-section {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .problem-section:last-child {
+      border-bottom: 0;
+    }
+
+    .problem-section summary {
+      min-height: 58px;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 20px;
+      gap: 12px;
+      align-items: center;
+      padding: 0 18px;
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      transition: background 160ms ease;
+    }
+
+    .problem-section summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .problem-section summary:hover,
+    .problem-section summary:focus-visible {
+      background: var(--surface-subtle);
+    }
+
+    .problem-section-no {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
+    .problem-section-title {
+      min-width: 0;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .problem-section-chevron {
+      width: 9px;
+      height: 9px;
+      justify-self: center;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+
+    .problem-section[open] .problem-section-chevron {
+      border-color: var(--primary);
+      transform: rotate(225deg);
+    }
+
+    .problem-section-body {
+      min-height: 132px;
+      border-top: 1px solid var(--border);
+      background: #fbfcfe;
+      padding: 18px 18px 18px 72px;
+    }
+
+    .problem-section-empty {
+      min-height: 96px;
+    }
+
+    body.is-dark-mode .problem-register-page,
+    body.is-dark-mode .problem-section {
+      background: var(--surface);
+    }
+
+    body.is-dark-mode .problem-section-body {
+      background: #111820;
+    }
+
     .event-page {
       min-height: calc(100vh - var(--header-height) - 48px);
       display: grid;
@@ -2902,6 +2992,7 @@
       }
 
       .workspace,
+      .problem-register-page,
       .event-page,
       .event-rule-page,
       .table-panel,
@@ -3445,7 +3536,78 @@
         </section>
 
         <section class="view" id="problem-register" aria-labelledby="page-heading">
-          <div class="workspace" aria-label="문제관리 등록"></div>
+          <div class="problem-register-page" aria-label="문제관리 등록">
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">01</span>
+                <span class="problem-section-title">기본정보</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">02</span>
+                <span class="problem-section-title">개요</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">03</span>
+                <span class="problem-section-title">서비스영향도</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">04</span>
+                <span class="problem-section-title">문제 발생 원인</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">05</span>
+                <span class="problem-section-title">조치 내용 (시간별)</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">06</span>
+                <span class="problem-section-title">향후 대책</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+            <details class="problem-section">
+              <summary>
+                <span class="problem-section-no">07</span>
+                <span class="problem-section-title">5-why</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-section-empty" aria-hidden="true"></div>
+              </div>
+            </details>
+          </div>
         </section>
 
         <section class="view" id="problem-search" aria-labelledby="page-heading">
@@ -3470,6 +3632,7 @@
                   <option value="오류상황판">오류상황판</option>
                   <option value="이벤트관리">이벤트관리</option>
                   <option value="오류상황판/이벤트관리">오류상황판/이벤트관리</option>
+                  <option value="문제관리 등록">문제관리 등록</option>
                 </select>
               </div>
               <span class="requirements-count" id="requirements-filter-count"></span>
@@ -3737,6 +3900,13 @@
                     <td class="req-category">그리드 사용성</td>
                     <td>오류상황판 그리드는 가로 스크롤 시 이벤트 조치 대상 선택을 유지할 수 있도록 선택 컬럼만 고정하고, 나머지 컬럼은 스크롤 흐름에 따라 이동한다.</td>
                     <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-037</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">접근 권한</td>
+                    <td>문제관리 등록 탭은 상황관리 Cell 인원만 접근하여 볼 수 있도록 한다.</td>
+                    <td class="req-status is-pending">대기</td>
                   </tr>
                 </tbody>
               </table>
