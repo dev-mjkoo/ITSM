@@ -603,15 +603,6 @@
       border-color: #a1acba;
     }
 
-    .problem-section.is-locked summary {
-      cursor: default;
-    }
-
-    .problem-section.is-locked summary:hover,
-    .problem-section.is-locked summary:focus-visible {
-      background: var(--surface);
-    }
-
     .problem-section-no {
       color: var(--muted);
       font-size: 12px;
@@ -669,6 +660,12 @@
       gap: 10px;
     }
 
+    .problem-overview-form {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
     .problem-form-field {
       min-width: 0;
       display: grid;
@@ -677,6 +674,10 @@
 
     .problem-form-field.is-full {
       grid-column: 1 / -1;
+    }
+
+    .problem-form-field.is-span-2 {
+      grid-column: span 2;
     }
 
     .problem-form-field label {
@@ -793,6 +794,40 @@
     body.is-dark-mode .problem-search-button:hover {
       background: #263241;
       color: #79c0ff;
+    }
+
+    .problem-author-dialog {
+      width: min(1180px, calc(100vw - 48px));
+      height: min(840px, calc(100vh - 48px));
+    }
+
+    .problem-author-body {
+      min-height: 0;
+      flex: 1;
+      overflow: auto;
+      padding: 14px;
+      background: #f7f9fc;
+    }
+
+    .problem-author-body .problem-register-page {
+      min-height: 0;
+      border-radius: 8px;
+      box-shadow: none;
+    }
+
+    .problem-author-body .problem-register-toolbar {
+      display: none;
+    }
+
+    .problem-author-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    body.is-dark-mode .problem-author-body {
+      background: #0d1117;
     }
 
     .problem-search-page {
@@ -3318,6 +3353,10 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
+      .problem-overview-form {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
       .board-summary {
         width: 100%;
         justify-content: flex-end;
@@ -3374,8 +3413,13 @@
         padding: 12px;
       }
 
-      .problem-basic-form {
+      .problem-basic-form,
+      .problem-overview-form {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .problem-form-field.is-span-2 {
+        grid-column: 1 / -1;
       }
 
       .problem-section-body {
@@ -3420,6 +3464,15 @@
 
       .detail-dialog {
         max-height: calc(100vh - 24px);
+      }
+
+      .problem-author-dialog {
+        width: 100%;
+        height: calc(100vh - 24px);
+      }
+
+      .problem-author-body {
+        padding: 10px;
       }
 
       .event-detail-dialog {
@@ -3907,7 +3960,7 @@
               </summary>
               <div class="problem-section-body">
                 <div class="problem-basic-form">
-                  <div class="problem-form-field">
+                  <div class="problem-form-field is-span-2">
                     <label for="problem-request-department">요청부서</label>
                     <input id="problem-request-department" type="text" data-problem-request-department readonly>
                   </div>
@@ -3964,9 +4017,45 @@
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-form-field is-full">
-                  <label for="problem-overview">개요</label>
-                  <textarea id="problem-overview" data-problem-followup-field data-problem-overview disabled></textarea>
+                <div class="problem-overview-form">
+                  <div class="problem-form-field is-span-2">
+                    <label for="problem-start-date">발생시작일자</label>
+                    <div class="action-date-control" data-problem-date-control>
+                      <input id="problem-start-date" type="text" data-problem-followup-field data-problem-start-date readonly aria-readonly="true" disabled>
+                      <button class="action-date-button" type="button" aria-label="발생시작일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="발생시작일자" disabled>
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="M7 3.5v3M17 3.5v3M4.5 9.5h15M6.5 5.5h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-form-field is-span-2">
+                    <label for="problem-start-time">발생시작시간</label>
+                    <input id="problem-start-time" type="time" min="00:00" max="23:59" step="60" lang="en-GB" data-problem-followup-field data-problem-start-time disabled>
+                  </div>
+                  <div class="problem-form-field is-span-2">
+                    <label for="problem-end-date">발생종료일자</label>
+                    <div class="action-date-control" data-problem-date-control>
+                      <input id="problem-end-date" type="text" data-problem-followup-field data-problem-end-date readonly aria-readonly="true" disabled>
+                      <button class="action-date-button" type="button" aria-label="발생종료일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="발생종료일자" disabled>
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="M7 3.5v3M17 3.5v3M4.5 9.5h15M6.5 5.5h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-form-field is-span-2">
+                    <label for="problem-end-time">발생종료시간</label>
+                    <input id="problem-end-time" type="time" min="00:00" max="23:59" step="60" lang="en-GB" data-problem-followup-field data-problem-end-time disabled>
+                  </div>
+                  <div class="problem-form-field">
+                    <label for="problem-total-minutes">총 발생시간(분)</label>
+                    <input id="problem-total-minutes" type="text" data-problem-total-minutes readonly aria-readonly="true">
+                  </div>
+                  <div class="problem-form-field is-full">
+                    <label for="problem-error-content">오류내용</label>
+                    <textarea id="problem-error-content" data-problem-followup-field data-problem-error-content disabled></textarea>
+                  </div>
                 </div>
               </div>
             </details>
@@ -4426,7 +4515,7 @@
                     <td class="req-id">REQ-046</td>
                     <td class="req-screen">문제관리 조회</td>
                     <td class="req-category">후속 작성</td>
-                    <td>문제관리 조회에서 작성자 본인 건을 선택하면 문제관리 등록과 동일한 화면으로 이동하되, 기본정보 섹션은 비활성화하고 02~07 섹션은 작성자가 직접 입력할 수 있도록 활성화한다.</td>
+                    <td>문제관리 조회에서 작성자 본인 건을 선택하면 문제관리 등록과 동일한 작성 화면을 팝업으로 표시하되, 기본정보 섹션은 비활성화하고 02~07 섹션은 작성자가 직접 입력할 수 있도록 활성화한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                   <tr>
@@ -4441,6 +4530,27 @@
                     <td class="req-screen">문제관리 조회</td>
                     <td class="req-category">화면 진입</td>
                     <td>문제관리 조회에서 작성자 후속 작성 화면으로 진입하면 02 개요 섹션은 기본으로 펼치고 나머지 섹션은 닫힌 상태로 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-049</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">02 개요</td>
+                    <td>02 개요 섹션은 발생시작시간, 발생종료시간, 총 발생시간, 오류내용을 입력 항목으로 제공하며 발생시작시간과 발생종료시간은 날짜와 시간을 분리해 입력한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-050</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">02 개요</td>
+                    <td>총 발생시간은 발생시작시간과 발생종료시간을 기준으로 분 단위 자동 계산하며 직접 입력할 수 없다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-051</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">후속 작성</td>
+                    <td>작성자 후속 작성 팝업에는 임시저장과 결재요청 버튼을 제공한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                 </tbody>
@@ -4570,6 +4680,26 @@
       <div class="detail-body detail-tab-panel" id="event-detail-history" role="tabpanel" aria-labelledby="event-detail-tab-history" hidden></div>
     </div>
   </div>
+  <div class="detail-modal" id="problem-author-modal" role="dialog" aria-modal="true" aria-labelledby="problem-author-modal-title" hidden>
+    <div class="detail-dialog problem-author-dialog">
+      <header class="detail-header">
+        <div class="detail-title-block">
+          <h2 class="detail-title" id="problem-author-modal-title">문제 후속 작성</h2>
+          <div class="detail-subtitle" id="problem-author-modal-subtitle"></div>
+        </div>
+        <div class="problem-author-header-actions" aria-label="문제 후속 작성 작업">
+          <button class="problem-action-button" type="button" data-problem-author-draft-button>임시저장</button>
+          <button class="problem-action-button is-primary" type="button" data-problem-author-approval-button>결재요청</button>
+        </div>
+        <button class="detail-close" type="button" aria-label="문제 후속 작성 닫기" data-problem-author-close>
+          <svg width="20" height="20" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+      <div class="problem-author-body" id="problem-author-body"></div>
+    </div>
+  </div>
 
   <script src="sample-data.js"></script>
   <script src="event-sample-data.js"></script>
@@ -4697,12 +4827,18 @@
     const eventRuleCount = document.querySelector("#event-rule-count");
     const problemResultBody = document.querySelector("#problem-result-body");
     const problemResultCount = document.querySelector("#problem-result-count");
+    const problemRegisterPage = document.querySelector(".problem-register-page");
     const problemRegisterButton = document.querySelector("[data-problem-register-button]");
     const problemBasicSection = document.querySelector("[data-problem-section='basic']");
     const problemFollowupSections = [...document.querySelectorAll("[data-problem-section]:not([data-problem-section='basic'])")];
     const problemBasicRequiredNote = document.querySelector("[data-problem-basic-required-note]");
     const problemFollowupRequiredNotes = [...document.querySelectorAll("[data-problem-followup-required-note]")];
     const problemFollowupFields = [...document.querySelectorAll("[data-problem-followup-field]")];
+    const problemStartDateInput = document.querySelector("[data-problem-start-date]");
+    const problemStartTimeInput = document.querySelector("[data-problem-start-time]");
+    const problemEndDateInput = document.querySelector("[data-problem-end-date]");
+    const problemEndTimeInput = document.querySelector("[data-problem-end-time]");
+    const problemTotalMinutesInput = document.querySelector("[data-problem-total-minutes]");
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -4762,9 +4898,17 @@
     const eventDetailHistory = document.querySelector("#event-detail-history");
     const eventDetailTabButtons = [...eventDetailModal.querySelectorAll("[data-event-detail-tab-target]")];
     const eventDetailTabPanels = [eventDetailInfo, eventDetailHistory];
+    const problemAuthorModal = document.querySelector("#problem-author-modal");
+    const problemAuthorModalTitle = document.querySelector("#problem-author-modal-title");
+    const problemAuthorModalSubtitle = document.querySelector("#problem-author-modal-subtitle");
+    const problemAuthorBody = document.querySelector("#problem-author-body");
+    const problemAuthorDraftButton = document.querySelector("[data-problem-author-draft-button]");
+    const problemAuthorApprovalButton = document.querySelector("[data-problem-author-approval-button]");
+    const problemAuthorCloseButton = document.querySelector("[data-problem-author-close]");
     const actionReceiptStates = new Map();
     const selectedEventRows = new Set();
     const eventRuleRows = [];
+    const problemRegisterPageHome = document.createComment("problem-register-page-home");
     const problemStorageKey = "itsm.problem.register.rows";
     let statusRows = [];
     let eventRows = [];
@@ -4777,6 +4921,9 @@
     let lastEventDetailFocusedElement = null;
     let lastSettingsFocusedElement = null;
     let lastNoticeFocusedElement = null;
+    let lastProblemAuthorFocusedElement = null;
+
+    problemRegisterPage.before(problemRegisterPageHome);
 
     const errorDetailMessages = {
       BXM30011: "서비스 계층에서 거래 처리 도중 예외가 반환되었습니다. 호스트 로그와 전문 응답 상태 확인이 필요합니다.",
@@ -5329,6 +5476,10 @@
       }
 
       dateButton.addEventListener("click", () => {
+        if (dateButton.disabled || control.disabled) {
+          return;
+        }
+
         if (popover.hidden) {
           openCalendar();
         } else {
@@ -5394,6 +5545,25 @@
           refreshEventSearchResults();
         });
       }
+    }
+
+    function initializeProblemDateControls() {
+      document.querySelectorAll("[data-problem-date-control]").forEach((dateWrapper) => {
+        const control = dateWrapper.querySelector("input");
+        const dateButton = dateWrapper.querySelector(".action-date-button");
+
+        if (!control || !dateButton || dateWrapper.querySelector(".action-date-popover")) {
+          return;
+        }
+
+        dateWrapper.append(createActionDateCalendar({
+          control,
+          dateButton,
+          dateWrapper,
+          label: dateButton.dataset.dateLabel || "발생일자",
+          minDateValue: ""
+        }));
+      });
     }
 
     function normalizeEventRuleValue(value) {
@@ -5589,7 +5759,11 @@
 
     function getProblemFollowupFields() {
       return [
-        { label: "개요", key: "overview", control: document.querySelector("[data-problem-overview]") },
+        { label: "발생시작일자", key: "startDate", control: problemStartDateInput },
+        { label: "발생시작시간", key: "startTime", control: problemStartTimeInput },
+        { label: "발생종료일자", key: "endDate", control: problemEndDateInput },
+        { label: "발생종료시간", key: "endTime", control: problemEndTimeInput },
+        { label: "오류내용", key: "errorContent", control: document.querySelector("[data-problem-error-content]") },
         { label: "서비스영향도", key: "serviceImpact", control: document.querySelector("[data-problem-service-impact]") },
         { label: "문제 발생 원인", key: "cause", control: document.querySelector("[data-problem-cause]") },
         { label: "조치 내용 (시간별)", key: "actionTimeline", control: document.querySelector("[data-problem-action-timeline]") },
@@ -5613,6 +5787,8 @@
       getProblemFollowupFields().forEach(({ key, control }) => {
         control.value = row[key] || "";
       });
+      problemTotalMinutesInput.value = row.totalMinutes || "";
+      updateProblemTotalMinutes();
     }
 
     function setProblemBasicReadonly(isReadonly) {
@@ -5622,6 +5798,61 @@
       });
       problemRequesterSearchButton.disabled = isReadonly;
       problemAuthorSearchButton.disabled = isReadonly;
+    }
+
+    function normalizeProblemTimeValue(value) {
+      const text = String(value || "").trim();
+
+      if (/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(text)) {
+        return text;
+      }
+
+      const digits = text.replace(/\D/g, "");
+
+      if (digits.length < 3) {
+        return text;
+      }
+
+      const normalizedDigits = digits.length === 3 ? `0${digits}` : digits.slice(0, 4);
+      const hour = Number(normalizedDigits.slice(0, 2));
+      const minute = Number(normalizedDigits.slice(2, 4));
+
+      if (hour > 23 || minute > 59) {
+        return text;
+      }
+
+      return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+    }
+
+    function isProblemTimeValue(value) {
+      return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(value || "").trim());
+    }
+
+    function formatProblemTimeControl(control) {
+      control.value = normalizeProblemTimeValue(control.value);
+      updateProblemTotalMinutes();
+    }
+
+    function createProblemDateTime(dateValue, timeValue) {
+      if (!dateValue || !isProblemTimeValue(timeValue)) {
+        return null;
+      }
+
+      const date = new Date(`${dateValue}T${timeValue}`);
+
+      return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    function updateProblemTotalMinutes() {
+      const startDate = createProblemDateTime(problemStartDateInput.value, problemStartTimeInput.value);
+      const endDate = createProblemDateTime(problemEndDateInput.value, problemEndTimeInput.value);
+
+      if (!startDate || !endDate || endDate < startDate) {
+        problemTotalMinutesInput.value = "";
+        return;
+      }
+
+      problemTotalMinutesInput.value = String(Math.round((endDate - startDate) / 60000));
     }
 
     function setProblemSectionDisabled(section, isDisabled) {
@@ -5639,12 +5870,12 @@
 
       problemRegisterMode = isAuthorMode ? "author" : "create";
       activeProblemId = row?.problemId || "";
-      problemRegisterButton.textContent = isAuthorMode ? "저장" : "등록";
+      problemRegisterButton.textContent = isAuthorMode ? "임시저장" : "등록";
 
       problemBasicSection.classList.toggle("is-required", !isAuthorMode);
       problemBasicSection.classList.toggle("is-locked", isAuthorMode);
       problemBasicSection.toggleAttribute("data-problem-locked-section", isAuthorMode);
-      problemBasicSection.setAttribute("aria-disabled", isAuthorMode ? "true" : "false");
+      problemBasicSection.setAttribute("aria-disabled", "false");
       problemBasicRequiredNote.hidden = isAuthorMode;
       problemBasicSection.open = !isAuthorMode;
       problemFollowupRequiredNotes.forEach((note) => {
@@ -5662,6 +5893,9 @@
 
       problemFollowupFields.forEach((control) => {
         control.disabled = !isAuthorMode;
+      });
+      document.querySelectorAll("[data-problem-date-control] .action-date-button").forEach((button) => {
+        button.disabled = !isAuthorMode;
       });
 
       setProblemBasicReadonly(isAuthorMode);
@@ -5699,21 +5933,57 @@
       };
     }
 
-    function saveProblemFollowup() {
-      const missingFields = getProblemFollowupFields()
-        .filter(({ control }) => !String(control.value || "").trim())
-        .map(({ label }) => label);
+    function saveProblemFollowup(options = {}) {
+      const {
+        requireAllFields = true,
+        successMessage = "저장되었습니다"
+      } = options;
+      const scheduleControls = [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput];
+      const hasFullSchedule = scheduleControls.every((control) => String(control.value || "").trim());
 
-      if (missingFields.length > 0) {
-        openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
-        return;
+      if (requireAllFields) {
+        const missingFields = getProblemFollowupFields()
+          .filter(({ control }) => !String(control.value || "").trim())
+          .map(({ label }) => label);
+
+        if (missingFields.length > 0) {
+          openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+          return false;
+        }
+      }
+
+      if (problemStartTimeInput.value.trim()) {
+        formatProblemTimeControl(problemStartTimeInput);
+      }
+
+      if (problemEndTimeInput.value.trim()) {
+        formatProblemTimeControl(problemEndTimeInput);
+      }
+
+      if (
+        (problemStartTimeInput.value.trim() && !isProblemTimeValue(problemStartTimeInput.value)) ||
+        (problemEndTimeInput.value.trim() && !isProblemTimeValue(problemEndTimeInput.value))
+      ) {
+        openEventActionEmptyModal("발생시간은 24시간제 HH:MM 형식으로 입력해주세요");
+        return false;
+      }
+
+      if (requireAllFields || hasFullSchedule) {
+        updateProblemTotalMinutes();
+
+        if (!problemTotalMinutesInput.value) {
+          openEventActionEmptyModal("발생종료시간은 발생시작시간 이후로 입력해주세요");
+          return false;
+        }
+      } else {
+        problemTotalMinutesInput.value = "";
       }
 
       const currentRow = getProblemRows().find((row) => row.problemId === activeProblemId);
 
       if (!currentRow) {
         openEventActionEmptyModal("저장할 문제를 찾을 수 없습니다");
-        return;
+        return false;
       }
 
       const updatedRow = {
@@ -5723,6 +5993,7 @@
       getProblemFollowupFields().forEach(({ key, control }) => {
         updatedRow[key] = control.value.trim();
       });
+      updatedRow.totalMinutes = problemTotalMinutesInput.value;
 
       const storedRows = readStoredProblemRows();
       const storedIndex = storedRows.findIndex((row) => row.problemId === activeProblemId);
@@ -5734,16 +6005,31 @@
       }
 
       if (!writeStoredProblemRows(storedRows)) {
-        return;
+        return false;
       }
 
       renderProblemResultRows(getProblemRows());
-      openEventActionEmptyModal("저장되었습니다");
+      openEventActionEmptyModal(successMessage);
+      return true;
+    }
+
+    function handleProblemAuthorDraftSave() {
+      saveProblemFollowup({
+        requireAllFields: false,
+        successMessage: "임시저장되었습니다"
+      });
+    }
+
+    function handleProblemAuthorApprovalRequest() {
+      saveProblemFollowup({
+        requireAllFields: true,
+        successMessage: "결재요청되었습니다"
+      });
     }
 
     function handleProblemRegister() {
       if (problemRegisterMode === "author") {
-        saveProblemFollowup();
+        handleProblemAuthorDraftSave();
         return;
       }
 
@@ -6486,14 +6772,39 @@
       return cell;
     }
 
+    function openProblemAuthorModal(row) {
+      lastProblemAuthorFocusedElement = document.activeElement;
+      problemAuthorModalTitle.textContent = row.title || "문제 후속 작성";
+      problemAuthorModalSubtitle.textContent = `${row.authorTeam || "-"} · ${row.author || "-"} · ${row.registeredAt || "-"}`;
+      problemAuthorBody.append(problemRegisterPage);
+      setProblemRegisterMode("author", row);
+      problemAuthorModal.hidden = false;
+      body.classList.add("detail-open");
+      problemAuthorCloseButton.focus();
+    }
+
+    function closeProblemAuthorModal() {
+      if (problemAuthorModal.hidden) {
+        return;
+      }
+
+      problemAuthorModal.hidden = true;
+      body.classList.remove("detail-open");
+      problemRegisterPageHome.after(problemRegisterPage);
+      setProblemRegisterMode("create");
+
+      if (lastProblemAuthorFocusedElement && document.contains(lastProblemAuthorFocusedElement)) {
+        lastProblemAuthorFocusedElement.focus();
+      }
+    }
+
     function openProblemAuthorMode(row) {
       if (row.author !== currentProblemAuthor) {
         openEventActionEmptyModal("작성자 본인 건만 작성할 수 있습니다");
         return;
       }
 
-      setProblemRegisterMode("author", row);
-      showView("problem-register");
+      openProblemAuthorModal(row);
     }
 
     function renderProblemResultRows(rows) {
@@ -6669,13 +6980,13 @@
 
     document.querySelectorAll(".problem-section summary").forEach((summary) => {
       summary.addEventListener("click", (event) => {
-        if (summary.closest("[data-problem-disabled-section], [data-problem-locked-section]")) {
+        if (summary.closest("[data-problem-disabled-section]")) {
           event.preventDefault();
         }
       });
 
       summary.addEventListener("keydown", (event) => {
-        if (summary.closest("[data-problem-disabled-section], [data-problem-locked-section]") && (event.key === "Enter" || event.key === " ")) {
+        if (summary.closest("[data-problem-disabled-section]") && (event.key === "Enter" || event.key === " ")) {
           event.preventDefault();
         }
       });
@@ -6732,6 +7043,12 @@
     problemRegisterButton.addEventListener("click", handleProblemRegister);
     problemRequesterSearchButton.addEventListener("click", fillProblemRequester);
     problemAuthorSearchButton.addEventListener("click", fillProblemAuthor);
+    [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput].forEach((control) => {
+      control.addEventListener("input", updateProblemTotalMinutes);
+    });
+    [problemStartTimeInput, problemEndTimeInput].forEach((control) => {
+      control.addEventListener("blur", () => formatProblemTimeControl(control));
+    });
 
     eventActionButton.addEventListener("click", handleEventActionClick);
     eventApprovalButton.addEventListener("click", handleEventApprovalRequestClick);
@@ -6774,6 +7091,15 @@
       }
     });
 
+    problemAuthorDraftButton.addEventListener("click", handleProblemAuthorDraftSave);
+    problemAuthorApprovalButton.addEventListener("click", handleProblemAuthorApprovalRequest);
+    problemAuthorCloseButton.addEventListener("click", closeProblemAuthorModal);
+    problemAuthorModal.addEventListener("click", (event) => {
+      if (event.target === problemAuthorModal) {
+        closeProblemAuthorModal();
+      }
+    });
+
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !eventActionEmptyModal.hidden) {
         closeEventActionEmptyModal();
@@ -6792,10 +7118,16 @@
 
       if (event.key === "Escape" && !eventDetailModal.hidden) {
         closeEventDetailModal();
+        return;
+      }
+
+      if (event.key === "Escape" && !problemAuthorModal.hidden) {
+        closeProblemAuthorModal();
       }
     });
 
     initializeEventSearchControls();
+    initializeProblemDateControls();
     setProblemRegisterMode("create");
     renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
