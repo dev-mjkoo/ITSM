@@ -512,6 +512,49 @@
       overflow: hidden;
     }
 
+    .problem-register-toolbar {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .problem-action-button {
+      min-width: 82px;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 850;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .problem-action-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .problem-action-button.is-primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .problem-action-button.is-primary:hover {
+      border-color: var(--primary-strong);
+      background: var(--primary-strong);
+    }
+
     .problem-section {
       border-bottom: 1px solid var(--border);
       background: var(--surface);
@@ -544,6 +587,22 @@
       background: var(--surface-subtle);
     }
 
+    .problem-section.is-disabled summary {
+      cursor: not-allowed;
+    }
+
+    .problem-section.is-disabled summary:hover,
+    .problem-section.is-disabled summary:focus-visible {
+      background: var(--surface);
+    }
+
+    .problem-section.is-disabled .problem-section-no,
+    .problem-section.is-disabled .problem-section-title,
+    .problem-section.is-disabled .problem-section-chevron {
+      color: #a1acba;
+      border-color: #a1acba;
+    }
+
     .problem-section-no {
       color: var(--muted);
       font-size: 12px;
@@ -556,6 +615,17 @@
       color: var(--text);
       font-size: 15px;
       font-weight: 850;
+    }
+
+    .problem-section.is-required summary {
+      grid-template-columns: 42px minmax(0, 1fr) auto 20px;
+    }
+
+    .problem-required-note {
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
     }
 
     .problem-section-chevron {
@@ -574,10 +644,94 @@
     }
 
     .problem-section-body {
-      min-height: 132px;
+      min-height: 0;
       border-top: 1px solid var(--border);
       background: #fbfcfe;
-      padding: 18px 18px 18px 72px;
+      padding: 14px 16px;
+    }
+
+    .problem-basic-form {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .problem-form-field {
+      min-width: 0;
+      display: grid;
+      gap: 4px;
+    }
+
+    .problem-form-field.is-full {
+      grid-column: 1 / -1;
+    }
+
+    .problem-form-field label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .problem-form-field input,
+    .problem-form-field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 12px;
+      outline: none;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+
+    .problem-form-field input {
+      height: 30px;
+      padding: 0 8px;
+    }
+
+    .problem-form-field textarea {
+      min-height: 86px;
+      max-height: 180px;
+      padding: 8px;
+      line-height: 1.45;
+      overflow: auto;
+      resize: vertical;
+    }
+
+    .problem-form-field input:focus,
+    .problem-form-field textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .problem-form-field input[readonly] {
+      background: #f4f7fb;
+      color: #526071;
+      cursor: default;
+    }
+
+    .problem-search-control {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 32px;
+      gap: 4px;
+    }
+
+    .problem-search-button {
+      width: 32px;
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #2f3d52;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .problem-search-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+      color: var(--primary);
     }
 
     .problem-section-empty {
@@ -585,12 +739,182 @@
     }
 
     body.is-dark-mode .problem-register-page,
+    body.is-dark-mode .problem-register-toolbar,
     body.is-dark-mode .problem-section {
       background: var(--surface);
     }
 
+    body.is-dark-mode .problem-action-button {
+      border-color: var(--border);
+      background: #1f2630;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-action-button:hover {
+      background: #263241;
+    }
+
+    body.is-dark-mode .problem-action-button.is-primary {
+      border-color: #2f81f7;
+      background: #2f81f7;
+      color: #ffffff;
+    }
+
     body.is-dark-mode .problem-section-body {
       background: #111820;
+    }
+
+    body.is-dark-mode .problem-form-field input,
+    body.is-dark-mode .problem-form-field textarea,
+    body.is-dark-mode .problem-search-button {
+      border-color: var(--border);
+      background: #161b22;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-form-field input[readonly] {
+      background: #111820;
+      color: #aebbd0;
+    }
+
+    body.is-dark-mode .problem-search-button:hover {
+      background: #263241;
+      color: #79c0ff;
+    }
+
+    .problem-search-page {
+      min-height: calc(100vh - var(--header-height) - 48px);
+      display: grid;
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    .problem-result-panel {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .problem-result-header {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 14px;
+    }
+
+    .problem-result-title {
+      margin: 0;
+      color: #26364a;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .problem-result-count {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .problem-result-divider {
+      margin: 0 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .problem-result-scroll {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      margin: 0 14px 14px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .problem-result-table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .problem-result-table th,
+    .problem-result-table td {
+      height: 34px;
+      padding: 0 8px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .problem-result-table th {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--surface-subtle);
+      color: #38475a;
+      font-weight: 700;
+    }
+
+    .problem-result-table th:last-child,
+    .problem-result-table td:last-child {
+      border-right: 0;
+    }
+
+    .problem-result-table tbody td {
+      color: #253246;
+    }
+
+    .problem-result-table tbody tr:nth-child(even) td {
+      background: #fbfcfe;
+    }
+
+    .problem-result-table tbody tr:hover td {
+      background: #f7fbff;
+    }
+
+    .problem-result-table .problem-col-no {
+      width: 56px;
+      text-align: center;
+    }
+
+    .problem-result-table .problem-col-title {
+      width: 360px;
+    }
+
+    .problem-result-table .problem-col-author-department {
+      width: 180px;
+    }
+
+    .problem-result-table .problem-col-author-team {
+      width: 150px;
+    }
+
+    .problem-result-table .problem-col-author {
+      width: 110px;
+    }
+
+    .problem-result-table .problem-col-registered-at {
+      width: 170px;
+    }
+
+    .problem-result-table td.problem-col-registered-at {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
     }
 
     .event-page {
@@ -2969,6 +3293,10 @@
         padding: 10px 14px 8px;
       }
 
+      .problem-basic-form {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
       .board-summary {
         width: 100%;
         justify-content: flex-end;
@@ -2993,6 +3321,7 @@
 
       .workspace,
       .problem-register-page,
+      .problem-search-page,
       .event-page,
       .event-rule-page,
       .table-panel,
@@ -3021,6 +3350,14 @@
       .event-search-grid,
       .event-rule-form {
         grid-template-columns: minmax(0, 1fr);
+        padding: 12px;
+      }
+
+      .problem-basic-form {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .problem-section-body {
         padding: 12px;
       }
 
@@ -3537,17 +3874,68 @@
 
         <section class="view" id="problem-register" aria-labelledby="page-heading">
           <div class="problem-register-page" aria-label="문제관리 등록">
-            <details class="problem-section">
+            <div class="problem-register-toolbar" aria-label="문제관리 등록 작업">
+              <button class="problem-action-button is-primary" type="button" data-problem-register-button>등록</button>
+            </div>
+            <details class="problem-section is-required" open>
               <summary>
                 <span class="problem-section-no">01</span>
                 <span class="problem-section-title">기본정보</span>
+                <span class="problem-required-note">* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-basic-form">
+                  <div class="problem-form-field">
+                    <label for="problem-request-department">요청부서</label>
+                    <input id="problem-request-department" type="text" data-problem-request-department readonly>
+                  </div>
+                  <div class="problem-form-field">
+                    <label for="problem-request-team">요청팀</label>
+                    <input id="problem-request-team" type="text" data-problem-request-team readonly>
+                  </div>
+                  <div class="problem-form-field">
+                    <label for="problem-requester">요청자</label>
+                    <div class="problem-search-control">
+                      <input id="problem-requester" type="text" data-problem-requester readonly>
+                      <button class="problem-search-button" type="button" data-problem-requester-search aria-label="요청자 검색">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-form-field">
+                    <label for="problem-author-department">작성부서</label>
+                    <input id="problem-author-department" type="text" data-problem-author-department readonly>
+                  </div>
+                  <div class="problem-form-field">
+                    <label for="problem-author-team">작성팀</label>
+                    <input id="problem-author-team" type="text" data-problem-author-team readonly>
+                  </div>
+                  <div class="problem-form-field">
+                    <label for="problem-author">작성자</label>
+                    <div class="problem-search-control">
+                      <input id="problem-author" type="text" data-problem-author readonly>
+                      <button class="problem-search-button" type="button" data-problem-author-search aria-label="작성자 검색">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-form-field is-full">
+                    <label for="problem-title">제목</label>
+                    <input id="problem-title" type="text">
+                  </div>
+                  <div class="problem-form-field is-full">
+                    <label for="problem-content">내용</label>
+                    <textarea id="problem-content"></textarea>
+                  </div>
+                </div>
               </div>
             </details>
-            <details class="problem-section">
+            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">02</span>
                 <span class="problem-section-title">개요</span>
@@ -3557,7 +3945,7 @@
                 <div class="problem-section-empty" aria-hidden="true"></div>
               </div>
             </details>
-            <details class="problem-section">
+            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">03</span>
                 <span class="problem-section-title">서비스영향도</span>
@@ -3567,7 +3955,7 @@
                 <div class="problem-section-empty" aria-hidden="true"></div>
               </div>
             </details>
-            <details class="problem-section">
+            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">04</span>
                 <span class="problem-section-title">문제 발생 원인</span>
@@ -3577,7 +3965,7 @@
                 <div class="problem-section-empty" aria-hidden="true"></div>
               </div>
             </details>
-            <details class="problem-section">
+            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">05</span>
                 <span class="problem-section-title">조치 내용 (시간별)</span>
@@ -3587,7 +3975,7 @@
                 <div class="problem-section-empty" aria-hidden="true"></div>
               </div>
             </details>
-            <details class="problem-section">
+            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">06</span>
                 <span class="problem-section-title">향후 대책</span>
@@ -3597,7 +3985,7 @@
                 <div class="problem-section-empty" aria-hidden="true"></div>
               </div>
             </details>
-            <details class="problem-section">
+            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">07</span>
                 <span class="problem-section-title">5-why</span>
@@ -3611,7 +3999,30 @@
         </section>
 
         <section class="view" id="problem-search" aria-labelledby="page-heading">
-          <div class="workspace" aria-label="문제관리 조회"></div>
+          <div class="problem-search-page">
+            <section class="problem-result-panel" aria-label="문제관리 조회 결과">
+              <div class="problem-result-header">
+                <h2 class="problem-result-title">등록 문제 목록</h2>
+                <span class="problem-result-count" id="problem-result-count">0건</span>
+              </div>
+              <div class="problem-result-divider" aria-hidden="true"></div>
+              <div class="problem-result-scroll">
+                <table class="problem-result-table" aria-label="문제관리 조회 결과 목록">
+                  <thead>
+                    <tr>
+                      <th class="problem-col-no" scope="col">NO</th>
+                      <th class="problem-col-title" scope="col">제목</th>
+                      <th class="problem-col-author-department" scope="col">작성부서</th>
+                      <th class="problem-col-author-team" scope="col">작성팀</th>
+                      <th class="problem-col-author" scope="col">작성자</th>
+                      <th class="problem-col-registered-at" scope="col">등록일시</th>
+                    </tr>
+                  </thead>
+                  <tbody id="problem-result-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
         </section>
 
         <section class="view" id="incident-register" aria-labelledby="page-heading">
@@ -3633,6 +4044,7 @@
                   <option value="이벤트관리">이벤트관리</option>
                   <option value="오류상황판/이벤트관리">오류상황판/이벤트관리</option>
                   <option value="문제관리 등록">문제관리 등록</option>
+                  <option value="공통">공통</option>
                 </select>
               </div>
               <span class="requirements-count" id="requirements-filter-count"></span>
@@ -3908,6 +4320,62 @@
                     <td>문제관리 등록 탭은 상황관리 Cell 인원만 접근하여 볼 수 있도록 한다.</td>
                     <td class="req-status is-pending">대기</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-038</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">등록 흐름</td>
+                    <td>문제관리 등록 탭에서는 상황관리 Cell 인원이 기본정보까지 입력한 뒤 등록 버튼으로 문제를 등록하며, 등록 이후 별도의 결재요청 단계는 제공하지 않는다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-039</td>
+                    <td class="req-screen">공통</td>
+                    <td class="req-category">화면 구성</td>
+                    <td>문제관리, 장애관리 등 업무 입력 화면은 필드 크기와 간격을 촘촘하게 구성하고, 입력 라벨은 과도하게 굵게 강조하지 않는다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-040</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">기본정보</td>
+                    <td>기본정보 섹션의 요청부서, 요청팀, 작성부서, 작성팀은 직접 입력할 수 없으며 요청자 또는 작성자 선택 시 자동 입력한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-041</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">화면 진입</td>
+                    <td>문제관리 등록 탭에 진입하면 기본정보 섹션은 기본으로 펼쳐진 상태로 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-042</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">등록 검증</td>
+                    <td>등록 버튼 실행 시 기본정보 섹션의 필드 중 하나라도 입력되지 않으면 등록하지 않고 입력 안내를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-043</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">등록 완료</td>
+                    <td>문제 등록이 완료되면 문제관리 등록 화면의 입력값을 초기화한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-044</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">작성 권한</td>
+                    <td>문제관리 등록 탭에서는 02~07 섹션을 비활성화하며, 해당 섹션은 작성자가 후속 작성 단계에서 입력한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-045</td>
+                    <td class="req-screen">문제관리 등록</td>
+                    <td class="req-category">등록 알림</td>
+                    <td>문제 등록이 완료되면 작성자에게 SWING 메일을 발송한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -4038,6 +4506,7 @@
 
   <script src="sample-data.js"></script>
   <script src="event-sample-data.js"></script>
+  <script src="problem-data.js"></script>
   <script>
     const statusBoardColumns = [
       { key: "select", className: "col-select", selectable: true },
@@ -4098,6 +4567,15 @@
       { label: "조치구분", key: "actionType" }
     ];
 
+    const problemSearchColumns = [
+      { key: "no", className: "problem-col-no" },
+      { key: "title", className: "problem-col-title" },
+      { key: "authorDepartment", className: "problem-col-author-department" },
+      { key: "authorTeam", className: "problem-col-author-team" },
+      { key: "author", className: "problem-col-author" },
+      { key: "registeredAt", className: "problem-col-registered-at" }
+    ];
+
     const currentUserProfile = {
       cell: "디지털수신셀",
       employee: "20100061(구민준)"
@@ -4149,6 +4627,19 @@
     const eventRuleFeedback = document.querySelector("#event-rule-feedback");
     const eventRuleBody = document.querySelector("#event-rule-body");
     const eventRuleCount = document.querySelector("#event-rule-count");
+    const problemResultBody = document.querySelector("#problem-result-body");
+    const problemResultCount = document.querySelector("#problem-result-count");
+    const problemRegisterButton = document.querySelector("[data-problem-register-button]");
+    const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
+    const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
+    const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
+    const problemRequestTeamInput = document.querySelector("[data-problem-request-team]");
+    const problemRequesterInput = document.querySelector("[data-problem-requester]");
+    const problemAuthorDepartmentInput = document.querySelector("[data-problem-author-department]");
+    const problemAuthorTeamInput = document.querySelector("[data-problem-author-team]");
+    const problemAuthorInput = document.querySelector("[data-problem-author]");
+    const problemTitleInput = document.querySelector("#problem-title");
+    const problemContentInput = document.querySelector("#problem-content");
     const requirementsScreenFilter = document.querySelector("#requirements-screen-filter");
     const requirementsFilterCount = document.querySelector("#requirements-filter-count");
     const requirementRows = [...document.querySelectorAll(".requirements-table tbody tr")];
@@ -4201,8 +4692,10 @@
     const actionReceiptStates = new Map();
     const selectedEventRows = new Set();
     const eventRuleRows = [];
+    const problemStorageKey = "itsm.problem.register.rows";
     let statusRows = [];
     let eventRows = [];
+    let problemRows = [];
     let eventRuleSequence = 0;
     let lastStatusUpdatedAt = new Date();
     let lastFocusedElement = null;
@@ -4842,6 +5335,45 @@
       return `${year}-${month}-${day} ${hour}:${minute}`;
     }
 
+    function formatProblemRegisteredAt(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hour = String(date.getHours()).padStart(2, "0");
+      const minute = String(date.getMinutes()).padStart(2, "0");
+      const second = String(date.getSeconds()).padStart(2, "0");
+
+      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    }
+
+    function readStoredProblemRows() {
+      try {
+        const rawRows = window.localStorage.getItem(problemStorageKey);
+        const parsedRows = JSON.parse(rawRows || "[]");
+
+        return Array.isArray(parsedRows) ? parsedRows : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function writeStoredProblemRows(rows) {
+      try {
+        window.localStorage.setItem(problemStorageKey, JSON.stringify(rows));
+        return true;
+      } catch {
+        openEventActionEmptyModal("브라우저 저장소에 문제 등록 데이터를 저장할 수 없습니다");
+        return false;
+      }
+    }
+
+    function getProblemRows() {
+      return [
+        ...readStoredProblemRows(),
+        ...(window.PROBLEM_REGISTER_ROWS || [])
+      ];
+    }
+
     function setEventRuleFeedback(message, isError = false) {
       eventRuleFeedback.textContent = message;
       eventRuleFeedback.classList.toggle("is-error", isError);
@@ -4963,6 +5495,74 @@
       eventRuleForm.reset();
       renderEventRuleRows();
       setEventRuleFeedback("룰이 등록되었습니다. 기존 이벤트 조회 데이터는 유지되고 다음 전일자 취합부터 제외됩니다.");
+    }
+
+    function getProblemBasicFields() {
+      return [
+        { label: "요청부서", control: problemRequestDepartmentInput },
+        { label: "요청팀", control: problemRequestTeamInput },
+        { label: "요청자", control: problemRequesterInput },
+        { label: "작성부서", control: problemAuthorDepartmentInput },
+        { label: "작성팀", control: problemAuthorTeamInput },
+        { label: "작성자", control: problemAuthorInput },
+        { label: "제목", control: problemTitleInput },
+        { label: "내용", control: problemContentInput }
+      ];
+    }
+
+    function resetProblemRegisterForm() {
+      getProblemBasicFields().forEach(({ control }) => {
+        control.value = "";
+      });
+    }
+
+    function createProblemRow() {
+      return {
+        problemId: `PBM-${Date.now()}`,
+        registeredAt: formatProblemRegisteredAt(),
+        requestDepartment: problemRequestDepartmentInput.value,
+        requestTeam: problemRequestTeamInput.value,
+        requester: problemRequesterInput.value,
+        authorDepartment: problemAuthorDepartmentInput.value,
+        authorTeam: problemAuthorTeamInput.value,
+        author: problemAuthorInput.value,
+        title: problemTitleInput.value.trim(),
+        content: problemContentInput.value.trim()
+      };
+    }
+
+    function handleProblemRegister() {
+      const missingFields = getProblemBasicFields()
+        .filter(({ control }) => !String(control.value || "").trim())
+        .map(({ label }) => label);
+
+      if (missingFields.length > 0) {
+        openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+        return;
+      }
+
+      const storedRows = readStoredProblemRows();
+
+      storedRows.unshift(createProblemRow());
+      if (!writeStoredProblemRows(storedRows)) {
+        return;
+      }
+
+      renderProblemResultRows(getProblemRows());
+      resetProblemRegisterForm();
+      openEventActionEmptyModal("등록되었습니다(SWING메일로도 전달됩니다)");
+    }
+
+    function fillProblemRequester() {
+      problemRequesterInput.value = "구민준";
+      problemRequestDepartmentInput.value = "Tech운영부";
+      problemRequestTeamInput.value = "상황관리Cell";
+    }
+
+    function fillProblemAuthor() {
+      problemAuthorInput.value = "홍길동";
+      problemAuthorDepartmentInput.value = "디지털서비스개발부";
+      problemAuthorTeamInput.value = "디지털수신Cell";
     }
 
     function createActionInputField(config) {
@@ -5660,6 +6260,50 @@
       eventResultBody.replaceChildren(fragment);
     }
 
+    function createProblemResultCell(row, column) {
+      const cell = document.createElement("td");
+      const value = column.key === "no" ? row.no : row[column.key] ?? "";
+
+      cell.className = column.className;
+      cell.title = String(value);
+      cell.textContent = value;
+
+      return cell;
+    }
+
+    function renderProblemResultRows(rows) {
+      const fragment = document.createDocumentFragment();
+
+      problemRows = rows.map((row, index) => ({
+        ...row,
+        no: index + 1
+      }));
+      problemResultCount.textContent = `${problemRows.length}건`;
+
+      if (problemRows.length === 0) {
+        const emptyRow = document.createElement("tr");
+        const emptyCell = document.createElement("td");
+
+        emptyCell.colSpan = problemSearchColumns.length;
+        emptyCell.textContent = "등록된 문제가 없습니다.";
+        emptyRow.append(emptyCell);
+        problemResultBody.replaceChildren(emptyRow);
+        return;
+      }
+
+      problemRows.forEach((row) => {
+        const tableRow = document.createElement("tr");
+
+        problemSearchColumns.forEach((column) => {
+          tableRow.append(createProblemResultCell(row, column));
+        });
+
+        fragment.append(tableRow);
+      });
+
+      problemResultBody.replaceChildren(fragment);
+    }
+
     function renderStatusBoardRows(rows) {
       const fragment = document.createDocumentFragment();
 
@@ -5776,6 +6420,18 @@
       button.addEventListener("click", () => showView(button.dataset.viewTarget));
     });
 
+    document.querySelectorAll("[data-problem-disabled-section] summary").forEach((summary) => {
+      summary.addEventListener("click", (event) => {
+        event.preventDefault();
+      });
+
+      summary.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+        }
+      });
+    });
+
     menuButton.addEventListener("click", () => {
       body.classList.toggle("nav-open");
     });
@@ -5823,6 +6479,10 @@
     eventRuleForm.addEventListener("reset", () => {
       window.setTimeout(() => setEventRuleFeedback(""), 0);
     });
+
+    problemRegisterButton.addEventListener("click", handleProblemRegister);
+    problemRequesterSearchButton.addEventListener("click", fillProblemRequester);
+    problemAuthorSearchButton.addEventListener("click", fillProblemAuthor);
 
     eventActionButton.addEventListener("click", handleEventActionClick);
     eventApprovalButton.addEventListener("click", handleEventApprovalRequestClick);
@@ -5889,6 +6549,7 @@
     initializeEventSearchControls();
     renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
+    renderProblemResultRows(getProblemRows());
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
     applyRequirementsFilter();
     updateCurrentClock();

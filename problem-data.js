@@ -1,0 +1,1 @@
+window.PROBLEM_REGISTER_ROWS = [];
