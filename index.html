@@ -603,6 +603,15 @@
       border-color: #a1acba;
     }
 
+    .problem-section.is-locked summary {
+      cursor: default;
+    }
+
+    .problem-section.is-locked summary:hover,
+    .problem-section.is-locked summary:focus-visible {
+      background: var(--surface);
+    }
+
     .problem-section-no {
       color: var(--muted);
       font-size: 12px;
@@ -626,6 +635,10 @@
       font-size: 12px;
       font-weight: 500;
       white-space: nowrap;
+    }
+
+    .problem-required-note[hidden] {
+      display: none;
     }
 
     .problem-section-chevron {
@@ -885,6 +898,14 @@
 
     .problem-result-table tbody tr:hover td {
       background: #f7fbff;
+    }
+
+    .problem-result-table tbody tr.is-clickable {
+      cursor: pointer;
+    }
+
+    .problem-result-table tbody tr.is-not-owned td {
+      color: #8b98a9;
     }
 
     .problem-result-table .problem-col-no {
@@ -3877,11 +3898,11 @@
             <div class="problem-register-toolbar" aria-label="문제관리 등록 작업">
               <button class="problem-action-button is-primary" type="button" data-problem-register-button>등록</button>
             </div>
-            <details class="problem-section is-required" open>
+            <details class="problem-section is-required" data-problem-section="basic" open>
               <summary>
                 <span class="problem-section-no">01</span>
                 <span class="problem-section-title">기본정보</span>
-                <span class="problem-required-note">* 필수입력 항목입니다</span>
+                <span class="problem-required-note" data-problem-basic-required-note>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
@@ -3935,64 +3956,88 @@
                 </div>
               </div>
             </details>
-            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
+            <details class="problem-section is-disabled" data-problem-section="overview" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">02</span>
                 <span class="problem-section-title">개요</span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-form-field is-full">
+                  <label for="problem-overview">개요</label>
+                  <textarea id="problem-overview" data-problem-followup-field data-problem-overview disabled></textarea>
+                </div>
               </div>
             </details>
-            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
+            <details class="problem-section is-disabled" data-problem-section="serviceImpact" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">03</span>
                 <span class="problem-section-title">서비스영향도</span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-form-field is-full">
+                  <label for="problem-service-impact">서비스영향도</label>
+                  <textarea id="problem-service-impact" data-problem-followup-field data-problem-service-impact disabled></textarea>
+                </div>
               </div>
             </details>
-            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
+            <details class="problem-section is-disabled" data-problem-section="cause" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">04</span>
                 <span class="problem-section-title">문제 발생 원인</span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-form-field is-full">
+                  <label for="problem-cause">문제 발생 원인</label>
+                  <textarea id="problem-cause" data-problem-followup-field data-problem-cause disabled></textarea>
+                </div>
               </div>
             </details>
-            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
+            <details class="problem-section is-disabled" data-problem-section="actionTimeline" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">05</span>
                 <span class="problem-section-title">조치 내용 (시간별)</span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-form-field is-full">
+                  <label for="problem-action-timeline">조치 내용 (시간별)</label>
+                  <textarea id="problem-action-timeline" data-problem-followup-field data-problem-action-timeline disabled></textarea>
+                </div>
               </div>
             </details>
-            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
+            <details class="problem-section is-disabled" data-problem-section="futurePlan" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">06</span>
                 <span class="problem-section-title">향후 대책</span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-form-field is-full">
+                  <label for="problem-future-plan">향후 대책</label>
+                  <textarea id="problem-future-plan" data-problem-followup-field data-problem-future-plan disabled></textarea>
+                </div>
               </div>
             </details>
-            <details class="problem-section is-disabled" data-problem-disabled-section aria-disabled="true">
+            <details class="problem-section is-disabled" data-problem-section="fiveWhy" data-problem-disabled-section aria-disabled="true">
               <summary>
                 <span class="problem-section-no">07</span>
                 <span class="problem-section-title">5-why</span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-section-empty" aria-hidden="true"></div>
+                <div class="problem-form-field is-full">
+                  <label for="problem-five-why">5-why</label>
+                  <textarea id="problem-five-why" data-problem-followup-field data-problem-five-why disabled></textarea>
+                </div>
               </div>
             </details>
           </div>
@@ -4044,6 +4089,7 @@
                   <option value="이벤트관리">이벤트관리</option>
                   <option value="오류상황판/이벤트관리">오류상황판/이벤트관리</option>
                   <option value="문제관리 등록">문제관리 등록</option>
+                  <option value="문제관리 조회">문제관리 조회</option>
                   <option value="공통">공통</option>
                 </select>
               </div>
@@ -4376,6 +4422,27 @@
                     <td>문제 등록이 완료되면 작성자에게 SWING 메일을 발송한다.</td>
                     <td class="req-status is-pending">대기</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-046</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">후속 작성</td>
+                    <td>문제관리 조회에서 작성자 본인 건을 선택하면 문제관리 등록과 동일한 화면으로 이동하되, 기본정보 섹션은 비활성화하고 02~07 섹션은 작성자가 직접 입력할 수 있도록 활성화한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-047</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">필수 입력</td>
+                    <td>문제관리 조회에서 작성자 후속 작성 화면으로 진입한 경우 02~07 섹션에는 필수입력 항목 안내를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-048</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">화면 진입</td>
+                    <td>문제관리 조회에서 작성자 후속 작성 화면으로 진입하면 02 개요 섹션은 기본으로 펼치고 나머지 섹션은 닫힌 상태로 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -4580,6 +4647,7 @@
       cell: "디지털수신셀",
       employee: "20100061(구민준)"
     };
+    const currentProblemAuthor = "홍길동";
 
     const pageMeta = {
       "status-board": {
@@ -4630,6 +4698,11 @@
     const problemResultBody = document.querySelector("#problem-result-body");
     const problemResultCount = document.querySelector("#problem-result-count");
     const problemRegisterButton = document.querySelector("[data-problem-register-button]");
+    const problemBasicSection = document.querySelector("[data-problem-section='basic']");
+    const problemFollowupSections = [...document.querySelectorAll("[data-problem-section]:not([data-problem-section='basic'])")];
+    const problemBasicRequiredNote = document.querySelector("[data-problem-basic-required-note]");
+    const problemFollowupRequiredNotes = [...document.querySelectorAll("[data-problem-followup-required-note]")];
+    const problemFollowupFields = [...document.querySelectorAll("[data-problem-followup-field]")];
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -4696,6 +4769,8 @@
     let statusRows = [];
     let eventRows = [];
     let problemRows = [];
+    let problemRegisterMode = "create";
+    let activeProblemId = "";
     let eventRuleSequence = 0;
     let lastStatusUpdatedAt = new Date();
     let lastFocusedElement = null;
@@ -5368,10 +5443,12 @@
     }
 
     function getProblemRows() {
-      return [
-        ...readStoredProblemRows(),
-        ...(window.PROBLEM_REGISTER_ROWS || [])
-      ];
+      const storedRows = readStoredProblemRows();
+      const storedIds = new Set(storedRows.map((row) => row.problemId));
+      const initialRows = (window.PROBLEM_REGISTER_ROWS || [])
+        .filter((row) => !storedIds.has(row.problemId));
+
+      return [...storedRows, ...initialRows];
     }
 
     function setEventRuleFeedback(message, isError = false) {
@@ -5510,8 +5587,99 @@
       ];
     }
 
+    function getProblemFollowupFields() {
+      return [
+        { label: "개요", key: "overview", control: document.querySelector("[data-problem-overview]") },
+        { label: "서비스영향도", key: "serviceImpact", control: document.querySelector("[data-problem-service-impact]") },
+        { label: "문제 발생 원인", key: "cause", control: document.querySelector("[data-problem-cause]") },
+        { label: "조치 내용 (시간별)", key: "actionTimeline", control: document.querySelector("[data-problem-action-timeline]") },
+        { label: "향후 대책", key: "futurePlan", control: document.querySelector("[data-problem-future-plan]") },
+        { label: "5-why", key: "fiveWhy", control: document.querySelector("[data-problem-five-why]") }
+      ];
+    }
+
+    function setProblemBasicValues(row = {}) {
+      problemRequestDepartmentInput.value = row.requestDepartment || "";
+      problemRequestTeamInput.value = row.requestTeam || "";
+      problemRequesterInput.value = row.requester || "";
+      problemAuthorDepartmentInput.value = row.authorDepartment || "";
+      problemAuthorTeamInput.value = row.authorTeam || "";
+      problemAuthorInput.value = row.author || "";
+      problemTitleInput.value = row.title || "";
+      problemContentInput.value = row.content || "";
+    }
+
+    function setProblemFollowupValues(row = {}) {
+      getProblemFollowupFields().forEach(({ key, control }) => {
+        control.value = row[key] || "";
+      });
+    }
+
+    function setProblemBasicReadonly(isReadonly) {
+      [problemTitleInput, problemContentInput].forEach((control) => {
+        control.readOnly = isReadonly;
+        control.setAttribute("aria-readonly", isReadonly ? "true" : "false");
+      });
+      problemRequesterSearchButton.disabled = isReadonly;
+      problemAuthorSearchButton.disabled = isReadonly;
+    }
+
+    function setProblemSectionDisabled(section, isDisabled) {
+      section.classList.toggle("is-disabled", isDisabled);
+      section.toggleAttribute("data-problem-disabled-section", isDisabled);
+      section.setAttribute("aria-disabled", isDisabled ? "true" : "false");
+
+      if (isDisabled) {
+        section.removeAttribute("open");
+      }
+    }
+
+    function setProblemRegisterMode(mode, row = null) {
+      const isAuthorMode = mode === "author";
+
+      problemRegisterMode = isAuthorMode ? "author" : "create";
+      activeProblemId = row?.problemId || "";
+      problemRegisterButton.textContent = isAuthorMode ? "저장" : "등록";
+
+      problemBasicSection.classList.toggle("is-required", !isAuthorMode);
+      problemBasicSection.classList.toggle("is-locked", isAuthorMode);
+      problemBasicSection.toggleAttribute("data-problem-locked-section", isAuthorMode);
+      problemBasicSection.setAttribute("aria-disabled", isAuthorMode ? "true" : "false");
+      problemBasicRequiredNote.hidden = isAuthorMode;
+      problemBasicSection.open = !isAuthorMode;
+      problemFollowupRequiredNotes.forEach((note) => {
+        note.hidden = !isAuthorMode;
+      });
+
+      problemFollowupSections.forEach((section, index) => {
+        section.classList.toggle("is-required", isAuthorMode);
+        setProblemSectionDisabled(section, !isAuthorMode);
+
+        if (isAuthorMode) {
+          section.open = index === 0;
+        }
+      });
+
+      problemFollowupFields.forEach((control) => {
+        control.disabled = !isAuthorMode;
+      });
+
+      setProblemBasicReadonly(isAuthorMode);
+
+      if (isAuthorMode && row) {
+        setProblemBasicValues(row);
+        setProblemFollowupValues(row);
+        return;
+      }
+
+      resetProblemRegisterForm();
+    }
+
     function resetProblemRegisterForm() {
       getProblemBasicFields().forEach(({ control }) => {
+        control.value = "";
+      });
+      getProblemFollowupFields().forEach(({ control }) => {
         control.value = "";
       });
     }
@@ -5531,7 +5699,54 @@
       };
     }
 
+    function saveProblemFollowup() {
+      const missingFields = getProblemFollowupFields()
+        .filter(({ control }) => !String(control.value || "").trim())
+        .map(({ label }) => label);
+
+      if (missingFields.length > 0) {
+        openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+        return;
+      }
+
+      const currentRow = getProblemRows().find((row) => row.problemId === activeProblemId);
+
+      if (!currentRow) {
+        openEventActionEmptyModal("저장할 문제를 찾을 수 없습니다");
+        return;
+      }
+
+      const updatedRow = {
+        ...currentRow
+      };
+
+      getProblemFollowupFields().forEach(({ key, control }) => {
+        updatedRow[key] = control.value.trim();
+      });
+
+      const storedRows = readStoredProblemRows();
+      const storedIndex = storedRows.findIndex((row) => row.problemId === activeProblemId);
+
+      if (storedIndex >= 0) {
+        storedRows[storedIndex] = updatedRow;
+      } else {
+        storedRows.unshift(updatedRow);
+      }
+
+      if (!writeStoredProblemRows(storedRows)) {
+        return;
+      }
+
+      renderProblemResultRows(getProblemRows());
+      openEventActionEmptyModal("저장되었습니다");
+    }
+
     function handleProblemRegister() {
+      if (problemRegisterMode === "author") {
+        saveProblemFollowup();
+        return;
+      }
+
       const missingFields = getProblemBasicFields()
         .filter(({ control }) => !String(control.value || "").trim())
         .map(({ label }) => label);
@@ -6271,6 +6486,16 @@
       return cell;
     }
 
+    function openProblemAuthorMode(row) {
+      if (row.author !== currentProblemAuthor) {
+        openEventActionEmptyModal("작성자 본인 건만 작성할 수 있습니다");
+        return;
+      }
+
+      setProblemRegisterMode("author", row);
+      showView("problem-register");
+    }
+
     function renderProblemResultRows(rows) {
       const fragment = document.createDocumentFragment();
 
@@ -6293,10 +6518,26 @@
 
       problemRows.forEach((row) => {
         const tableRow = document.createElement("tr");
+        const isOwnedRow = row.author === currentProblemAuthor;
 
         problemSearchColumns.forEach((column) => {
           tableRow.append(createProblemResultCell(row, column));
         });
+
+        tableRow.classList.toggle("is-clickable", isOwnedRow);
+        tableRow.classList.toggle("is-not-owned", !isOwnedRow);
+        tableRow.tabIndex = isOwnedRow ? 0 : -1;
+        tableRow.title = isOwnedRow ? "후속 작성 화면 열기" : "작성자 본인 건만 작성할 수 있습니다";
+
+        if (isOwnedRow) {
+          tableRow.addEventListener("click", () => openProblemAuthorMode(row));
+          tableRow.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openProblemAuthorMode(row);
+            }
+          });
+        }
 
         fragment.append(tableRow);
       });
@@ -6417,16 +6658,24 @@
     }
 
     navButtons.forEach((button) => {
-      button.addEventListener("click", () => showView(button.dataset.viewTarget));
+      button.addEventListener("click", () => {
+        if (button.dataset.viewTarget === "problem-register") {
+          setProblemRegisterMode("create");
+        }
+
+        showView(button.dataset.viewTarget);
+      });
     });
 
-    document.querySelectorAll("[data-problem-disabled-section] summary").forEach((summary) => {
+    document.querySelectorAll(".problem-section summary").forEach((summary) => {
       summary.addEventListener("click", (event) => {
-        event.preventDefault();
+        if (summary.closest("[data-problem-disabled-section], [data-problem-locked-section]")) {
+          event.preventDefault();
+        }
       });
 
       summary.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
+        if (summary.closest("[data-problem-disabled-section], [data-problem-locked-section]") && (event.key === "Enter" || event.key === " ")) {
           event.preventDefault();
         }
       });
@@ -6547,6 +6796,7 @@
     });
 
     initializeEventSearchControls();
+    setProblemRegisterMode("create");
     renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
     renderProblemResultRows(getProblemRows());
