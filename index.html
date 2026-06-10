@@ -822,6 +822,10 @@
       width: 220px;
     }
 
+    .problem-fivewhy-col-no {
+      width: 96px;
+    }
+
     .problem-timeline-table th,
     .problem-timeline-table td {
       border-bottom: 1px solid var(--border);
@@ -892,6 +896,30 @@
       padding: 7px 8px;
       line-height: 1.35;
       overflow: auto;
+      resize: vertical;
+    }
+
+    .problem-timeline-table.is-fivewhy {
+      min-width: 720px;
+    }
+
+    .problem-timeline-table.is-fivewhy th {
+      text-align: center;
+    }
+
+    .problem-timeline-table.is-fivewhy td:first-child {
+      text-align: center;
+      vertical-align: middle;
+      font-weight: 700;
+    }
+
+    .problem-timeline-table.is-fivewhy tbody tr {
+      cursor: default;
+    }
+
+    .problem-timeline-table.is-fivewhy textarea {
+      min-height: 48px;
+      max-height: 120px;
       resize: vertical;
     }
 
@@ -4345,9 +4373,25 @@
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-form-field is-full">
-                  <label for="problem-five-why">5-why</label>
-                  <textarea id="problem-five-why" data-problem-followup-field data-problem-five-why disabled></textarea>
+                <div class="problem-timeline" data-problem-fivewhy-wrap>
+                  <input id="problem-five-why" type="hidden" data-problem-followup-field data-problem-five-why disabled>
+                  <div class="problem-timeline-scroll">
+                    <table class="problem-timeline-table is-fivewhy" aria-label="5-why 입력">
+                      <colgroup>
+                        <col class="problem-fivewhy-col-no">
+                        <col class="problem-fivewhy-col-why">
+                        <col class="problem-fivewhy-col-cause">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th scope="col">NO</th>
+                          <th scope="col">WHY</th>
+                          <th scope="col">원인</th>
+                        </tr>
+                      </thead>
+                      <tbody id="problem-fivewhy-body"></tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </details>
@@ -5076,6 +5120,8 @@
     const problemFuturePlanBody = document.querySelector("#problem-future-plan-body");
     const problemFuturePlanAddButton = document.querySelector("[data-problem-future-row-add]");
     const problemFuturePlanDeleteButton = document.querySelector("[data-problem-future-row-delete]");
+    const problemFiveWhyInput = document.querySelector("[data-problem-five-why]");
+    const problemFiveWhyBody = document.querySelector("#problem-fivewhy-body");
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -6547,6 +6593,112 @@
       return true;
     }
 
+    function normalizeProblemFiveWhyRows(rows) {
+      const sourceRows = Array.isArray(rows) ? rows : [];
+
+      return Array.from({ length: 5 }, (_, index) => {
+        const row = sourceRows[index] || {};
+
+        return {
+          no: `WHY${index + 1}`,
+          why: String(row?.why || ""),
+          cause: String(row?.cause || "")
+        };
+      });
+    }
+
+    function getProblemFiveWhyRows() {
+      const value = String(problemFiveWhyInput.value || "").trim();
+
+      if (!value) {
+        return normalizeProblemFiveWhyRows([]);
+      }
+
+      try {
+        return normalizeProblemFiveWhyRows(JSON.parse(value));
+      } catch {
+        return normalizeProblemFiveWhyRows([{
+          why: value,
+          cause: ""
+        }]);
+      }
+    }
+
+    function setProblemFiveWhyRows(rows = []) {
+      const normalizedRows = normalizeProblemFiveWhyRows(rows);
+
+      problemFiveWhyInput.value = JSON.stringify(normalizedRows);
+      renderProblemFiveWhyRows(normalizedRows);
+    }
+
+    function collectProblemFiveWhyRows() {
+      return [...problemFiveWhyBody.querySelectorAll("tr")].map((row, index) => ({
+        no: `WHY${index + 1}`,
+        why: row.querySelector("[data-fivewhy-why]")?.value.trim() || "",
+        cause: row.querySelector("[data-fivewhy-cause]")?.value.trim() || ""
+      }));
+    }
+
+    function updateProblemFiveWhyValue() {
+      const rows = normalizeProblemFiveWhyRows(collectProblemFiveWhyRows());
+
+      problemFiveWhyInput.value = JSON.stringify(rows);
+      return rows;
+    }
+
+    function createProblemFiveWhyRow(row, rowIndex) {
+      const tableRow = document.createElement("tr");
+      const noCell = document.createElement("td");
+      const whyCell = document.createElement("td");
+      const causeCell = document.createElement("td");
+      const whyInput = document.createElement("textarea");
+      const causeInput = document.createElement("textarea");
+      const isDisabled = problemRegisterMode !== "author";
+
+      noCell.textContent = `WHY${rowIndex + 1}`;
+      whyInput.value = row.why || "";
+      whyInput.rows = 2;
+      whyInput.disabled = isDisabled;
+      whyInput.dataset.fivewhyWhy = "true";
+      whyInput.setAttribute("aria-label", `WHY${rowIndex + 1} 질문`);
+      whyInput.addEventListener("input", updateProblemFiveWhyValue);
+      causeInput.value = row.cause || "";
+      causeInput.rows = 2;
+      causeInput.disabled = isDisabled;
+      causeInput.dataset.fivewhyCause = "true";
+      causeInput.setAttribute("aria-label", `WHY${rowIndex + 1} 원인`);
+      causeInput.addEventListener("input", updateProblemFiveWhyValue);
+
+      whyCell.append(whyInput);
+      causeCell.append(causeInput);
+      tableRow.append(noCell, whyCell, causeCell);
+
+      return tableRow;
+    }
+
+    function renderProblemFiveWhyRows(rows = getProblemFiveWhyRows()) {
+      const fragment = document.createDocumentFragment();
+      const normalizedRows = normalizeProblemFiveWhyRows(rows);
+
+      normalizedRows.forEach((row, rowIndex) => {
+        fragment.append(createProblemFiveWhyRow(row, rowIndex));
+      });
+
+      problemFiveWhyBody.replaceChildren(fragment);
+    }
+
+    function validateProblemFiveWhyRows() {
+      const rows = updateProblemFiveWhyValue();
+      const hasIncompleteRow = rows.some((row) => !row.why || !row.cause);
+
+      if (hasIncompleteRow) {
+        openEventActionEmptyModal("5-why의 WHY와 원인을 모두 입력해주세요");
+        return false;
+      }
+
+      return true;
+    }
+
     function getProblemFollowupFields() {
       return [
         { label: "발생시작일자", key: "startDate", control: problemStartDateInput },
@@ -6580,6 +6732,7 @@
       problemTotalMinutesInput.value = row.totalMinutes || "";
       const timelineRows = getProblemActionTimelineRows();
       const futureRows = getProblemFuturePlanRows();
+      const fiveWhyRows = getProblemFiveWhyRows();
 
       setProblemActionTimelineRows(
         problemRegisterMode === "author" && timelineRows.length === 0
@@ -6591,6 +6744,7 @@
           ? createDefaultProblemFuturePlanRows()
           : futureRows
       );
+      setProblemFiveWhyRows(fiveWhyRows);
       updateProblemTotalMinutes();
     }
 
@@ -6723,6 +6877,7 @@
       setProblemActionTimelineRows([]);
       selectedProblemFuturePlanRows.clear();
       setProblemFuturePlanRows([]);
+      setProblemFiveWhyRows([]);
     }
 
     function createProblemRow() {
@@ -6750,6 +6905,7 @@
 
       updateProblemActionTimelineValue();
       updateProblemFuturePlanValue();
+      updateProblemFiveWhyValue();
 
       if (requireAllFields) {
         const missingFields = getProblemFollowupFields()
@@ -6766,6 +6922,10 @@
         }
 
         if (!validateProblemFuturePlanRows()) {
+          return false;
+        }
+
+        if (!validateProblemFiveWhyRows()) {
           return false;
         }
       }
