@@ -818,6 +818,10 @@
       width: 130px;
     }
 
+    .problem-future-col-due {
+      width: 220px;
+    }
+
     .problem-timeline-table th,
     .problem-timeline-table td {
       border-bottom: 1px solid var(--border);
@@ -4307,9 +4311,29 @@
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-form-field is-full">
-                  <label for="problem-future-plan">향후 대책</label>
-                  <textarea id="problem-future-plan" data-problem-followup-field data-problem-future-plan disabled></textarea>
+                <div class="problem-timeline" data-problem-future-plan-wrap>
+                  <div class="problem-timeline-actions">
+                    <button class="problem-timeline-button" type="button" data-problem-future-row-add disabled>행 추가</button>
+                    <button class="problem-timeline-button" type="button" data-problem-future-row-delete disabled>행 삭제</button>
+                  </div>
+                  <input id="problem-future-plan" type="hidden" data-problem-followup-field data-problem-future-plan disabled>
+                  <div class="problem-timeline-scroll">
+                    <table class="problem-timeline-table is-future-plan" aria-label="향후 대책 입력">
+                      <colgroup>
+                        <col class="problem-timeline-col-select">
+                        <col class="problem-future-col-task">
+                        <col class="problem-future-col-due">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="is-center" scope="col">선택</th>
+                          <th scope="col">TASK</th>
+                          <th scope="col">예정완료일시</th>
+                        </tr>
+                      </thead>
+                      <tbody id="problem-future-plan-body"></tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </details>
@@ -5048,6 +5072,10 @@
     const problemActionTimelineBody = document.querySelector("#problem-action-timeline-body");
     const problemActionTimelineAddButton = document.querySelector("[data-problem-action-row-add]");
     const problemActionTimelineDeleteButton = document.querySelector("[data-problem-action-row-delete]");
+    const problemFuturePlanInput = document.querySelector("[data-problem-future-plan]");
+    const problemFuturePlanBody = document.querySelector("#problem-future-plan-body");
+    const problemFuturePlanAddButton = document.querySelector("[data-problem-future-row-add]");
+    const problemFuturePlanDeleteButton = document.querySelector("[data-problem-future-row-delete]");
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -5132,6 +5160,7 @@
     let lastNoticeFocusedElement = null;
     let lastProblemAuthorFocusedElement = null;
     const selectedProblemActionTimelineRows = new Set();
+    const selectedProblemFuturePlanRows = new Set();
 
     problemRegisterPage.before(problemRegisterPageHome);
 
@@ -6086,7 +6115,7 @@
       applyProblemActionTimelineSelection();
     }
 
-    function createProblemTimelineDateControl(value, rowIndex) {
+    function createProblemTimelineDateControl(value, rowIndex, label = "날짜") {
       const dateWrapper = document.createElement("div");
       const control = document.createElement("input");
       const dateButton = document.createElement("button");
@@ -6098,12 +6127,12 @@
       control.readOnly = true;
       control.disabled = isDisabled;
       control.setAttribute("aria-readonly", "true");
-      control.setAttribute("aria-label", `${rowIndex + 1}행 날짜`);
+      control.setAttribute("aria-label", `${rowIndex + 1}행 ${label}`);
       control.dataset.timelineDate = "true";
       dateButton.className = "action-date-button";
       dateButton.type = "button";
       dateButton.disabled = isDisabled;
-      dateButton.setAttribute("aria-label", `${rowIndex + 1}행 날짜 달력 열기`);
+      dateButton.setAttribute("aria-label", `${rowIndex + 1}행 ${label} 달력 열기`);
       dateButton.setAttribute("aria-haspopup", "dialog");
       dateButton.setAttribute("aria-expanded", "false");
       dateButton.innerHTML = `
@@ -6119,7 +6148,7 @@
           control,
           dateButton,
           dateWrapper,
-          label: "날짜",
+          label,
           minDateValue: "",
           fixedPlacement: true
         })
@@ -6290,6 +6319,234 @@
       return true;
     }
 
+    function normalizeProblemFuturePlanRows(rows) {
+      if (!Array.isArray(rows)) {
+        return [];
+      }
+
+      return rows.map((row) => ({
+        task: String(row?.task || ""),
+        dueAt: String(row?.dueAt || "")
+      }));
+    }
+
+    function createEmptyProblemFuturePlanRow() {
+      return {
+        task: "",
+        dueAt: ""
+      };
+    }
+
+    function createDefaultProblemFuturePlanRows() {
+      return [
+        createEmptyProblemFuturePlanRow(),
+        createEmptyProblemFuturePlanRow()
+      ];
+    }
+
+    function getProblemFuturePlanRows() {
+      const value = String(problemFuturePlanInput.value || "").trim();
+
+      if (!value) {
+        return [];
+      }
+
+      try {
+        return normalizeProblemFuturePlanRows(JSON.parse(value));
+      } catch {
+        return [{
+          task: value,
+          dueAt: ""
+        }];
+      }
+    }
+
+    function setProblemFuturePlanRows(rows = []) {
+      const normalizedRows = normalizeProblemFuturePlanRows(rows);
+
+      problemFuturePlanInput.value = normalizedRows.length ? JSON.stringify(normalizedRows) : "";
+      renderProblemFuturePlanRows(normalizedRows);
+    }
+
+    function collectProblemFuturePlanRows() {
+      return [...problemFuturePlanBody.querySelectorAll("tr")].map((row) => ({
+        task: row.querySelector("[data-future-task]")?.value.trim() || "",
+        dueAt: row.querySelector("[data-future-due-at]")?.value.trim() || ""
+      }));
+    }
+
+    function updateProblemFuturePlanValue() {
+      const rows = collectProblemFuturePlanRows();
+
+      problemFuturePlanInput.value = rows.length ? JSON.stringify(rows) : "";
+      return rows;
+    }
+
+    function applyProblemFuturePlanSelection() {
+      problemFuturePlanBody.querySelectorAll("tr").forEach((row, rowIndex) => {
+        const isSelected = selectedProblemFuturePlanRows.has(rowIndex);
+        const checkbox = row.querySelector("[data-future-select]");
+
+        row.classList.toggle("is-selected", isSelected);
+
+        if (checkbox) {
+          checkbox.checked = isSelected;
+        }
+      });
+    }
+
+    function toggleProblemFuturePlanRow(index) {
+      if (selectedProblemFuturePlanRows.has(index)) {
+        selectedProblemFuturePlanRows.delete(index);
+      } else {
+        selectedProblemFuturePlanRows.add(index);
+      }
+
+      applyProblemFuturePlanSelection();
+    }
+
+    function createProblemFuturePlanRow(row, rowIndex) {
+      const tableRow = document.createElement("tr");
+      const selectCell = document.createElement("td");
+      const taskCell = document.createElement("td");
+      const dueAtCell = document.createElement("td");
+      const selectInput = document.createElement("input");
+      const taskInput = document.createElement("textarea");
+      const dueAtControl = createProblemTimelineDateControl(row.dueAt, rowIndex, "예정완료일시");
+      const dueAtInput = dueAtControl.querySelector("input");
+      const isDisabled = problemRegisterMode !== "author";
+
+      tableRow.tabIndex = isDisabled ? -1 : 0;
+      tableRow.setAttribute("aria-label", `${rowIndex + 1}행 향후대책 선택`);
+      tableRow.addEventListener("click", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        toggleProblemFuturePlanRow(rowIndex);
+      });
+      tableRow.addEventListener("keydown", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleProblemFuturePlanRow(rowIndex);
+        }
+      });
+
+      selectCell.className = "is-center";
+      selectInput.className = "problem-timeline-select";
+      selectInput.type = "checkbox";
+      selectInput.disabled = isDisabled;
+      selectInput.dataset.futureSelect = "true";
+      selectInput.setAttribute("aria-label", `${rowIndex + 1}행 선택`);
+      selectInput.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+      selectInput.addEventListener("change", (event) => {
+        event.stopPropagation();
+
+        if (selectInput.checked) {
+          selectedProblemFuturePlanRows.add(rowIndex);
+        } else {
+          selectedProblemFuturePlanRows.delete(rowIndex);
+        }
+
+        applyProblemFuturePlanSelection();
+      });
+
+      taskInput.value = row.task || "";
+      taskInput.rows = 2;
+      taskInput.placeholder = rowIndex === 0
+        ? "- OOOO 설정으로 조치 예정"
+        : "- OOOOOOOOO 분리 추진예정";
+      taskInput.disabled = isDisabled;
+      taskInput.dataset.futureTask = "true";
+      taskInput.setAttribute("aria-label", `${rowIndex + 1}행 TASK`);
+      taskInput.addEventListener("input", updateProblemFuturePlanValue);
+      if (dueAtInput) {
+        dueAtInput.dataset.futureDueAt = "true";
+        dueAtInput.addEventListener("input", updateProblemFuturePlanValue);
+      }
+
+      selectCell.append(selectInput);
+      taskCell.append(taskInput);
+      dueAtCell.append(dueAtControl);
+      tableRow.append(selectCell, taskCell, dueAtCell);
+
+      return tableRow;
+    }
+
+    function renderProblemFuturePlanRows(rows = getProblemFuturePlanRows()) {
+      const fragment = document.createDocumentFragment();
+
+      rows.forEach((row, rowIndex) => {
+        fragment.append(createProblemFuturePlanRow(row, rowIndex));
+      });
+
+      problemFuturePlanBody.replaceChildren(fragment);
+      problemFuturePlanAddButton.disabled = problemRegisterMode !== "author";
+      problemFuturePlanDeleteButton.disabled = problemRegisterMode !== "author" || rows.length === 0;
+      [...selectedProblemFuturePlanRows].forEach((rowIndex) => {
+        if (rowIndex >= rows.length) {
+          selectedProblemFuturePlanRows.delete(rowIndex);
+        }
+      });
+
+      applyProblemFuturePlanSelection();
+    }
+
+    function handleProblemFuturePlanAdd() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemFuturePlanValue();
+
+      rows.push(createEmptyProblemFuturePlanRow());
+      setProblemFuturePlanRows(rows);
+    }
+
+    function handleProblemFuturePlanDelete() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemFuturePlanValue();
+      const deleteIndexes = [...selectedProblemFuturePlanRows].sort((left, right) => right - left);
+
+      if (deleteIndexes.length === 0) {
+        openEventActionEmptyModal("삭제할 행을 선택해주세요");
+        return;
+      }
+
+      deleteIndexes.forEach((rowIndex) => {
+        rows.splice(rowIndex, 1);
+      });
+      selectedProblemFuturePlanRows.clear();
+      setProblemFuturePlanRows(rows);
+    }
+
+    function validateProblemFuturePlanRows() {
+      const rows = updateProblemFuturePlanValue();
+
+      if (rows.length === 0) {
+        openEventActionEmptyModal("다음 항목을 입력해주세요: 향후 대책");
+        return false;
+      }
+
+      const hasIncompleteRow = rows.some((row) => !row.task || !row.dueAt);
+
+      if (hasIncompleteRow) {
+        openEventActionEmptyModal("향후 대책의 TASK와 예정완료일시를 모두 입력해주세요");
+        return false;
+      }
+
+      return true;
+    }
+
     function getProblemFollowupFields() {
       return [
         { label: "발생시작일자", key: "startDate", control: problemStartDateInput },
@@ -6322,11 +6579,17 @@
       });
       problemTotalMinutesInput.value = row.totalMinutes || "";
       const timelineRows = getProblemActionTimelineRows();
+      const futureRows = getProblemFuturePlanRows();
 
       setProblemActionTimelineRows(
         problemRegisterMode === "author" && timelineRows.length === 0
           ? [createEmptyProblemActionTimelineRow()]
           : timelineRows
+      );
+      setProblemFuturePlanRows(
+        problemRegisterMode === "author" && futureRows.length === 0
+          ? createDefaultProblemFuturePlanRows()
+          : futureRows
       );
       updateProblemTotalMinutes();
     }
@@ -6458,6 +6721,8 @@
       });
       selectedProblemActionTimelineRows.clear();
       setProblemActionTimelineRows([]);
+      selectedProblemFuturePlanRows.clear();
+      setProblemFuturePlanRows([]);
     }
 
     function createProblemRow() {
@@ -6484,6 +6749,7 @@
       const hasFullSchedule = scheduleControls.every((control) => String(control.value || "").trim());
 
       updateProblemActionTimelineValue();
+      updateProblemFuturePlanValue();
 
       if (requireAllFields) {
         const missingFields = getProblemFollowupFields()
@@ -6496,6 +6762,10 @@
         }
 
         if (!validateProblemActionTimelineRows()) {
+          return false;
+        }
+
+        if (!validateProblemFuturePlanRows()) {
           return false;
         }
       }
@@ -7593,6 +7863,8 @@
     problemAuthorSearchButton.addEventListener("click", fillProblemAuthor);
     problemActionTimelineAddButton.addEventListener("click", handleProblemActionTimelineAdd);
     problemActionTimelineDeleteButton.addEventListener("click", handleProblemActionTimelineDelete);
+    problemFuturePlanAddButton.addEventListener("click", handleProblemFuturePlanAdd);
+    problemFuturePlanDeleteButton.addEventListener("click", handleProblemFuturePlanDelete);
     [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput].forEach((control) => {
       control.addEventListener("input", updateProblemTotalMinutes);
     });
