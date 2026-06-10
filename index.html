@@ -717,6 +717,10 @@
       border-color: var(--primary);
     }
 
+    .problem-form-field textarea::placeholder {
+      color: #98a4b4;
+    }
+
     .problem-form-field input[readonly] {
       background: #f4f7fb;
       color: #526071;
@@ -4068,8 +4072,8 @@
               </summary>
               <div class="problem-section-body">
                 <div class="problem-form-field is-full">
-                  <label for="problem-service-impact">서비스영향도</label>
-                  <textarea id="problem-service-impact" data-problem-followup-field data-problem-service-impact disabled></textarea>
+                  <label for="problem-service-impact">내용작성</label>
+                  <textarea id="problem-service-impact" placeholder="- 송신 전문 OO 확인용 ACK 전문 수신불가&#10;- 수신 전문 중 OOO 전송오류로 일부 수신불가" data-problem-followup-field data-problem-service-impact disabled></textarea>
                 </div>
               </div>
             </details>
@@ -4082,7 +4086,7 @@
               </summary>
               <div class="problem-section-body">
                 <div class="problem-form-field is-full">
-                  <label for="problem-cause">문제 발생 원인</label>
+                  <label for="problem-cause">내용작성</label>
                   <textarea id="problem-cause" data-problem-followup-field data-problem-cause disabled></textarea>
                 </div>
               </div>
@@ -4551,6 +4555,13 @@
                     <td class="req-screen">문제관리 조회</td>
                     <td class="req-category">후속 작성</td>
                     <td>작성자 후속 작성 팝업에는 임시저장과 결재요청 버튼을 제공한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-052</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">03 서비스영향도</td>
+                    <td>서비스영향도 섹션의 내용작성 입력 필드에는 송신 전문 ACK 수신불가, 수신 전문 전송오류 등 작성 예시를 placeholder로 제공한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                 </tbody>
@@ -5765,7 +5776,7 @@
         { label: "발생종료시간", key: "endTime", control: problemEndTimeInput },
         { label: "오류내용", key: "errorContent", control: document.querySelector("[data-problem-error-content]") },
         { label: "서비스영향도", key: "serviceImpact", control: document.querySelector("[data-problem-service-impact]") },
-        { label: "문제 발생 원인", key: "cause", control: document.querySelector("[data-problem-cause]") },
+        { label: "문제 발생 원인 내용작성", key: "cause", control: document.querySelector("[data-problem-cause]") },
         { label: "조치 내용 (시간별)", key: "actionTimeline", control: document.querySelector("[data-problem-action-timeline]") },
         { label: "향후 대책", key: "futurePlan", control: document.querySelector("[data-problem-future-plan]") },
         { label: "5-why", key: "fiveWhy", control: document.querySelector("[data-problem-five-why]") }
