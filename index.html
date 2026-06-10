@@ -752,6 +752,145 @@
       color: var(--primary);
     }
 
+    .problem-timeline {
+      display: grid;
+      gap: 8px;
+    }
+
+    .problem-timeline-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .problem-timeline-button {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 12px;
+      font-weight: 700;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .problem-timeline-button:hover:not(:disabled) {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .problem-timeline-button:disabled {
+      color: #9aa6b4;
+      cursor: not-allowed;
+    }
+
+    .problem-timeline-scroll {
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .problem-timeline-table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .problem-timeline-col-select {
+      width: 42px;
+    }
+
+    .problem-timeline-col-date {
+      width: 190px;
+    }
+
+    .problem-timeline-col-time {
+      width: 150px;
+    }
+
+    .problem-timeline-col-type {
+      width: 130px;
+    }
+
+    .problem-timeline-table th,
+    .problem-timeline-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .problem-timeline-table .is-center {
+      text-align: center;
+    }
+
+    .problem-timeline-table th {
+      background: #f4f7fb;
+      color: #5a6678;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .problem-timeline-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .problem-timeline-table tbody tr {
+      cursor: pointer;
+    }
+
+    .problem-timeline-table tbody tr.is-selected td {
+      background: #eef6ff;
+    }
+
+    .problem-timeline-select {
+      width: 16px;
+      height: 16px;
+      margin: 7px auto 0;
+      display: block;
+      accent-color: var(--primary);
+    }
+
+    .problem-timeline-table input:not(.problem-timeline-select),
+    .problem-timeline-table select,
+    .problem-timeline-table textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .problem-timeline-table input:not(.problem-timeline-select),
+    .problem-timeline-table select {
+      height: 30px;
+    }
+
+    .problem-timeline-table input:not(.problem-timeline-select) {
+      padding: 0 8px;
+    }
+
+    .problem-timeline-table select {
+      padding: 0 28px 0 8px;
+    }
+
+    .problem-timeline-table textarea {
+      min-height: 38px;
+      max-height: 112px;
+      padding: 7px 8px;
+      line-height: 1.35;
+      overflow: auto;
+      resize: vertical;
+    }
+
     .problem-section-empty {
       min-height: 96px;
     }
@@ -798,6 +937,30 @@
     body.is-dark-mode .problem-search-button:hover {
       background: #263241;
       color: #79c0ff;
+    }
+
+    body.is-dark-mode .problem-timeline-button,
+    body.is-dark-mode .problem-timeline-scroll,
+    body.is-dark-mode .problem-timeline-table input:not(.problem-timeline-select),
+    body.is-dark-mode .problem-timeline-table select,
+    body.is-dark-mode .problem-timeline-table textarea {
+      border-color: var(--border);
+      background: #161b22;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-timeline-table th {
+      border-color: var(--border);
+      background: #111820;
+      color: #aebbd0;
+    }
+
+    body.is-dark-mode .problem-timeline-table td {
+      border-color: var(--border);
+    }
+
+    body.is-dark-mode .problem-timeline-table tbody tr.is-selected td {
+      background: #17283b;
     }
 
     .problem-author-dialog {
@@ -2623,6 +2786,13 @@
       box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
     }
 
+    .action-date-popover.is-fixed {
+      position: fixed;
+      top: auto;
+      right: auto;
+      z-index: 80;
+    }
+
     .action-calendar-header {
       display: flex;
       align-items: center;
@@ -4099,9 +4269,33 @@
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
               <div class="problem-section-body">
-                <div class="problem-form-field is-full">
-                  <label for="problem-action-timeline">조치 내용 (시간별)</label>
-                  <textarea id="problem-action-timeline" data-problem-followup-field data-problem-action-timeline disabled></textarea>
+                <div class="problem-timeline" data-problem-action-timeline-wrap>
+                  <div class="problem-timeline-actions">
+                    <button class="problem-timeline-button" type="button" data-problem-action-row-add disabled>행 추가</button>
+                    <button class="problem-timeline-button" type="button" data-problem-action-row-delete disabled>행 삭제</button>
+                  </div>
+                  <input id="problem-action-timeline" type="hidden" data-problem-followup-field data-problem-action-timeline disabled>
+                  <div class="problem-timeline-scroll">
+                    <table class="problem-timeline-table" aria-label="조치 내용 시간별 입력">
+                      <colgroup>
+                        <col class="problem-timeline-col-select">
+                        <col class="problem-timeline-col-date">
+                        <col class="problem-timeline-col-time">
+                        <col class="problem-timeline-col-type">
+                        <col class="problem-timeline-col-content">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="is-center" scope="col">선택</th>
+                          <th scope="col">날짜</th>
+                          <th scope="col">시간</th>
+                          <th scope="col">구분</th>
+                          <th scope="col">조치내용</th>
+                        </tr>
+                      </thead>
+                      <tbody id="problem-action-timeline-body"></tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </details>
@@ -4850,6 +5044,10 @@
     const problemEndDateInput = document.querySelector("[data-problem-end-date]");
     const problemEndTimeInput = document.querySelector("[data-problem-end-time]");
     const problemTotalMinutesInput = document.querySelector("[data-problem-total-minutes]");
+    const problemActionTimelineInput = document.querySelector("[data-problem-action-timeline]");
+    const problemActionTimelineBody = document.querySelector("#problem-action-timeline-body");
+    const problemActionTimelineAddButton = document.querySelector("[data-problem-action-row-add]");
+    const problemActionTimelineDeleteButton = document.querySelector("[data-problem-action-row-delete]");
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -4933,6 +5131,7 @@
     let lastSettingsFocusedElement = null;
     let lastNoticeFocusedElement = null;
     let lastProblemAuthorFocusedElement = null;
+    const selectedProblemActionTimelineRows = new Set();
 
     problemRegisterPage.before(problemRegisterPageHome);
 
@@ -5366,7 +5565,7 @@
       return new Date(date.getFullYear(), date.getMonth(), 1);
     }
 
-    function createActionDateCalendar({ control, dateButton, dateWrapper, label, minDateValue = getTodayDateValue() }) {
+    function createActionDateCalendar({ control, dateButton, dateWrapper, label, minDateValue = getTodayDateValue(), fixedPlacement = false }) {
       const popover = document.createElement("div");
       const header = document.createElement("div");
       const previousButton = document.createElement("button");
@@ -5380,6 +5579,7 @@
       let visibleMonth = createMonthDate(createDateFromValue(control.value) || new Date());
 
       popover.className = "action-date-popover";
+      popover.classList.toggle("is-fixed", fixedPlacement);
       popover.hidden = true;
       popover.setAttribute("role", "dialog");
       popover.setAttribute("aria-label", `${label} 선택 달력`);
@@ -5422,6 +5622,10 @@
         popover.hidden = true;
         dateButton.setAttribute("aria-expanded", "false");
         document.removeEventListener("pointerdown", handleOutsidePointerDown);
+        if (fixedPlacement) {
+          document.removeEventListener("scroll", updateFixedPopoverPosition, true);
+          window.removeEventListener("resize", updateFixedPopoverPosition);
+        }
 
         if (restoreFocus) {
           dateButton.focus();
@@ -5432,6 +5636,28 @@
         if (!dateWrapper.contains(event.target)) {
           closeCalendar({ restoreFocus: false });
         }
+      }
+
+      function updateFixedPopoverPosition() {
+        if (!fixedPlacement || popover.hidden) {
+          return;
+        }
+
+        const buttonRect = dateButton.getBoundingClientRect();
+        const popoverRect = popover.getBoundingClientRect();
+        const gutter = 12;
+        const preferredTop = buttonRect.bottom + 6;
+        const fallbackTop = buttonRect.top - popoverRect.height - 6;
+        const top = preferredTop + popoverRect.height > window.innerHeight - gutter
+          ? Math.max(gutter, fallbackTop)
+          : preferredTop;
+        const left = Math.min(
+          Math.max(gutter, buttonRect.right - popoverRect.width),
+          window.innerWidth - popoverRect.width - gutter
+        );
+
+        popover.style.top = `${top}px`;
+        popover.style.left = `${left}px`;
       }
 
       function renderCalendar() {
@@ -5475,7 +5701,12 @@
         renderCalendar();
         popover.hidden = false;
         dateButton.setAttribute("aria-expanded", "true");
+        updateFixedPopoverPosition();
         document.addEventListener("pointerdown", handleOutsidePointerDown);
+        if (fixedPlacement) {
+          document.addEventListener("scroll", updateFixedPopoverPosition, true);
+          window.addEventListener("resize", updateFixedPopoverPosition);
+        }
         window.setTimeout(() => {
           const focusTarget = dayGrid.querySelector(".action-calendar-day.is-selected:not(:disabled)")
             || dayGrid.querySelector(".action-calendar-day:not(:disabled)");
@@ -5768,6 +5999,297 @@
       ];
     }
 
+    function normalizeProblemActionTimelineRows(rows) {
+      if (!Array.isArray(rows)) {
+        return [];
+      }
+
+      return rows.map((row) => ({
+        date: String(row?.date || ""),
+        time: String(row?.time || ""),
+        type: String(row?.type || "").replace("직접입력", "기타"),
+        content: String(row?.content || "")
+      }));
+    }
+
+    function createEmptyProblemActionTimelineRow() {
+      return {
+        date: "",
+        time: "",
+        type: "",
+        content: ""
+      };
+    }
+
+    function getProblemActionTimelineRows() {
+      const value = String(problemActionTimelineInput.value || "").trim();
+
+      if (!value) {
+        return [];
+      }
+
+      try {
+        return normalizeProblemActionTimelineRows(JSON.parse(value));
+      } catch {
+        return [{
+          date: "",
+          time: "",
+          type: "기타",
+          content: value
+        }];
+      }
+    }
+
+    function setProblemActionTimelineRows(rows = []) {
+      const normalizedRows = normalizeProblemActionTimelineRows(rows);
+
+      problemActionTimelineInput.value = normalizedRows.length ? JSON.stringify(normalizedRows) : "";
+      renderProblemActionTimelineRows(normalizedRows);
+    }
+
+    function collectProblemActionTimelineRows() {
+      return [...problemActionTimelineBody.querySelectorAll("tr")].map((row) => ({
+        date: row.querySelector("[data-timeline-date]")?.value || "",
+        time: row.querySelector("[data-timeline-time]")?.value.trim() || "",
+        type: row.querySelector("[data-timeline-type]")?.value || "",
+        content: row.querySelector("[data-timeline-content]")?.value.trim() || ""
+      }));
+    }
+
+    function updateProblemActionTimelineValue() {
+      const rows = collectProblemActionTimelineRows();
+
+      problemActionTimelineInput.value = rows.length ? JSON.stringify(rows) : "";
+      return rows;
+    }
+
+    function applyProblemActionTimelineSelection() {
+      problemActionTimelineBody.querySelectorAll("tr").forEach((row, rowIndex) => {
+        const isSelected = selectedProblemActionTimelineRows.has(rowIndex);
+        const checkbox = row.querySelector("[data-timeline-select]");
+
+        row.classList.toggle("is-selected", isSelected);
+
+        if (checkbox) {
+          checkbox.checked = isSelected;
+        }
+      });
+    }
+
+    function toggleProblemActionTimelineRow(index) {
+      if (selectedProblemActionTimelineRows.has(index)) {
+        selectedProblemActionTimelineRows.delete(index);
+      } else {
+        selectedProblemActionTimelineRows.add(index);
+      }
+
+      applyProblemActionTimelineSelection();
+    }
+
+    function createProblemTimelineDateControl(value, rowIndex) {
+      const dateWrapper = document.createElement("div");
+      const control = document.createElement("input");
+      const dateButton = document.createElement("button");
+      const isDisabled = problemRegisterMode !== "author";
+
+      dateWrapper.className = "action-date-control";
+      control.type = "text";
+      control.value = value || "";
+      control.readOnly = true;
+      control.disabled = isDisabled;
+      control.setAttribute("aria-readonly", "true");
+      control.setAttribute("aria-label", `${rowIndex + 1}행 날짜`);
+      control.dataset.timelineDate = "true";
+      dateButton.className = "action-date-button";
+      dateButton.type = "button";
+      dateButton.disabled = isDisabled;
+      dateButton.setAttribute("aria-label", `${rowIndex + 1}행 날짜 달력 열기`);
+      dateButton.setAttribute("aria-haspopup", "dialog");
+      dateButton.setAttribute("aria-expanded", "false");
+      dateButton.innerHTML = `
+        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <path d="M7 3.5v3M17 3.5v3M4.5 9.5h15M6.5 5.5h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+      `;
+      control.addEventListener("input", updateProblemActionTimelineValue);
+      dateWrapper.append(
+        control,
+        dateButton,
+        createActionDateCalendar({
+          control,
+          dateButton,
+          dateWrapper,
+          label: "날짜",
+          minDateValue: "",
+          fixedPlacement: true
+        })
+      );
+
+      return dateWrapper;
+    }
+
+    function createProblemActionTimelineRow(row, rowIndex) {
+      const tableRow = document.createElement("tr");
+      const selectCell = document.createElement("td");
+      const dateCell = document.createElement("td");
+      const timeCell = document.createElement("td");
+      const typeCell = document.createElement("td");
+      const contentCell = document.createElement("td");
+      const selectInput = document.createElement("input");
+      const timeInput = document.createElement("input");
+      const typeSelect = document.createElement("select");
+      const contentInput = document.createElement("textarea");
+      const typeOptions = ["", "발생", "인지", "원인파악", "조치", "정상화", "기타"];
+      const isDisabled = problemRegisterMode !== "author";
+
+      tableRow.tabIndex = isDisabled ? -1 : 0;
+      tableRow.setAttribute("aria-label", `${rowIndex + 1}행 조치내용 선택`);
+      tableRow.addEventListener("click", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        toggleProblemActionTimelineRow(rowIndex);
+      });
+      tableRow.addEventListener("keydown", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleProblemActionTimelineRow(rowIndex);
+        }
+      });
+
+      selectCell.className = "is-center";
+      selectInput.className = "problem-timeline-select";
+      selectInput.type = "checkbox";
+      selectInput.disabled = isDisabled;
+      selectInput.dataset.timelineSelect = "true";
+      selectInput.setAttribute("aria-label", `${rowIndex + 1}행 선택`);
+      selectInput.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+      selectInput.addEventListener("change", (event) => {
+        event.stopPropagation();
+
+        if (selectInput.checked) {
+          selectedProblemActionTimelineRows.add(rowIndex);
+        } else {
+          selectedProblemActionTimelineRows.delete(rowIndex);
+        }
+
+        applyProblemActionTimelineSelection();
+      });
+
+      timeInput.type = "text";
+      timeInput.value = row.time || "";
+      timeInput.placeholder = "00:00 혹은 00:00 ~ 00:00";
+      timeInput.disabled = isDisabled;
+      timeInput.dataset.timelineTime = "true";
+      timeInput.setAttribute("aria-label", `${rowIndex + 1}행 시간`);
+      timeInput.addEventListener("input", updateProblemActionTimelineValue);
+
+      typeOptions.forEach((optionValue) => {
+        const option = document.createElement("option");
+
+        option.value = optionValue;
+        option.textContent = optionValue;
+        option.selected = optionValue === (row.type || "");
+        typeSelect.append(option);
+      });
+      typeSelect.disabled = isDisabled;
+      typeSelect.dataset.timelineType = "true";
+      typeSelect.setAttribute("aria-label", `${rowIndex + 1}행 구분`);
+      typeSelect.addEventListener("change", updateProblemActionTimelineValue);
+
+      contentInput.value = row.content || "";
+      contentInput.rows = 2;
+      contentInput.placeholder = "- 조치내용 입력";
+      contentInput.disabled = isDisabled;
+      contentInput.dataset.timelineContent = "true";
+      contentInput.setAttribute("aria-label", `${rowIndex + 1}행 조치내용`);
+      contentInput.addEventListener("input", updateProblemActionTimelineValue);
+
+      selectCell.append(selectInput);
+      dateCell.append(createProblemTimelineDateControl(row.date, rowIndex));
+      timeCell.append(timeInput);
+      typeCell.append(typeSelect);
+      contentCell.append(contentInput);
+      tableRow.append(selectCell, dateCell, timeCell, typeCell, contentCell);
+
+      return tableRow;
+    }
+
+    function renderProblemActionTimelineRows(rows = getProblemActionTimelineRows()) {
+      const fragment = document.createDocumentFragment();
+
+      rows.forEach((row, rowIndex) => {
+        fragment.append(createProblemActionTimelineRow(row, rowIndex));
+      });
+
+      problemActionTimelineBody.replaceChildren(fragment);
+      problemActionTimelineAddButton.disabled = problemRegisterMode !== "author";
+      problemActionTimelineDeleteButton.disabled = problemRegisterMode !== "author" || rows.length === 0;
+      [...selectedProblemActionTimelineRows].forEach((rowIndex) => {
+        if (rowIndex >= rows.length) {
+          selectedProblemActionTimelineRows.delete(rowIndex);
+        }
+      });
+
+      applyProblemActionTimelineSelection();
+    }
+
+    function handleProblemActionTimelineAdd() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemActionTimelineValue();
+
+      rows.push(createEmptyProblemActionTimelineRow());
+      setProblemActionTimelineRows(rows);
+    }
+
+    function handleProblemActionTimelineDelete() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemActionTimelineValue();
+      const deleteIndexes = [...selectedProblemActionTimelineRows].sort((left, right) => right - left);
+
+      if (deleteIndexes.length === 0) {
+        openEventActionEmptyModal("삭제할 행을 선택해주세요");
+        return;
+      }
+
+      deleteIndexes.forEach((rowIndex) => {
+        rows.splice(rowIndex, 1);
+      });
+      selectedProblemActionTimelineRows.clear();
+      setProblemActionTimelineRows(rows);
+    }
+
+    function validateProblemActionTimelineRows() {
+      const rows = updateProblemActionTimelineValue();
+
+      if (rows.length === 0) {
+        openEventActionEmptyModal("다음 항목을 입력해주세요: 조치 내용 (시간별)");
+        return false;
+      }
+
+      const hasIncompleteRow = rows.some((row) => !row.date || !row.time || !row.type || !row.content);
+
+      if (hasIncompleteRow) {
+        openEventActionEmptyModal("조치 내용 (시간별)의 날짜, 시간, 구분, 조치내용을 모두 입력해주세요");
+        return false;
+      }
+
+      return true;
+    }
+
     function getProblemFollowupFields() {
       return [
         { label: "발생시작일자", key: "startDate", control: problemStartDateInput },
@@ -5799,6 +6321,13 @@
         control.value = row[key] || "";
       });
       problemTotalMinutesInput.value = row.totalMinutes || "";
+      const timelineRows = getProblemActionTimelineRows();
+
+      setProblemActionTimelineRows(
+        problemRegisterMode === "author" && timelineRows.length === 0
+          ? [createEmptyProblemActionTimelineRow()]
+          : timelineRows
+      );
       updateProblemTotalMinutes();
     }
 
@@ -5927,6 +6456,8 @@
       getProblemFollowupFields().forEach(({ control }) => {
         control.value = "";
       });
+      selectedProblemActionTimelineRows.clear();
+      setProblemActionTimelineRows([]);
     }
 
     function createProblemRow() {
@@ -5952,6 +6483,8 @@
       const scheduleControls = [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput];
       const hasFullSchedule = scheduleControls.every((control) => String(control.value || "").trim());
 
+      updateProblemActionTimelineValue();
+
       if (requireAllFields) {
         const missingFields = getProblemFollowupFields()
           .filter(({ control }) => !String(control.value || "").trim())
@@ -5959,6 +6492,10 @@
 
         if (missingFields.length > 0) {
           openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+          return false;
+        }
+
+        if (!validateProblemActionTimelineRows()) {
           return false;
         }
       }
@@ -7054,6 +7591,8 @@
     problemRegisterButton.addEventListener("click", handleProblemRegister);
     problemRequesterSearchButton.addEventListener("click", fillProblemRequester);
     problemAuthorSearchButton.addEventListener("click", fillProblemAuthor);
+    problemActionTimelineAddButton.addEventListener("click", handleProblemActionTimelineAdd);
+    problemActionTimelineDeleteButton.addEventListener("click", handleProblemActionTimelineDelete);
     [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput].forEach((control) => {
       control.addEventListener("input", updateProblemTotalMinutes);
     });
