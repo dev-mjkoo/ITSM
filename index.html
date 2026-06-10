@@ -2158,6 +2158,34 @@
       background: #f8fafc;
     }
 
+    #status-board .table-panel {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    #status-board .board-toolbar {
+      padding: 0 0 6px;
+      background: transparent;
+    }
+
+    #status-board .board-summary {
+      justify-content: flex-end;
+      padding: 6px 0 0;
+      background: transparent;
+    }
+
+    #status-board .table-divider {
+      display: none;
+    }
+
+    #status-board .table-scroll {
+      margin: 0;
+      border: 1px solid #b9c3d0;
+      background: #f8fafc;
+    }
+
     .data-table {
       width: 100%;
       min-width: 1900px;
@@ -2176,10 +2204,16 @@
       border-bottom: 1px solid #dde4ed;
       border-right: 1px solid #e3e8ef;
       overflow: hidden;
-      text-align: left;
+      text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
       vertical-align: middle;
+    }
+
+    .data-table td.col-part,
+    .data-table td.col-name,
+    .data-table td.col-message {
+      text-align: left;
     }
 
     .data-table th {
@@ -2213,35 +2247,41 @@
     }
 
     .data-table .col-no {
-      width: 56px;
+      width: 44px;
       text-align: center;
     }
 
     .data-table .col-time {
-      width: 142px;
+      width: 168px;
     }
 
     .data-table .col-stage {
-      width: 88px;
+      width: 72px;
     }
 
-    .data-table .col-channel,
+    .data-table .col-channel {
+      width: 82px;
+    }
+
     .data-table .col-part {
       width: 104px;
     }
 
     .data-table .col-actor,
     .data-table .col-owner {
-      width: 120px;
+      width: 92px;
     }
 
     .data-table .col-code,
-    .data-table .col-error-type,
     .data-table .col-error-code,
-    .data-table .col-store,
     .data-table .col-host,
     .data-table .col-pid {
       width: 120px;
+    }
+
+    .data-table .col-error-type,
+    .data-table .col-store {
+      width: 78px;
     }
 
     .data-table .col-name {
@@ -2388,6 +2428,18 @@
 
     body.is-dark-mode .board-toolbar,
     body.is-dark-mode .table-scroll {
+      background: #12171f;
+    }
+
+    body.is-dark-mode #status-board .table-panel,
+    body.is-dark-mode #status-board .board-toolbar,
+    body.is-dark-mode #status-board .board-summary {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    body.is-dark-mode #status-board .table-scroll {
+      border-color: #303947;
       background: #12171f;
     }
 
@@ -2747,6 +2799,30 @@
       color: var(--primary-strong);
     }
 
+    .detail-template-button {
+      position: relative;
+      z-index: 1;
+      min-height: 34px;
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .detail-template-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
     .detail-tab-panel[hidden] {
       display: none;
     }
@@ -2835,6 +2911,72 @@
     .detail-field.is-code dd {
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
       font-size: 12px;
+    }
+
+    #detail-modal .detail-header {
+      border-bottom-color: #c7d2e1;
+      background: #eef3f8;
+    }
+
+    #detail-modal .detail-title {
+      color: #0b1726;
+      font-weight: 800;
+    }
+
+    #detail-modal .detail-subtitle {
+      color: #405168;
+      font-weight: 500;
+    }
+
+    #detail-modal .detail-meta-token {
+      color: #16263a;
+      font-weight: 700;
+    }
+
+    #detail-modal .detail-meta-token strong {
+      color: #5d6b7d;
+      font-weight: 500;
+    }
+
+    #detail-modal .detail-meta-token.is-code {
+      color: #0b5cad;
+    }
+
+    #detail-modal .detail-meta-token.is-danger {
+      color: #b4232f;
+    }
+
+    #detail-modal .detail-meta-token.is-type {
+      color: #2f4f76;
+    }
+
+    #detail-modal .detail-section h3 {
+      border-bottom-color: #c7d2e1;
+      color: #111827;
+      font-weight: 800;
+    }
+
+    #detail-modal .detail-field dt {
+      color: #526173;
+      font-weight: 600;
+    }
+
+    #detail-modal .detail-field dd {
+      border-color: #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 400;
+      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.03);
+    }
+
+    #detail-modal .detail-readonly-textarea {
+      color: #0f172a;
+      font-weight: 400;
+    }
+
+    #detail-modal .detail-field.is-code dd {
+      color: #0b3f76;
+      font-weight: 500;
     }
 
     .event-history-table-wrap {
@@ -3265,6 +3407,50 @@
       color: #8ab4ff;
     }
 
+    body.is-dark-mode .detail-template-button,
+    body.is-dark-mode .copy-close,
+    body.is-dark-mode .copy-button {
+      border-color: #354052;
+      background: #1a202b;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .detail-template-button:hover,
+    body.is-dark-mode .copy-close:hover,
+    body.is-dark-mode .copy-button:hover {
+      border-color: #506078;
+      background: #222a37;
+      color: #ffffff;
+    }
+
+    body.is-dark-mode .copy-dialog {
+      border-color: #303947;
+      background: #12171f;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    body.is-dark-mode .copy-header,
+    body.is-dark-mode .copy-actions {
+      border-color: #303947;
+      background: #171e29;
+    }
+
+    body.is-dark-mode .copy-title {
+      color: #edf4ff;
+    }
+
+    body.is-dark-mode .copy-textarea {
+      border-color: #354052;
+      background: #111821;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .copy-button.is-primary {
+      border-color: #2f81f7;
+      background: #2f81f7;
+      color: #ffffff;
+    }
+
     body.is-dark-mode .detail-section h3,
     body.is-dark-mode .action-target-count {
       color: #e6edf3;
@@ -3281,6 +3467,63 @@
 
     body.is-dark-mode .detail-readonly-textarea {
       color: #d9e2ef;
+    }
+
+    body.is-dark-mode #detail-modal .detail-header {
+      border-bottom-color: #3b4658;
+      background: #182334;
+    }
+
+    body.is-dark-mode #detail-modal .detail-title {
+      color: #f8fbff;
+    }
+
+    body.is-dark-mode #detail-modal .detail-subtitle {
+      color: #b9c8db;
+    }
+
+    body.is-dark-mode #detail-modal .detail-meta-token {
+      color: #e2edf9;
+    }
+
+    body.is-dark-mode #detail-modal .detail-meta-token strong {
+      color: #a8b6c9;
+    }
+
+    body.is-dark-mode #detail-modal .detail-meta-token.is-code {
+      color: #9dccff;
+    }
+
+    body.is-dark-mode #detail-modal .detail-meta-token.is-danger {
+      color: #ffb4bd;
+    }
+
+    body.is-dark-mode #detail-modal .detail-meta-token.is-type {
+      color: #c8ddff;
+    }
+
+    body.is-dark-mode #detail-modal .detail-section h3 {
+      border-bottom-color: #3b4658;
+      color: #f0f6fc;
+    }
+
+    body.is-dark-mode #detail-modal .detail-field dt {
+      color: #aebbd0;
+    }
+
+    body.is-dark-mode #detail-modal .detail-field dd {
+      border-color: #3b4658;
+      background: #0f1622;
+      color: #f0f6fc;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    body.is-dark-mode #detail-modal .detail-readonly-textarea {
+      color: #f0f6fc;
+    }
+
+    body.is-dark-mode #detail-modal .detail-field.is-code dd {
+      color: #b6d4ff;
     }
 
     body.is-dark-mode .action-field input[readonly] {
@@ -3609,6 +3852,104 @@
     .notice-button:hover {
       border-color: var(--primary-strong);
       background: var(--primary-strong);
+    }
+
+    .copy-modal[hidden] {
+      display: none;
+    }
+
+    .copy-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(15, 23, 42, 0.46);
+    }
+
+    .copy-dialog {
+      width: min(620px, calc(100vw - 36px));
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.2);
+    }
+
+    .copy-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-subtle);
+    }
+
+    .copy-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .copy-close {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .copy-body {
+      padding: 14px 16px;
+    }
+
+    .copy-textarea {
+      width: 100%;
+      min-height: 168px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fbfcfe;
+      color: #17202a;
+      font: 13px/1.55 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      resize: vertical;
+    }
+
+    .copy-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      background: var(--surface-subtle);
+    }
+
+    .copy-button {
+      min-width: 76px;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .copy-button.is-primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
     }
 
     .requirements-panel {
@@ -4191,6 +4532,32 @@
                 </button>
               </div>
             </div>
+            <div class="table-divider" aria-hidden="true"></div>
+            <div class="table-scroll">
+              <table class="data-table" aria-label="오류상황판 목록">
+                <thead>
+                  <tr>
+                    <th class="col-select" scope="col">선택</th>
+                    <th class="col-no" scope="col">NO</th>
+                    <th class="col-time" scope="col">등록시간</th>
+                    <th class="col-channel" scope="col">채널유형</th>
+                    <th class="col-part" scope="col">파트</th>
+                    <th class="col-actor" scope="col">최종이행자</th>
+                    <th class="col-owner" scope="col">담당자</th>
+                    <th class="col-code" scope="col">거래코드</th>
+                    <th class="col-name" scope="col">거래명</th>
+                    <th class="col-error-type" scope="col">오류구분</th>
+                    <th class="col-error-code" scope="col">에러코드</th>
+                    <th class="col-message" scope="col">에러메시지</th>
+                    <th class="col-store" scope="col">거래점</th>
+                    <th class="col-host" scope="col">호스트명</th>
+                    <th class="col-stage" scope="col">단계</th>
+                    <th class="col-pid" scope="col">PID</th>
+                  </tr>
+                </thead>
+                <tbody id="status-board-body"></tbody>
+              </table>
+            </div>
             <div class="board-summary" aria-label="오류상황판 조회 정보">
               <div class="board-summary-item">
                 <span class="board-summary-label">디스플레이건수</span>
@@ -4208,32 +4575,6 @@
                   <span class="board-update-query">[<span class="board-summary-accent" id="status-lookup-minutes">30</span>]분 / [<span class="board-summary-accent" id="status-refresh-seconds">30</span>]초 / 파트별: <span class="board-summary-accent" id="status-part-filter">전체</span></span>
                 </strong>
               </div>
-            </div>
-            <div class="table-divider" aria-hidden="true"></div>
-            <div class="table-scroll">
-              <table class="data-table" aria-label="오류상황판 목록">
-                <thead>
-                  <tr>
-                    <th class="col-select" scope="col">선택</th>
-                    <th class="col-no" scope="col">NO</th>
-                    <th class="col-time" scope="col">등록시간</th>
-                    <th class="col-stage" scope="col">단계</th>
-                    <th class="col-channel" scope="col">채널유형</th>
-                    <th class="col-part" scope="col">파트</th>
-                    <th class="col-actor" scope="col">최종이행자</th>
-                    <th class="col-owner" scope="col">담당자</th>
-                    <th class="col-code" scope="col">거래코드</th>
-                    <th class="col-name" scope="col">거래명</th>
-                    <th class="col-error-type" scope="col">오류구분</th>
-                    <th class="col-error-code" scope="col">에러코드</th>
-                    <th class="col-message" scope="col">에러메시지</th>
-                    <th class="col-store" scope="col">거래점</th>
-                    <th class="col-host" scope="col">호스트명</th>
-                    <th class="col-pid" scope="col">PID</th>
-                  </tr>
-                </thead>
-                <tbody id="status-board-body"></tbody>
-              </table>
             </div>
           </div>
         </section>
@@ -5199,6 +5540,13 @@
                     <td>이벤트 조회 목록은 거래코드와 거래명을 클릭 가능한 주요 컬럼으로 시각적으로 강조하여 행 상세 진입 가능성을 인지할 수 있게 한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-058</td>
+                    <td class="req-screen">오류상황판</td>
+                    <td class="req-category">오류 상세</td>
+                    <td>오류 상세 팝업의 에러확인문구 버튼을 누르면 복사 가능한 문구를 표시하며, 양식은 다음과 같다.<br>► [오류상황판-&amp;파트명] &amp;거래명(&amp;거래코드), &amp;전문전송일시(yyyy-mm-dd hh:MM), &amp;글로벌ID<br>► &amp;에러메시지<br>► 최종이행자/담당자 : &amp;최종이행자/&amp;담당자<br>► 업무팀 확인 부탁드립니다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -5297,9 +5645,29 @@
       <div class="detail-tabs" role="tablist" aria-label="오류 상세 탭">
         <button class="detail-tab is-active" type="button" role="tab" id="detail-tab-content" aria-selected="true" aria-controls="detail-body" data-detail-tab-target="detail-body">상세내용</button>
         <button class="detail-tab" type="button" role="tab" id="detail-tab-action" aria-selected="false" aria-controls="detail-action-panel" data-detail-tab-target="detail-action-panel">이벤트 조치접수</button>
+        <button class="detail-template-button" type="button" data-error-check-template>에러확인문구</button>
       </div>
       <div class="detail-body detail-tab-panel" id="detail-body" role="tabpanel" aria-labelledby="detail-tab-content"></div>
       <div class="detail-action-panel detail-tab-panel" id="detail-action-panel" role="tabpanel" aria-labelledby="detail-tab-action" hidden></div>
+    </div>
+  </div>
+  <div class="copy-modal" id="error-check-modal" role="dialog" aria-modal="true" aria-labelledby="error-check-title" hidden>
+    <div class="copy-dialog">
+      <header class="copy-header">
+        <h2 class="copy-title" id="error-check-title">에러확인문구</h2>
+        <button class="copy-close" type="button" aria-label="에러확인문구 닫기" data-error-check-close>
+          <svg width="18" height="18" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+      <div class="copy-body">
+        <textarea class="copy-textarea" id="error-check-text" readonly aria-readonly="true"></textarea>
+      </div>
+      <div class="copy-actions">
+        <button class="copy-button" type="button" data-error-check-close>닫기</button>
+        <button class="copy-button is-primary" type="button" data-error-check-copy>복사</button>
+      </div>
     </div>
   </div>
   <div class="detail-modal" id="event-detail-modal" role="dialog" aria-modal="true" aria-labelledby="event-detail-title" hidden>
@@ -5355,7 +5723,6 @@
       { key: "select", className: "col-select", selectable: true },
       { key: "no", className: "col-no" },
       { key: "registeredAt", className: "col-time" },
-      { key: "stage", className: "col-stage", stageBadge: true },
       { key: "channelType", className: "col-channel" },
       { key: "part", className: "col-part" },
       { key: "lastActor", className: "col-actor" },
@@ -5367,6 +5734,7 @@
       { key: "errorMessage", className: "col-message" },
       { key: "store", className: "col-store" },
       { key: "hostName", className: "col-host" },
+      { key: "stage", className: "col-stage", stageBadge: true },
       { key: "pid", className: "col-pid" }
     ];
 
@@ -5549,6 +5917,11 @@
     const detailActionPanel = document.querySelector("#detail-action-panel");
     const detailTabButtons = [...detailModal.querySelectorAll("[data-detail-tab-target]")];
     const detailTabPanels = [...detailModal.querySelectorAll(".detail-tab-panel")];
+    const errorCheckTemplateButton = document.querySelector("[data-error-check-template]");
+    const errorCheckModal = document.querySelector("#error-check-modal");
+    const errorCheckTextarea = document.querySelector("#error-check-text");
+    const errorCheckCloseButtons = [...document.querySelectorAll("[data-error-check-close]")];
+    const errorCheckCopyButton = document.querySelector("[data-error-check-copy]");
     const eventDetailModal = document.querySelector("#event-detail-modal");
     const eventDetailCloseButton = eventDetailModal.querySelector("[data-event-detail-close]");
     const eventDetailTitle = document.querySelector("#event-detail-title");
@@ -5580,7 +5953,9 @@
     let lastEventDetailFocusedElement = null;
     let lastSettingsFocusedElement = null;
     let lastNoticeFocusedElement = null;
+    let lastErrorCheckFocusedElement = null;
     let lastProblemAuthorFocusedElement = null;
+    let activeStatusDetailRow = null;
     const selectedProblemActionTimelineRows = new Set();
     const selectedProblemFuturePlanRows = new Set();
 
@@ -5927,6 +6302,76 @@
       token.append(tokenLabel, tokenValue);
 
       return token;
+    }
+
+    function formatErrorCheckDateTime(row) {
+      const [dateText = "", timeText = ""] = String(row.registeredAt || "").split(" ");
+      const timeMinute = timeText.slice(0, 5);
+
+      return [dateText, timeMinute].filter(Boolean).join(" ");
+    }
+
+    function formatTelegramSentAtText(telegramSentAt, row) {
+      const rawValue = String(telegramSentAt || "");
+
+      if (rawValue.length >= 12) {
+        return `${rawValue.slice(0, 4)}-${rawValue.slice(4, 6)}-${rawValue.slice(6, 8)} ${rawValue.slice(8, 10)}:${rawValue.slice(10, 12)}`;
+      }
+
+      return formatErrorCheckDateTime(row);
+    }
+
+    function createErrorCheckText(row) {
+      const detail = getDetailRecord(row);
+      const sentAtText = formatTelegramSentAtText(detail.telegramSentAt, row);
+
+      return [
+        `► [오류상황판-${detail.partName}] ${detail.transactionName}(${detail.transactionCode}), ${sentAtText}, ${detail.globalId}`,
+        `► ${detail.errorMessage}`,
+        `► 최종이행자/담당자 : ${detail.lastActor}/${detail.owner}`,
+        "► 업무팀 확인 부탁드립니다."
+      ].join("\n");
+    }
+
+    function openErrorCheckModal() {
+      if (!activeStatusDetailRow) {
+        openEventActionEmptyModal("에러확인문구를 생성할 오류를 찾을 수 없습니다");
+        return;
+      }
+
+      lastErrorCheckFocusedElement = document.activeElement;
+      errorCheckTextarea.value = createErrorCheckText(activeStatusDetailRow);
+      errorCheckModal.hidden = false;
+      errorCheckTextarea.focus();
+      errorCheckTextarea.select();
+    }
+
+    function closeErrorCheckModal() {
+      errorCheckModal.hidden = true;
+
+      if (lastErrorCheckFocusedElement && document.contains(lastErrorCheckFocusedElement)) {
+        lastErrorCheckFocusedElement.focus();
+      }
+    }
+
+    async function copyErrorCheckText() {
+      const value = errorCheckTextarea.value;
+      const originalText = errorCheckCopyButton.textContent;
+
+      errorCheckTextarea.focus();
+      errorCheckTextarea.select();
+
+      try {
+        await navigator.clipboard.writeText(value);
+        errorCheckCopyButton.textContent = "복사됨";
+      } catch {
+        document.execCommand("copy");
+        errorCheckCopyButton.textContent = "복사됨";
+      }
+
+      window.setTimeout(() => {
+        errorCheckCopyButton.textContent = originalText;
+      }, 1200);
     }
 
     function setDetailTab(panelId) {
@@ -7910,6 +8355,7 @@
       const fragment = document.createDocumentFragment();
 
       lastFocusedElement = document.activeElement;
+      activeStatusDetailRow = row;
       detailTitle.textContent = row.transactionName;
       detailSubtitle.textContent = `${row.hostName} · ${row.registeredAt}`;
       detailMeta.replaceChildren(
@@ -7931,8 +8377,13 @@
     }
 
     function closeDetailModal() {
+      if (!errorCheckModal.hidden) {
+        closeErrorCheckModal();
+      }
+
       detailModal.hidden = true;
       body.classList.remove("detail-open");
+      activeStatusDetailRow = null;
 
       if (lastFocusedElement && document.contains(lastFocusedElement)) {
         lastFocusedElement.focus();
@@ -8549,6 +9000,17 @@
     });
 
     detailCloseButton.addEventListener("click", closeDetailModal);
+    errorCheckTemplateButton.addEventListener("click", openErrorCheckModal);
+    errorCheckCopyButton.addEventListener("click", copyErrorCheckText);
+    errorCheckCloseButtons.forEach((button) => {
+      button.addEventListener("click", closeErrorCheckModal);
+    });
+
+    errorCheckModal.addEventListener("click", (event) => {
+      if (event.target === errorCheckModal) {
+        closeErrorCheckModal();
+      }
+    });
 
     detailModal.addEventListener("click", (event) => {
       if (event.target === detailModal) {
@@ -8587,6 +9049,11 @@
 
       if (event.key === "Escape" && !settingsModal.hidden) {
         closeSettingsModal();
+        return;
+      }
+
+      if (event.key === "Escape" && !errorCheckModal.hidden) {
+        closeErrorCheckModal();
         return;
       }
 
