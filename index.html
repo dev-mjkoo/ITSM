@@ -567,15 +567,17 @@
     .problem-section summary {
       min-height: 58px;
       display: grid;
-      grid-template-columns: 42px minmax(0, 1fr) 20px;
+      grid-template-columns: minmax(0, 1fr) 20px;
       gap: 12px;
       align-items: center;
       padding: 0 18px;
+      border-bottom: 1px solid transparent;
+      background: #f3f6fa;
       list-style: none;
       cursor: pointer;
       user-select: none;
       outline: none;
-      transition: background 160ms ease;
+      transition: background 160ms ease, border-color 160ms ease;
     }
 
     .problem-section summary::-webkit-details-marker {
@@ -584,7 +586,7 @@
 
     .problem-section summary:hover,
     .problem-section summary:focus-visible {
-      background: var(--surface-subtle);
+      background: #edf2f7;
     }
 
     .problem-section.is-disabled summary {
@@ -593,32 +595,25 @@
 
     .problem-section.is-disabled summary:hover,
     .problem-section.is-disabled summary:focus-visible {
-      background: var(--surface);
+      background: #f3f6fa;
     }
 
-    .problem-section.is-disabled .problem-section-no,
-    .problem-section.is-disabled .problem-section-title,
+    .problem-section.is-disabled .problem-section-heading,
     .problem-section.is-disabled .problem-section-chevron {
       color: #a1acba;
       border-color: #a1acba;
     }
 
-    .problem-section-no {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 0.02em;
-    }
-
-    .problem-section-title {
+    .problem-section-heading {
       min-width: 0;
       color: var(--text);
-      font-size: 15px;
-      font-weight: 850;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.25;
     }
 
     .problem-section.is-required summary {
-      grid-template-columns: 42px minmax(0, 1fr) auto 20px;
+      grid-template-columns: minmax(0, 1fr) auto 20px;
     }
 
     .problem-required-note {
@@ -647,10 +642,14 @@
       transform: rotate(225deg);
     }
 
+    .problem-section[open] summary {
+      border-bottom-color: var(--border);
+      background: #eef3f8;
+    }
+
     .problem-section-body {
       min-height: 0;
-      border-top: 1px solid var(--border);
-      background: #fbfcfe;
+      background: var(--surface);
       padding: 14px 16px;
     }
 
@@ -949,8 +948,62 @@
       color: #ffffff;
     }
 
+    body.is-dark-mode .problem-filter-field input {
+      border-color: var(--border);
+      background: #161b22;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-filter-field input[readonly] {
+      background: #111820;
+    }
+
+    body.is-dark-mode .problem-filter-button {
+      border-color: var(--border);
+      background: #1f2630;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-filter-button:hover {
+      background: #263241;
+    }
+
+    body.is-dark-mode .problem-filter-button.is-primary {
+      border-color: #2f81f7;
+      background: #2f81f7;
+      color: #ffffff;
+    }
+
+    body.is-dark-mode .problem-result-action {
+      border-color: var(--border);
+      background: #1f2630;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-result-action:hover {
+      background: #263241;
+    }
+
     body.is-dark-mode .problem-section-body {
       background: #111820;
+    }
+
+    body.is-dark-mode .problem-section summary {
+      background: #1b222c;
+    }
+
+    body.is-dark-mode .problem-section summary:hover,
+    body.is-dark-mode .problem-section summary:focus-visible {
+      background: #222b37;
+    }
+
+    body.is-dark-mode .problem-section.is-disabled summary:hover,
+    body.is-dark-mode .problem-section.is-disabled summary:focus-visible {
+      background: #1b222c;
+    }
+
+    body.is-dark-mode .problem-section[open] summary {
+      background: #202a36;
     }
 
     body.is-dark-mode .problem-form-field input,
@@ -995,6 +1048,39 @@
       background: #17283b;
     }
 
+    body.is-dark-mode .problem-result-scroll,
+    body.is-dark-mode .problem-result-table th,
+    body.is-dark-mode .problem-result-table td {
+      border-color: var(--border);
+    }
+
+    body.is-dark-mode .problem-result-table th {
+      background: #111820;
+      color: #aebbd0;
+    }
+
+    body.is-dark-mode .problem-result-table tbody td {
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-result-table tbody tr:nth-child(even) td {
+      background: #141b24;
+    }
+
+    body.is-dark-mode .problem-result-table tbody tr.is-clickable td.problem-col-title {
+      color: #8ab4ff;
+    }
+
+    body.is-dark-mode .problem-result-table tbody tr.is-clickable:hover td,
+    body.is-dark-mode .problem-result-table tbody tr.is-clickable:focus-visible td {
+      background: #17283b;
+      color: #f0f6fc;
+    }
+
+    body.is-dark-mode .problem-result-table tbody tr.is-not-owned td {
+      color: #7d8898;
+    }
+
     .problem-author-dialog {
       width: min(1180px, calc(100vw - 48px));
       height: min(840px, calc(100vh - 48px));
@@ -1032,7 +1118,139 @@
     .problem-search-page {
       min-height: calc(100vh - var(--header-height) - 48px);
       display: grid;
-      grid-template-rows: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .problem-filter-panel {
+      overflow: visible;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .problem-filter-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .problem-filter-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      align-items: end;
+      padding: 16px;
+    }
+
+    .problem-filter-field {
+      min-width: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .problem-filter-field.is-lookup {
+      grid-column: span 2;
+    }
+
+    .problem-filter-field.is-date-range {
+      grid-column: span 4;
+    }
+
+    .problem-filter-field.is-title {
+      grid-column: span 2;
+    }
+
+    .problem-filter-field label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .problem-filter-field input {
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #1d2a3a;
+      font-size: 13px;
+    }
+
+    .problem-filter-field input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .problem-filter-field input[readonly] {
+      background: #fbfcfe;
+      cursor: default;
+    }
+
+    .problem-filter-field .action-search-control,
+    .problem-filter-field .action-date-control {
+      grid-template-columns: minmax(0, 1fr) 38px;
+    }
+
+    .problem-filter-field .action-search-button,
+    .problem-filter-field .action-date-button {
+      min-height: 36px;
+      height: 36px;
+    }
+
+    .problem-date-range {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 6px;
+      align-items: center;
+    }
+
+    .problem-date-range-separator {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .problem-filter-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 0 16px 16px;
+    }
+
+    .problem-filter-button {
+      min-width: 76px;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .problem-filter-button:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
+    }
+
+    .problem-filter-button.is-primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .problem-filter-button.is-primary:hover {
+      border-color: var(--primary-strong);
+      background: var(--primary-strong);
     }
 
     .problem-result-panel {
@@ -1046,32 +1264,42 @@
       box-shadow: var(--shadow);
     }
 
-    .problem-result-header {
-      min-height: 44px;
+    .problem-result-meta {
+      min-height: 34px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 9px 14px;
+      align-items: flex-end;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 8px 14px 6px;
     }
 
-    .problem-result-title {
-      margin: 0;
-      color: #26364a;
-      font-size: 14px;
+    .problem-result-action {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: #253246;
+      font-size: 13px;
       font-weight: 800;
+      white-space: nowrap;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .problem-result-action:hover {
+      border-color: var(--border-strong);
+      background: #f7fbff;
     }
 
     .problem-result-count {
       color: var(--muted);
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
-    }
-
-    .problem-result-divider {
-      margin: 0 14px;
-      border-top: 1px solid var(--border);
     }
 
     .problem-result-scroll {
@@ -1080,6 +1308,7 @@
       overflow: auto;
       margin: 0 14px 14px;
       border-right: 1px solid var(--border);
+      border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       border-left: 1px solid var(--border);
       background: var(--surface);
@@ -1097,12 +1326,12 @@
 
     .problem-result-table th,
     .problem-result-table td {
-      height: 34px;
+      height: 38px;
       padding: 0 8px;
       border-right: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       overflow: hidden;
-      text-align: left;
+      text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
       vertical-align: middle;
@@ -1124,22 +1353,43 @@
 
     .problem-result-table tbody td {
       color: #253246;
+      transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
     }
 
     .problem-result-table tbody tr:nth-child(even) td {
       background: #fbfcfe;
     }
 
-    .problem-result-table tbody tr:hover td {
-      background: #f7fbff;
-    }
-
     .problem-result-table tbody tr.is-clickable {
       cursor: pointer;
     }
 
+    .problem-result-table tbody tr.is-clickable td.problem-col-title {
+      color: #174ea6;
+      font-weight: 800;
+    }
+
+    .problem-result-table tbody tr.is-clickable:hover td,
+    .problem-result-table tbody tr.is-clickable:focus-visible td {
+      background: #edf6ff;
+      color: #102a4c;
+    }
+
+    .problem-result-table tbody tr.is-clickable:hover td:first-child,
+    .problem-result-table tbody tr.is-clickable:focus-visible td:first-child {
+      box-shadow: inset 3px 0 0 var(--primary);
+    }
+
+    .problem-result-table tbody tr.is-clickable:focus-visible {
+      outline: none;
+    }
+
     .problem-result-table tbody tr.is-not-owned td {
       color: #8b98a9;
+    }
+
+    .problem-result-table tbody tr.is-not-owned {
+      cursor: default;
     }
 
     .problem-result-table .problem-col-no {
@@ -1714,6 +1964,21 @@
       font-size: 12px;
     }
 
+    .event-result-table tbody tr.is-clickable td.event-col-transaction-code,
+    .event-result-table tbody tr.is-clickable td.event-col-transaction-name {
+      color: #174ea6;
+      font-weight: 800;
+    }
+
+    .event-result-table tbody tr.is-clickable:hover td.event-col-transaction-code,
+    .event-result-table tbody tr.is-clickable:hover td.event-col-transaction-name,
+    .event-result-table tbody tr.is-clickable:focus-visible td.event-col-transaction-code,
+    .event-result-table tbody tr.is-clickable:focus-visible td.event-col-transaction-name {
+      color: #0f3f8f;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     .table-panel {
       min-height: calc(100vh - var(--header-height) - 48px);
       display: flex;
@@ -2093,29 +2358,25 @@
     }
 
     .stage-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 64px;
-      height: 22px;
-      padding: 0 8px;
-      border: 1px solid #e09aa1;
-      border-radius: 4px;
-      background: #fff1f3;
+      display: inline-block;
+      max-width: 100%;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: #b4232f;
       font-weight: 800;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       vertical-align: middle;
     }
 
     .stage-badge.is-pending {
-      border-color: #f2c16d;
-      background: #fff8e8;
       color: #8a5b10;
     }
 
     .stage-badge.is-excluded {
-      border-color: #d7dce4;
-      background: #f5f6f8;
       color: #667386;
     }
 
@@ -2222,6 +2483,18 @@
       color: #f0b8c0;
     }
 
+    body.is-dark-mode .event-result-table tbody tr.is-clickable td.event-col-transaction-code,
+    body.is-dark-mode .event-result-table tbody tr.is-clickable td.event-col-transaction-name {
+      color: #8ab4ff;
+    }
+
+    body.is-dark-mode .event-result-table tbody tr.is-clickable:hover td.event-col-transaction-code,
+    body.is-dark-mode .event-result-table tbody tr.is-clickable:hover td.event-col-transaction-name,
+    body.is-dark-mode .event-result-table tbody tr.is-clickable:focus-visible td.event-col-transaction-code,
+    body.is-dark-mode .event-result-table tbody tr.is-clickable:focus-visible td.event-col-transaction-name {
+      color: #b6d4ff;
+    }
+
     body.is-dark-mode .row-select {
       accent-color: #58a6ff;
     }
@@ -2239,20 +2512,14 @@
     }
 
     body.is-dark-mode .stage-badge {
-      border-color: #8f3841;
-      background: #351920;
       color: #ffb4bd;
     }
 
     body.is-dark-mode .stage-badge.is-pending {
-      border-color: #86672d;
-      background: #312812;
       color: #f4cf7c;
     }
 
     body.is-dark-mode .stage-badge.is-excluded {
-      border-color: #4a5361;
-      background: #20262f;
       color: #9eacbf;
     }
 
@@ -3614,9 +3881,16 @@
       }
 
       .event-search-grid,
+      .problem-filter-grid,
       .event-rule-form {
         grid-template-columns: minmax(0, 1fr);
         padding: 12px;
+      }
+
+      .problem-filter-field.is-lookup,
+      .problem-filter-field.is-date-range,
+      .problem-filter-field.is-title {
+        grid-column: 1 / -1;
       }
 
       .problem-basic-form,
@@ -3644,15 +3918,18 @@
         margin: 0 12px 12px;
       }
 
-      .event-date-range {
+      .event-date-range,
+      .problem-date-range {
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .event-date-range-separator {
+      .event-date-range-separator,
+      .problem-date-range-separator {
         display: none;
       }
 
-      .event-search-actions {
+      .event-search-actions,
+      .problem-filter-actions {
         padding: 0 12px 12px;
       }
 
@@ -3812,7 +4089,7 @@
               <path d="M12 3.5 21 19H3l9-15.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
               <path d="M12 9v4M12 16.5h.01" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
             </svg>
-            <span>장애 관리</span>
+            <span>장애관리 (TBD)</span>
             <svg class="nav-expander" aria-hidden="true" viewBox="0 0 24 24" fill="none">
               <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -4159,8 +4436,7 @@
             </div>
             <details class="problem-section is-required" data-problem-section="basic" open>
               <summary>
-                <span class="problem-section-no">01</span>
-                <span class="problem-section-title">기본정보</span>
+                <span class="problem-section-heading">01 기본정보</span>
                 <span class="problem-required-note" data-problem-basic-required-note>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4217,8 +4493,7 @@
             </details>
             <details class="problem-section is-disabled" data-problem-section="overview" data-problem-disabled-section aria-disabled="true">
               <summary>
-                <span class="problem-section-no">02</span>
-                <span class="problem-section-title">개요</span>
+                <span class="problem-section-heading">02 개요</span>
                 <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4267,8 +4542,7 @@
             </details>
             <details class="problem-section is-disabled" data-problem-section="serviceImpact" data-problem-disabled-section aria-disabled="true">
               <summary>
-                <span class="problem-section-no">03</span>
-                <span class="problem-section-title">서비스영향도</span>
+                <span class="problem-section-heading">03 서비스영향도</span>
                 <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4281,8 +4555,7 @@
             </details>
             <details class="problem-section is-disabled" data-problem-section="cause" data-problem-disabled-section aria-disabled="true">
               <summary>
-                <span class="problem-section-no">04</span>
-                <span class="problem-section-title">문제 발생 원인</span>
+                <span class="problem-section-heading">04 문제 발생 원인</span>
                 <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4295,8 +4568,7 @@
             </details>
             <details class="problem-section is-disabled" data-problem-section="actionTimeline" data-problem-disabled-section aria-disabled="true">
               <summary>
-                <span class="problem-section-no">05</span>
-                <span class="problem-section-title">조치 내용 (시간별)</span>
+                <span class="problem-section-heading">05 조치 내용 (시간별)</span>
                 <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4333,8 +4605,7 @@
             </details>
             <details class="problem-section is-disabled" data-problem-section="futurePlan" data-problem-disabled-section aria-disabled="true">
               <summary>
-                <span class="problem-section-no">06</span>
-                <span class="problem-section-title">향후 대책</span>
+                <span class="problem-section-heading">06 향후 대책</span>
                 <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4367,8 +4638,7 @@
             </details>
             <details class="problem-section is-disabled" data-problem-section="fiveWhy" data-problem-disabled-section aria-disabled="true">
               <summary>
-                <span class="problem-section-no">07</span>
-                <span class="problem-section-title">5-why</span>
+                <span class="problem-section-heading">07 5-why</span>
                 <span class="problem-required-note" data-problem-followup-required-note hidden>* 필수입력 항목입니다</span>
                 <span class="problem-section-chevron" aria-hidden="true"></span>
               </summary>
@@ -4400,12 +4670,80 @@
 
         <section class="view" id="problem-search" aria-labelledby="page-heading">
           <div class="problem-search-page">
+            <section class="problem-filter-panel" aria-label="문제관리 조회 검색 조건">
+              <form class="problem-filter-form" id="problem-search-form">
+                <div class="problem-filter-grid">
+                  <div class="problem-filter-field is-lookup">
+                    <label for="problem-search-author-department">작성부서</label>
+                    <div class="action-search-control">
+                      <input id="problem-search-author-department" name="authorDepartment" type="text" readonly aria-readonly="true">
+                      <button class="action-search-button" type="button" aria-label="작성부서 검색" data-problem-search-lookup data-target="problem-search-author-department" data-value="디지털서비스개발부">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-filter-field is-lookup">
+                    <label for="problem-search-author-team">작성팀</label>
+                    <div class="action-search-control">
+                      <input id="problem-search-author-team" name="authorTeam" type="text" readonly aria-readonly="true">
+                      <button class="action-search-button" type="button" aria-label="작성팀 검색" data-problem-search-lookup data-target="problem-search-author-team" data-value="디지털수신Cell">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-filter-field is-lookup">
+                    <label for="problem-search-author">작성자</label>
+                    <div class="action-search-control">
+                      <input id="problem-search-author" name="author" type="text" readonly aria-readonly="true">
+                      <button class="action-search-button" type="button" aria-label="작성자 검색" data-problem-search-lookup data-target="problem-search-author" data-value="홍길동">
+                        <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                          <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="problem-filter-field is-date-range">
+                    <label>기간</label>
+                    <div class="problem-date-range">
+                      <div class="action-date-control" data-problem-search-date>
+                        <input id="problem-search-start-date" name="startDate" type="text" readonly aria-readonly="true">
+                        <button class="action-date-button" type="button" aria-label="기간 시작일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="기간 시작일자">
+                          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 3v4M17 3v4M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </button>
+                      </div>
+                      <span class="problem-date-range-separator" aria-hidden="true">~</span>
+                      <div class="action-date-control" data-problem-search-date>
+                        <input id="problem-search-end-date" name="endDate" type="text" readonly aria-readonly="true">
+                        <button class="action-date-button" type="button" aria-label="기간 종료일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="기간 종료일자">
+                          <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 3v4M17 3v4M4.5 9.5h15M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="problem-filter-field is-title">
+                    <label for="problem-search-title">제목</label>
+                    <input id="problem-search-title" name="title" type="text">
+                  </div>
+                </div>
+                <div class="problem-filter-actions">
+                  <button class="problem-filter-button" type="reset">초기화</button>
+                  <button class="problem-filter-button is-primary" type="submit">조회</button>
+                </div>
+              </form>
+            </section>
             <section class="problem-result-panel" aria-label="문제관리 조회 결과">
-              <div class="problem-result-header">
-                <h2 class="problem-result-title">등록 문제 목록</h2>
+              <div class="problem-result-meta">
+                <button class="problem-result-action" type="button">Excel 다운로드</button>
                 <span class="problem-result-count" id="problem-result-count">0건</span>
               </div>
-              <div class="problem-result-divider" aria-hidden="true"></div>
               <div class="problem-result-scroll">
                 <table class="problem-result-table" aria-label="문제관리 조회 결과 목록">
                   <thead>
@@ -4826,6 +5164,41 @@
                     <td>서비스영향도 섹션의 내용작성 입력 필드에는 송신 전문 ACK 수신불가, 수신 전문 전송오류 등 작성 예시를 placeholder로 제공한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-053</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">검색 조건</td>
+                    <td>문제관리 조회 검색 조건의 작성부서, 작성팀, 작성자는 직접 입력할 수 없으며 돋보기 검색을 통해서만 선택하고, 검색 결과는 SWING 또는 ITBPI 정보를 사용한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-054</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 목록은 기본 표시 건수를 100건으로 한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-055</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">결재요청</td>
+                    <td>결재요청된 이벤트는 담당 셀장이 그룹 ITSM에 접속하면 나의할일의 결재대기 목록에 건수로 표시한다.</td>
+                    <td class="req-status is-pending">대기</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-056</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 목록의 선택 체크박스는 행 선택 전용으로 동작하며, 체크박스 클릭 시 상세 팝업을 열지 않는다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-057</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">이벤트 조회</td>
+                    <td>이벤트 조회 목록은 거래코드와 거래명을 클릭 가능한 주요 컬럼으로 시각적으로 강조하여 행 상세 진입 가능성을 인지할 수 있게 한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -5100,6 +5473,9 @@
     const eventRuleCount = document.querySelector("#event-rule-count");
     const problemResultBody = document.querySelector("#problem-result-body");
     const problemResultCount = document.querySelector("#problem-result-count");
+    const problemSearchForm = document.querySelector("#problem-search-form");
+    const problemSearchDateControls = [...document.querySelectorAll("[data-problem-search-date]")];
+    const problemSearchLookupButtons = [...document.querySelectorAll("[data-problem-search-lookup]")];
     const problemRegisterPage = document.querySelector(".problem-register-page");
     const problemRegisterButton = document.querySelector("[data-problem-register-button]");
     const problemBasicSection = document.querySelector("[data-problem-section='basic']");
@@ -5864,6 +6240,46 @@
       }
     }
 
+    function initializeProblemSearchControls() {
+      problemSearchDateControls.forEach((dateWrapper) => {
+        const control = dateWrapper.querySelector("input");
+        const dateButton = dateWrapper.querySelector(".action-date-button");
+
+        if (!control || !dateButton || dateWrapper.querySelector(".action-date-popover")) {
+          return;
+        }
+
+        dateWrapper.append(createActionDateCalendar({
+          control,
+          dateButton,
+          dateWrapper,
+          label: dateButton.dataset.dateLabel || "기간",
+          minDateValue: ""
+        }));
+      });
+
+      problemSearchLookupButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.target);
+
+          if (target) {
+            target.value = button.dataset.value || "";
+          }
+        });
+      });
+
+      if (problemSearchForm) {
+        problemSearchForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          refreshProblemSearchResults();
+        });
+
+        problemSearchForm.addEventListener("reset", () => {
+          window.setTimeout(refreshProblemSearchResults, 0);
+        });
+      }
+    }
+
     function initializeProblemDateControls() {
       document.querySelectorAll("[data-problem-date-control]").forEach((dateWrapper) => {
         const control = dateWrapper.querySelector("input");
@@ -5936,6 +6352,81 @@
         .filter((row) => !storedIds.has(row.problemId));
 
       return [...storedRows, ...initialRows];
+    }
+
+    function normalizeProblemSearchText(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    function getProblemSearchCriteria() {
+      if (!problemSearchForm) {
+        return {};
+      }
+
+      const formData = new FormData(problemSearchForm);
+
+      return {
+        authorDepartment: normalizeProblemSearchText(formData.get("authorDepartment")),
+        authorTeam: normalizeProblemSearchText(formData.get("authorTeam")),
+        author: normalizeProblemSearchText(formData.get("author")),
+        startDate: String(formData.get("startDate") || "").trim(),
+        endDate: String(formData.get("endDate") || "").trim(),
+        title: normalizeProblemSearchText(formData.get("title"))
+      };
+    }
+
+    function hasProblemSearchCriteria(criteria = getProblemSearchCriteria()) {
+      return Object.values(criteria).some((value) => String(value || "").trim());
+    }
+
+    function matchesProblemSearchCriteria(row, criteria) {
+      const registeredDate = String(row.registeredAt || "").slice(0, 10);
+      const includesText = (value, query) => !query || normalizeProblemSearchText(value).includes(query);
+
+      if (!includesText(row.authorDepartment, criteria.authorDepartment)) {
+        return false;
+      }
+
+      if (!includesText(row.authorTeam, criteria.authorTeam)) {
+        return false;
+      }
+
+      if (!includesText(row.author, criteria.author)) {
+        return false;
+      }
+
+      if (!includesText(row.title, criteria.title)) {
+        return false;
+      }
+
+      if (criteria.startDate && (!registeredDate || registeredDate < criteria.startDate)) {
+        return false;
+      }
+
+      if (criteria.endDate && (!registeredDate || registeredDate > criteria.endDate)) {
+        return false;
+      }
+
+      return true;
+    }
+
+    function getFilteredProblemRows(criteria = getProblemSearchCriteria()) {
+      if (!hasProblemSearchCriteria(criteria)) {
+        return getProblemRows();
+      }
+
+      return getProblemRows().filter((row) => matchesProblemSearchCriteria(row, criteria));
+    }
+
+    function refreshProblemSearchResults() {
+      const criteria = getProblemSearchCriteria();
+      const hasCriteria = hasProblemSearchCriteria(criteria);
+      const rows = getFilteredProblemRows(criteria);
+      const emptyMessage = hasCriteria
+        ? "조회 조건에 맞는 문제가 없습니다."
+        : "등록된 문제가 없습니다.";
+
+      renderProblemResultRows(rows, emptyMessage);
     }
 
     function setEventRuleFeedback(message, isError = false) {
@@ -6986,7 +7477,7 @@
         return false;
       }
 
-      renderProblemResultRows(getProblemRows());
+      refreshProblemSearchResults();
       openEventActionEmptyModal(successMessage);
       return true;
     }
@@ -7027,7 +7518,7 @@
         return;
       }
 
-      renderProblemResultRows(getProblemRows());
+      refreshProblemSearchResults();
       resetProblemRegisterForm();
       openEventActionEmptyModal("등록되었습니다(SWING메일로도 전달됩니다)");
     }
@@ -7687,6 +8178,12 @@
         checkbox.dataset.rowId = String(row.no);
         hiddenText.className = "sr-only";
         hiddenText.textContent = `${row.no}번 이벤트 선택`;
+        label.addEventListener("click", (event) => {
+          event.stopPropagation();
+        });
+        checkbox.addEventListener("click", (event) => {
+          event.stopPropagation();
+        });
         checkbox.addEventListener("change", () => handleEventResultSelect(row, checkbox));
         label.append(checkbox, hiddenText);
         cell.append(label);
@@ -7785,7 +8282,7 @@
       openProblemAuthorModal(row);
     }
 
-    function renderProblemResultRows(rows) {
+    function renderProblemResultRows(rows, emptyMessage = "등록된 문제가 없습니다.") {
       const fragment = document.createDocumentFragment();
 
       problemRows = rows.map((row, index) => ({
@@ -7799,7 +8296,7 @@
         const emptyCell = document.createElement("td");
 
         emptyCell.colSpan = problemSearchColumns.length;
-        emptyCell.textContent = "등록된 문제가 없습니다.";
+        emptyCell.textContent = emptyMessage;
         emptyRow.append(emptyCell);
         problemResultBody.replaceChildren(emptyRow);
         return;
@@ -8109,11 +8606,12 @@
     });
 
     initializeEventSearchControls();
+    initializeProblemSearchControls();
     initializeProblemDateControls();
     setProblemRegisterMode("create");
     renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
-    renderProblemResultRows(getProblemRows());
+    refreshProblemSearchResults();
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
     applyRequirementsFilter();
     updateCurrentClock();
