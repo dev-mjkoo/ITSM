@@ -3076,6 +3076,50 @@
             </button>
           </div>
         </div>
+        <div class="nav-group" data-nav-group="problem-management">
+          <button class="nav-button nav-group-button" type="button" data-view-target="problem-search" data-nav-group-button="problem-management" aria-expanded="false" aria-controls="problem-management-submenu">
+            <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M12 4.5a7.5 7.5 0 1 0 7.5 7.5A7.5 7.5 0 0 0 12 4.5Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 8.5v4M12 16h.01" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+            </svg>
+            <span>문제 관리</span>
+            <svg class="nav-expander" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-submenu" id="problem-management-submenu">
+            <button class="nav-sub-button" type="button" data-view-target="problem-search">
+              <span class="nav-sub-mark" aria-hidden="true"></span>
+              <span>문제관리 조회</span>
+            </button>
+            <button class="nav-sub-button" type="button" data-view-target="problem-register">
+              <span class="nav-sub-mark" aria-hidden="true"></span>
+              <span>문제관리 등록</span>
+            </button>
+          </div>
+        </div>
+        <div class="nav-group" data-nav-group="incident-management">
+          <button class="nav-button nav-group-button" type="button" data-view-target="incident-search" data-nav-group-button="incident-management" aria-expanded="false" aria-controls="incident-management-submenu">
+            <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3.5 21 19H3l9-15.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M12 9v4M12 16.5h.01" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+            </svg>
+            <span>장애 관리</span>
+            <svg class="nav-expander" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="nav-submenu" id="incident-management-submenu">
+            <button class="nav-sub-button" type="button" data-view-target="incident-search">
+              <span class="nav-sub-mark" aria-hidden="true"></span>
+              <span>장애관리 조회</span>
+            </button>
+            <button class="nav-sub-button" type="button" data-view-target="incident-register">
+              <span class="nav-sub-mark" aria-hidden="true"></span>
+              <span>장애관리 등록</span>
+            </button>
+          </div>
+        </div>
         <button class="nav-button" type="button" data-view-target="requirements">
           <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
             <path d="M7 3.5h7l3 3v14H7a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
@@ -3398,6 +3442,22 @@
               </div>
             </section>
           </div>
+        </section>
+
+        <section class="view" id="problem-register" aria-labelledby="page-heading">
+          <div class="workspace" aria-label="문제관리 등록"></div>
+        </section>
+
+        <section class="view" id="problem-search" aria-labelledby="page-heading">
+          <div class="workspace" aria-label="문제관리 조회"></div>
+        </section>
+
+        <section class="view" id="incident-register" aria-labelledby="page-heading">
+          <div class="workspace" aria-label="장애관리 등록"></div>
+        </section>
+
+        <section class="view" id="incident-search" aria-labelledby="page-heading">
+          <div class="workspace" aria-label="장애관리 조회"></div>
         </section>
 
         <section class="view" id="requirements" aria-labelledby="page-heading">
@@ -3883,6 +3943,18 @@
       "event-rule-management": {
         title: "이벤트 룰 관리"
       },
+      "problem-register": {
+        title: "문제관리 등록"
+      },
+      "problem-search": {
+        title: "문제관리 조회"
+      },
+      "incident-register": {
+        title: "장애관리 등록"
+      },
+      "incident-search": {
+        title: "장애관리 조회"
+      },
       "requirements": {
         title: "개발요건"
       }
@@ -3890,7 +3962,11 @@
 
     const body = document.body;
     const selectedStatusRows = new Set();
-    const eventManagementViewIds = new Set(["event-search", "event-rule-management"]);
+    const navGroupViewIds = {
+      "event-management": new Set(["event-search", "event-rule-management"]),
+      "problem-management": new Set(["problem-register", "problem-search"]),
+      "incident-management": new Set(["incident-register", "incident-search"])
+    };
     const navButtons = [...document.querySelectorAll("[data-view-target]")];
     const navGroups = [...document.querySelectorAll("[data-nav-group]")];
     const views = [...document.querySelectorAll(".view")];
@@ -5487,7 +5563,6 @@
 
     function showView(viewId) {
       const meta = pageMeta[viewId];
-      const isEventManagementView = eventManagementViewIds.has(viewId);
       const isStatusBoardView = viewId === "status-board";
 
       views.forEach((view) => {
@@ -5495,15 +5570,19 @@
       });
 
       navButtons.forEach((button) => {
-        const isGroupButton = button.dataset.navGroupButton === "event-management";
-        const isActive = button.dataset.viewTarget === viewId || (isGroupButton && isEventManagementView);
+        const groupId = button.dataset.navGroupButton;
+        const isGroupButton = Boolean(groupId);
+        const isActive = button.dataset.viewTarget === viewId || (
+          isGroupButton && navGroupViewIds[groupId]?.has(viewId)
+        );
 
         button.classList.toggle("is-active", isActive);
         button.setAttribute("aria-current", isActive && !isGroupButton ? "page" : "false");
       });
 
       navGroups.forEach((group) => {
-        const isOpen = group.dataset.navGroup === "event-management" && isEventManagementView;
+        const groupId = group.dataset.navGroup;
+        const isOpen = Boolean(navGroupViewIds[groupId]?.has(viewId));
         const groupButton = group.querySelector("[data-nav-group-button]");
 
         group.classList.toggle("is-open", isOpen);
