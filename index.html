@@ -328,6 +328,51 @@
       line-height: 1.25;
     }
 
+    .topbar-clock {
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .topbar-clock[hidden] {
+      display: none;
+    }
+
+    .topbar-clock-main {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .topbar-clock-date {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .topbar-clock-time {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      color: var(--text);
+      letter-spacing: 0;
+    }
+
+    .topbar-clock-updated {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .topbar-clock-updated time {
+      color: #475569;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
     .theme-toggle {
       min-height: 30px;
       display: inline-flex;
@@ -394,6 +439,26 @@
       border-color: var(--border);
       background: var(--surface);
       color: var(--text);
+    }
+
+    body.is-dark-mode .topbar-clock {
+      color: #cbd5e1;
+    }
+
+    body.is-dark-mode .topbar-clock-date {
+      color: #9aa7b8;
+    }
+
+    body.is-dark-mode .topbar-clock-time {
+      color: #e6edf3;
+    }
+
+    body.is-dark-mode .topbar-clock-updated {
+      color: #9aa7b8;
+    }
+
+    body.is-dark-mode .topbar-clock-updated time {
+      color: #cbd5e1;
     }
 
     body.is-dark-mode .sidebar-toggle {
@@ -1005,8 +1070,109 @@
       align-items: center;
       justify-content: flex-end;
       gap: 8px;
-      padding: 12px 14px;
+      padding: 12px 14px 6px;
       background: var(--surface);
+    }
+
+    .board-summary {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 5px 0;
+      padding: 0 14px 10px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .board-summary-item {
+      min-width: 0;
+      max-width: 100%;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      padding-right: 10px;
+      margin-right: 10px;
+      border-right: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .board-summary-item:last-child {
+      padding-right: 0;
+      margin-right: 0;
+      border-right: 0;
+    }
+
+    .board-summary-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .board-summary-label::after {
+      content: ":";
+    }
+
+    .board-summary-value {
+      display: inline;
+      min-width: 0;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .board-count-line {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 2px;
+      color: #334155;
+      line-height: 1.2;
+    }
+
+    .board-count-number {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .board-count-unit {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .board-count-total {
+      display: inline;
+      margin-left: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .board-update-query {
+      color: #334155;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .board-summary-accent {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .board-actions {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .table-divider {
@@ -1273,6 +1439,24 @@
     body.is-dark-mode .board-toolbar,
     body.is-dark-mode .table-scroll {
       background: #12171f;
+    }
+
+    body.is-dark-mode .board-summary-item {
+      border-right-color: #303947;
+    }
+
+    body.is-dark-mode .board-count-line,
+    body.is-dark-mode .board-count-total,
+    body.is-dark-mode .board-update-query {
+      color: #cbd5e1;
+    }
+
+    body.is-dark-mode .board-count-number {
+      color: #6ba6ff;
+    }
+
+    body.is-dark-mode .board-summary-accent {
+      color: #6ba6ff;
     }
 
     body.is-dark-mode .table-divider {
@@ -2622,14 +2806,20 @@
         font-size: 17px;
       }
 
+      .topbar-clock-date {
+        display: none;
+      }
+
+      .topbar-clock-updated {
+        display: none;
+      }
+
       .content {
         padding: 16px;
       }
 
-      .board-toolbar {
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding: 10px;
+      .board-actions {
+        overflow-x: visible;
       }
 
       .table-scroll {
@@ -2640,6 +2830,30 @@
       .event-result-divider {
         margin: 0 10px;
       }
+    }
+
+    @media (max-width: 1320px) {
+      .board-toolbar {
+        padding: 10px 14px 8px;
+      }
+
+      .board-summary {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .board-summary-item {
+        white-space: normal;
+      }
+
+      .board-actions {
+        width: 100%;
+        justify-content: flex-end;
+        overflow-x: visible;
+      }
+    }
+
+    @media (max-width: 760px) {
 
       .event-result-scroll {
         margin: 0 10px 10px;
@@ -2856,46 +3070,73 @@
             <span class="theme-toggle-label">다크</span>
           </button>
         </div>
+        <div class="topbar-clock" id="status-header-clock" aria-label="현재시간 및 최종업데이트">
+          <span class="topbar-clock-main">
+            <span class="topbar-clock-date" id="status-current-date">2026/06/10 수요일</span>
+            <span class="topbar-clock-time" id="status-current-clock">08:19:07</span>
+          </span>
+          <span class="topbar-clock-updated">최종업데이트 <time id="status-last-updated">[2026년 6월 10일 08:29:50]</time></span>
+        </div>
       </header>
 
       <main class="content">
         <section class="view is-active" id="status-board" aria-labelledby="page-heading">
           <div class="table-panel">
             <div class="board-toolbar" aria-label="오류상황판 작업">
-              <button class="toolbar-button" type="button">
-                <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 4h9l3 3v13H6V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                  <path d="M15 4v4h4M8.5 12h7M8.5 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-                <span>형상관리</span>
-              </button>
-              <button class="toolbar-button" type="button" id="settings-open-button">
-                <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" stroke="currentColor" stroke-width="1.8"/>
-                  <path d="M19 14.5a1.7 1.7 0 0 0 .4 1.9l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.4 1.7 1.7 0 0 0-1 1.6v.2a2 2 0 0 1-4 0v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.4l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .4-1.9 1.7 1.7 0 0 0-1.6-1h-.2a2 2 0 0 1 0-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.4-1.9l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.4 1.7 1.7 0 0 0 1-1.6v-.2a2 2 0 0 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.4l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.4 1.9 1.7 1.7 0 0 0 1.6 1h.2a2 2 0 0 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.4"/>
-                </svg>
-                <span>설정</span>
-              </button>
-              <button class="toolbar-button" type="button">
-                <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M18.5 10A7 7 0 0 0 6.1 6.8M5.5 14A7 7 0 0 0 17.9 17.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-                <span>새로고침</span>
-              </button>
-              <button class="toolbar-button" type="button">
-                <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <span>일시정지</span>
-              </button>
-              <button class="toolbar-button is-primary" type="button" id="event-action-button">
-                <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 6h12M6 12h9M6 18h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                  <path d="m16 16 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>이벤트 조치하기</span>
-              </button>
+              <div class="board-actions">
+                <button class="toolbar-button" type="button">
+                  <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 4h9l3 3v13H6V4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    <path d="M15 4v4h4M8.5 12h7M8.5 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                  <span>형상관리</span>
+                </button>
+                <button class="toolbar-button" type="button" id="settings-open-button">
+                  <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M19 14.5a1.7 1.7 0 0 0 .4 1.9l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.4 1.7 1.7 0 0 0-1 1.6v.2a2 2 0 0 1-4 0v-.2a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.4l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .4-1.9 1.7 1.7 0 0 0-1.6-1h-.2a2 2 0 0 1 0-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.4-1.9l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.4 1.7 1.7 0 0 0 1-1.6v-.2a2 2 0 0 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.4l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.4 1.9 1.7 1.7 0 0 0 1.6 1h.2a2 2 0 0 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="1.4"/>
+                  </svg>
+                  <span>설정</span>
+                </button>
+                <button class="toolbar-button" type="button" id="status-refresh-button">
+                  <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6v5h-5M4 18v-5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.5 10A7 7 0 0 0 6.1 6.8M5.5 14A7 7 0 0 0 17.9 17.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                  <span>새로고침</span>
+                </button>
+                <button class="toolbar-button" type="button">
+                  <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  <span>일시정지</span>
+                </button>
+                <button class="toolbar-button is-primary" type="button" id="event-action-button">
+                  <svg class="toolbar-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 6h12M6 12h9M6 18h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="m16 16 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span>이벤트 조치하기</span>
+                </button>
+              </div>
+            </div>
+            <div class="board-summary" aria-label="오류상황판 조회 정보">
+              <div class="board-summary-item">
+                <span class="board-summary-label">디스플레이건수</span>
+                <strong class="board-summary-value">
+                  <span class="board-count-line">
+                    <span class="board-count-number" id="status-display-count">10</span>
+                    <span class="board-count-unit">건</span>
+                  </span>
+                  <span class="board-count-total">금일 총 건수 : <span id="status-total-count">2000</span>건</span>
+                </strong>
+              </div>
+              <div class="board-summary-item">
+                <span class="board-summary-label">조회조건</span>
+                <strong class="board-summary-value">
+                  <span class="board-update-query">[<span class="board-summary-accent" id="status-lookup-minutes">30</span>]분 / [<span class="board-summary-accent" id="status-refresh-seconds">30</span>]초 / 파트별: <span class="board-summary-accent" id="status-part-filter">전체</span></span>
+                </strong>
+              </div>
             </div>
             <div class="table-divider" aria-hidden="true"></div>
             <div class="table-scroll">
@@ -3418,7 +3659,7 @@
           </div>
           <div class="settings-field">
             <label for="display-count">디스플레이 건수</label>
-            <input id="display-count" name="displayCount" type="text" value="100" inputmode="numeric">
+            <input id="display-count" name="displayCount" type="text" value="10" inputmode="numeric">
           </div>
           <div class="settings-field">
             <label for="channel-filter">채널유형</label>
@@ -3613,9 +3854,19 @@
     const pageHeading = document.querySelector("#page-heading");
     const sidebarToggleButton = document.querySelector("[data-sidebar-toggle]");
     const statusThemeToggle = document.querySelector("#status-theme-toggle");
+    const statusHeaderClock = document.querySelector("#status-header-clock");
+    const statusCurrentDate = document.querySelector("#status-current-date");
+    const statusCurrentClock = document.querySelector("#status-current-clock");
+    const statusDisplayCount = document.querySelector("#status-display-count");
+    const statusTotalCount = document.querySelector("#status-total-count");
+    const statusLastUpdated = document.querySelector("#status-last-updated");
+    const statusLookupMinutes = document.querySelector("#status-lookup-minutes");
+    const statusRefreshSeconds = document.querySelector("#status-refresh-seconds");
+    const statusPartFilter = document.querySelector("#status-part-filter");
     const menuButton = document.querySelector(".mobile-menu");
     const scrim = document.querySelector(".scrim");
     const statusBoardBody = document.querySelector("#status-board-body");
+    const statusRefreshButton = document.querySelector("#status-refresh-button");
     const eventActionButton = document.querySelector("#event-action-button");
     const eventActionEmptyModal = document.querySelector("#event-action-empty-modal");
     const eventActionEmptyMessage = document.querySelector("#event-action-empty-message");
@@ -3625,6 +3876,9 @@
     const settingsCloseButton = document.querySelector(".settings-close");
     const settingsFooterCloseButton = document.querySelector("[data-settings-close]");
     const settingsForm = document.querySelector("#settings-form");
+    const lookupMinutesInput = document.querySelector("#lookup-minutes");
+    const displayCountInput = document.querySelector("#display-count");
+    const partFilterInput = document.querySelector("#part-filter");
     const refreshSecondsInput = document.querySelector("#refresh-seconds");
     const detailModal = document.querySelector("#detail-modal");
     const detailCloseButton = detailModal.querySelector(".detail-close");
@@ -3649,6 +3903,7 @@
     let statusRows = [];
     let eventRows = [];
     let eventRuleSequence = 0;
+    let lastStatusUpdatedAt = new Date();
     let lastFocusedElement = null;
     let lastEventDetailFocusedElement = null;
     let lastSettingsFocusedElement = null;
@@ -3725,6 +3980,72 @@
         ]
       }
     ];
+
+    const koreanWeekdays = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+    const statusTotalTodayCount = 2000;
+
+    function padTwoDigits(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function formatLiveDateParts(date) {
+      const year = date.getFullYear();
+      const month = padTwoDigits(date.getMonth() + 1);
+      const day = padTwoDigits(date.getDate());
+      const hour = padTwoDigits(date.getHours());
+      const minute = padTwoDigits(date.getMinutes());
+      const second = padTwoDigits(date.getSeconds());
+
+      return {
+        dateText: `${year}/${month}/${day} ${koreanWeekdays[date.getDay()]}`,
+        timeText: `${hour}:${minute}:${second}`
+      };
+    }
+
+    function formatUpdatedDateTime(date) {
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = padTwoDigits(date.getHours());
+      const minute = padTwoDigits(date.getMinutes());
+      const second = padTwoDigits(date.getSeconds());
+
+      return `[${year}년 ${month}월 ${day}일 ${hour}:${minute}:${second}]`;
+    }
+
+    function normalizeNumberInput(input, fallback, minValue = 1) {
+      const value = Number.parseInt(input.value, 10);
+      const normalizedValue = Number.isNaN(value) ? fallback : Math.max(value, minValue);
+
+      input.value = String(normalizedValue);
+      return normalizedValue;
+    }
+
+    function getPartFilterLabel() {
+      const value = partFilterInput.value.trim();
+
+      return value || "전체";
+    }
+
+    function updateCurrentClock() {
+      const { dateText, timeText } = formatLiveDateParts(new Date());
+
+      statusCurrentDate.textContent = dateText;
+      statusCurrentClock.textContent = timeText;
+    }
+
+    function updateStatusSummary({ refreshLastUpdated = false } = {}) {
+      if (refreshLastUpdated) {
+        lastStatusUpdatedAt = new Date();
+      }
+
+      statusDisplayCount.textContent = String(normalizeNumberInput(displayCountInput, 10));
+      statusTotalCount.textContent = String(statusTotalTodayCount);
+      statusLastUpdated.textContent = formatUpdatedDateTime(lastStatusUpdatedAt);
+      statusLookupMinutes.textContent = String(normalizeNumberInput(lookupMinutesInput, 30));
+      statusRefreshSeconds.textContent = String(normalizeNumberInput(refreshSecondsInput, 30, 30));
+      statusPartFilter.textContent = getPartFilterLabel();
+    }
 
     function toCompactDate(dateText) {
       return dateText.replaceAll("-", "");
@@ -4905,11 +5226,6 @@
       cell.className = column.className;
 
       if (column.selectable) {
-        if (row.cell !== currentUserProfile.cell) {
-          cell.title = "현재 사용자와 같은 셀의 이벤트만 선택할 수 있습니다.";
-          return cell;
-        }
-
         const label = document.createElement("label");
         const checkbox = document.createElement("input");
         const hiddenText = document.createElement("span");
@@ -4975,6 +5291,11 @@
       cell.className = column.className;
 
       if (column.selectable) {
+        if (row.cell !== currentUserProfile.cell) {
+          cell.title = "현재 사용자와 같은 셀의 이벤트만 선택할 수 있습니다.";
+          return cell;
+        }
+
         const label = document.createElement("label");
         const checkbox = document.createElement("input");
         const hiddenText = document.createElement("span");
@@ -5126,6 +5447,7 @@
 
       pageHeading.textContent = meta.title;
       statusThemeToggle.hidden = !isStatusBoardView;
+      statusHeaderClock.hidden = !isStatusBoardView;
       body.classList.toggle(
         "is-dark-mode",
         isStatusBoardView && statusThemeToggle.getAttribute("aria-pressed") === "true"
@@ -5143,6 +5465,10 @@
 
     scrim.addEventListener("click", () => {
       body.classList.remove("nav-open");
+    });
+
+    statusRefreshButton.addEventListener("click", () => {
+      updateStatusSummary({ refreshLastUpdated: true });
     });
 
     sidebarToggleButton.addEventListener("click", () => {
@@ -5171,6 +5497,7 @@
     settingsForm.addEventListener("submit", (event) => {
       event.preventDefault();
       normalizeRefreshSeconds();
+      updateStatusSummary({ refreshLastUpdated: true });
       closeSettingsModal();
     });
     refreshSecondsInput.addEventListener("blur", normalizeRefreshSeconds);
@@ -5247,6 +5574,9 @@
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
     renderStatusBoardRows(window.ERROR_BOARD_ROWS || []);
     applyRequirementsFilter();
+    updateCurrentClock();
+    updateStatusSummary({ refreshLastUpdated: true });
+    window.setInterval(updateCurrentClock, 1000);
     showView("status-board");
   </script>
 </body>
