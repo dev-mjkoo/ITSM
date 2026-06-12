@@ -25,6 +25,13 @@
     "GSSDD4632A01::PFM03030": "유나영"
   };
   const actionTypes = ["", "프로그램수정", "DB조치", "시스템설정", "그외조치", "원인불명", "외부기관응답지연", "타시스템응답지연", "조치대상아님"];
+  const actionContents = [
+    "서비스 로그 확인 후 재처리 대상 건을 분리했습니다.",
+    "원장 응답 지연 구간을 확인하고 업무 담당자에게 확인 요청했습니다.",
+    "배치 반영 설정값 확인 후 재기동 일정을 조율 중입니다.",
+    "일시 지연으로 판단되어 동일 거래 재발생 여부를 모니터링 중입니다.",
+    "외부 응답 전문 지연으로 확인되어 기관 응답 상태를 추적 중입니다."
+  ];
 
   function pad(value, size) {
     return String(value).padStart(size, "0");
@@ -102,6 +109,7 @@
     const sample = transactionSamples[sampleIndex];
     const status = statuses[index % statuses.length];
     const actionType = status === "미조치" ? "" : actionTypes[(index % (actionTypes.length - 1)) + 1];
+    const actionContent = status === "미조치" ? "" : actionContents[index % actionContents.length];
     const plannedDate = status === "미조치" ? "" : makeDate(index, 1);
     const completedDate = status === "조치완료" ? makeDate(index, 5) : "";
     const transactionCode = sample[2];
@@ -130,6 +138,7 @@
       errorMessage: sample[5],
       duplicateCount: (index % 5) + 1,
       actionType,
+      actionContent,
       plannedDate,
       completedDate,
       businessGroup,

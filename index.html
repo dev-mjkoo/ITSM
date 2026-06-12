@@ -3552,7 +3552,7 @@
 
     .event-history-table {
       width: 100%;
-      min-width: 1360px;
+      min-width: 1580px;
       border-collapse: collapse;
       font-size: 13px;
     }
@@ -3574,6 +3574,15 @@
     .event-history-table .history-col-no {
       width: 64px;
       text-align: center;
+    }
+
+    .event-history-table .history-col-action-content {
+      width: 260px;
+    }
+
+    .event-history-table td.history-col-action-content {
+      white-space: normal;
+      line-height: 1.45;
     }
 
     .event-history-table tbody tr:last-child td {
@@ -6342,6 +6351,13 @@
                     <td>관련 이벤트 그리드의 추가 버튼을 누르면 이벤트 조회 목록에 표시된 row 중 하나를 선택하는 팝업을 표시하고, 사용자가 선택한 이벤트를 관련 이벤트로 연결한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-061</td>
+                    <td class="req-screen">이벤트관리</td>
+                    <td class="req-category">결재요청</td>
+                    <td>이벤트 조회 목록에서 결재요청은 선택된 이벤트가 모두 조치중 상태인 경우에만 실행할 수 있으며, 미조치, 결재요청, 조치완료 상태가 포함되면 결재요청하지 않고 안내를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -6607,7 +6623,8 @@
       { label: "호스트명", key: "hostName" },
       { label: "에러코드", key: "errorCode" },
       { label: "중복건수", key: "duplicateCount" },
-      { label: "조치구분", key: "actionType" }
+      { label: "조치구분", key: "actionType" },
+      { label: "조치내용", key: "actionContent", className: "history-col-action-content" }
     ];
 
     const problemSearchColumns = [
@@ -6880,7 +6897,7 @@
         points: [
           "담당부서와 담당자는 돋보기 검색으로만 입력합니다.",
           "진행상태는 미조치가 기본값이고, 조회 조건은 필수 입력 없이 사용할 수 있습니다.",
-          "자기 셀 이벤트만 체크박스가 보이고 결재요청 대상으로 선택할 수 있습니다."
+          "자기 셀 이벤트만 체크박스가 보이며, 결재요청은 조치중 상태의 이벤트만 가능합니다."
         ]
       },
       {
@@ -10081,6 +10098,7 @@
     function handleEventApprovalRequestClick() {
       const approvalRows = getSelectedEventRows();
       const hasOtherCellRow = approvalRows.some((row) => row.cell !== currentUserProfile.cell);
+      const hasNotInProgressRow = approvalRows.some((row) => row.status !== "조치중");
 
       if (approvalRows.length === 0) {
         openEventActionEmptyModal("결재요청할 이벤트를 선택해주세요");
@@ -10089,6 +10107,11 @@
 
       if (hasOtherCellRow) {
         openEventActionEmptyModal("같은 셀 소속 이벤트만 결재요청할 수 있습니다");
+        return;
+      }
+
+      if (hasNotInProgressRow) {
+        openEventActionEmptyModal("조치중 상태의 이벤트만 결재요청할 수 있습니다");
         return;
       }
 
