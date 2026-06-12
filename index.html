@@ -825,6 +825,39 @@
       width: 96px;
     }
 
+    .problem-infra-col-category {
+      width: 130px;
+    }
+
+    .problem-infra-col-name {
+      width: 190px;
+    }
+
+    .problem-infra-col-status {
+      width: 90px;
+    }
+
+    .problem-infra-col-tagging {
+      width: 120px;
+    }
+
+    .problem-related-col-occurred {
+      width: 160px;
+    }
+
+    .problem-related-col-code,
+    .problem-related-col-error {
+      width: 140px;
+    }
+
+    .problem-related-col-name {
+      width: 190px;
+    }
+
+    .problem-related-col-message {
+      width: 300px;
+    }
+
     .problem-timeline-table th,
     .problem-timeline-table td {
       border-bottom: 1px solid var(--border);
@@ -922,6 +955,166 @@
       resize: vertical;
     }
 
+    .problem-extra-grid + .problem-extra-grid {
+      margin-top: 18px;
+    }
+
+    .problem-extra-grid-header {
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .problem-extra-grid-title {
+      margin: 0;
+      color: #253246;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .problem-timeline-table.is-infra-ci,
+    .problem-timeline-table.is-related-event {
+      min-width: 900px;
+    }
+
+    .problem-timeline-table.is-infra-ci tbody tr,
+    .problem-timeline-table.is-related-event tbody tr {
+      cursor: pointer;
+    }
+
+    .problem-timeline-table.is-related-event input:not(.problem-timeline-select) {
+      cursor: default;
+    }
+
+    .event-select-modal[hidden] {
+      display: none;
+    }
+
+    .event-select-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.48);
+    }
+
+    .event-select-dialog {
+      width: min(980px, calc(100vw - 48px));
+      max-height: min(660px, calc(100vh - 48px));
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 24px 70px rgba(15, 23, 42, 0.24);
+    }
+
+    .event-select-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-subtle);
+    }
+
+    .event-select-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .event-select-close {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .event-select-body {
+      min-height: 0;
+      padding: 14px 16px 16px;
+    }
+
+    .event-select-table-scroll {
+      max-height: 520px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .event-select-table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .event-select-table th,
+    .event-select-table td {
+      height: 34px;
+      padding: 7px 10px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .event-select-table th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--surface-subtle);
+      color: #253246;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .event-select-table td {
+      color: #2f3b4c;
+    }
+
+    .event-select-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .event-select-table th:last-child,
+    .event-select-table td:last-child {
+      border-right: 0;
+    }
+
+    .event-select-table tbody tr {
+      cursor: pointer;
+    }
+
+    .event-select-table tbody tr:hover td,
+    .event-select-table tbody tr:focus-visible td {
+      background: #eef6ff;
+    }
+
+    .event-select-empty {
+      height: 72px;
+      color: var(--muted);
+      text-align: center;
+    }
+
     .problem-section-empty {
       min-height: 96px;
     }
@@ -1017,6 +1210,10 @@
     body.is-dark-mode .problem-form-field input[readonly] {
       background: #111820;
       color: #aebbd0;
+    }
+
+    body.is-dark-mode .problem-extra-grid-title {
+      color: #dbe6f3;
     }
 
     body.is-dark-mode .problem-search-button:hover {
@@ -2601,6 +2798,10 @@
       overflow: hidden;
     }
 
+    body.event-select-open {
+      overflow: hidden;
+    }
+
     .detail-dialog {
       width: min(1120px, 100%);
       max-height: min(820px, calc(100vh - 48px));
@@ -3449,6 +3650,57 @@
       border-color: #2f81f7;
       background: #2f81f7;
       color: #ffffff;
+    }
+
+    body.is-dark-mode .event-select-dialog {
+      border-color: #303947;
+      background: #12171f;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    body.is-dark-mode .event-select-header {
+      border-color: #303947;
+      background: #171e29;
+    }
+
+    body.is-dark-mode .event-select-title {
+      color: #edf4ff;
+    }
+
+    body.is-dark-mode .event-select-close {
+      border-color: #354052;
+      background: #1a202b;
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .event-select-close:hover {
+      border-color: #506078;
+      background: #222a37;
+      color: #ffffff;
+    }
+
+    body.is-dark-mode .event-select-table-scroll {
+      border-color: #303947;
+      background: #12171f;
+    }
+
+    body.is-dark-mode .event-select-table th,
+    body.is-dark-mode .event-select-table td {
+      border-color: #303947;
+    }
+
+    body.is-dark-mode .event-select-table th {
+      background: #171e29;
+      color: #cdd8e5;
+    }
+
+    body.is-dark-mode .event-select-table td {
+      color: #d9e2ef;
+    }
+
+    body.is-dark-mode .event-select-table tbody tr:hover td,
+    body.is-dark-mode .event-select-table tbody tr:focus-visible td {
+      background: #182433;
     }
 
     body.is-dark-mode .detail-section h3,
@@ -5006,6 +5258,82 @@
                 </div>
               </div>
             </details>
+            <details class="problem-section is-disabled" data-problem-section="etc" data-problem-disabled-section aria-disabled="true">
+              <summary>
+                <span class="problem-section-heading">08 기타</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="problem-extra-grid">
+                  <div class="problem-extra-grid-header">
+                    <h3 class="problem-extra-grid-title">대상 구성항목(인프라)</h3>
+                    <div class="problem-timeline-actions">
+                      <button class="problem-timeline-button" type="button" data-problem-infra-row-delete disabled>삭제</button>
+                      <button class="problem-timeline-button" type="button" data-problem-infra-row-add disabled>추가</button>
+                    </div>
+                  </div>
+                  <input id="problem-infra-ci" type="hidden" data-problem-followup-field data-problem-infra-ci disabled>
+                  <div class="problem-timeline-scroll">
+                    <table class="problem-timeline-table is-infra-ci" aria-label="대상 구성항목 인프라 입력">
+                      <colgroup>
+                        <col class="problem-timeline-col-select">
+                        <col class="problem-infra-col-category">
+                        <col class="problem-infra-col-category">
+                        <col class="problem-infra-col-category">
+                        <col class="problem-infra-col-name">
+                        <col class="problem-infra-col-status">
+                        <col class="problem-infra-col-tagging">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="is-center" scope="col">선택</th>
+                          <th scope="col">대분류</th>
+                          <th scope="col">중분류</th>
+                          <th scope="col">소분류</th>
+                          <th scope="col">CI명(호스트명)</th>
+                          <th scope="col">상태</th>
+                          <th scope="col">Tagging</th>
+                        </tr>
+                      </thead>
+                      <tbody id="problem-infra-ci-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="problem-extra-grid">
+                  <div class="problem-extra-grid-header">
+                    <h3 class="problem-extra-grid-title">관련 이벤트</h3>
+                    <div class="problem-timeline-actions">
+                      <button class="problem-timeline-button" type="button" data-problem-related-event-row-delete disabled>삭제</button>
+                      <button class="problem-timeline-button" type="button" data-problem-related-event-row-add disabled>추가</button>
+                    </div>
+                  </div>
+                  <input id="problem-related-event" type="hidden" data-problem-followup-field data-problem-related-event disabled>
+                  <div class="problem-timeline-scroll">
+                    <table class="problem-timeline-table is-related-event" aria-label="관련 이벤트 입력">
+                      <colgroup>
+                        <col class="problem-timeline-col-select">
+                        <col class="problem-related-col-occurred">
+                        <col class="problem-related-col-code">
+                        <col class="problem-related-col-name">
+                        <col class="problem-related-col-error">
+                        <col class="problem-related-col-message">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th class="is-center" scope="col">선택</th>
+                          <th scope="col">발생일시</th>
+                          <th scope="col">거래코드</th>
+                          <th scope="col">거래명</th>
+                          <th scope="col">에러코드</th>
+                          <th scope="col">에러메시지</th>
+                        </tr>
+                      </thead>
+                      <tbody id="problem-related-event-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -5547,6 +5875,20 @@
                     <td>오류 상세 팝업의 에러확인문구 버튼을 누르면 복사 가능한 문구를 표시하며, 양식은 다음과 같다.<br>► [오류상황판-&amp;파트명] &amp;거래명(&amp;거래코드), &amp;전문전송일시(yyyy-mm-dd hh:MM), &amp;글로벌ID<br>► &amp;에러메시지<br>► 최종이행자/담당자 : &amp;최종이행자/&amp;담당자<br>► 업무팀 확인 부탁드립니다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-059</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">08 기타</td>
+                    <td>08 기타 섹션은 대상 구성항목(인프라)과 관련 이벤트 그리드를 제공한다. 대상 구성항목(인프라)은 선택, 대분류, 중분류, 소분류, CI명(호스트명), 상태, Tagging 컬럼을 제공하며 추가 버튼으로 행을 추가하고 선택된 행을 삭제할 수 있다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-060</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">08 기타</td>
+                    <td>관련 이벤트 그리드의 추가 버튼을 누르면 이벤트 조회 목록에 표시된 row 중 하나를 선택하는 팝업을 표시하고, 사용자가 선택한 이벤트를 관련 이벤트로 연결한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -5714,6 +6056,43 @@
       <div class="problem-author-body" id="problem-author-body"></div>
     </div>
   </div>
+  <div class="event-select-modal" id="problem-related-event-modal" role="dialog" aria-modal="true" aria-labelledby="problem-related-event-title" hidden>
+    <div class="event-select-dialog">
+      <header class="event-select-header">
+        <h2 class="event-select-title" id="problem-related-event-title">관련 이벤트 선택</h2>
+        <button class="event-select-close" type="button" aria-label="관련 이벤트 선택 닫기" data-related-event-select-close>
+          <svg width="18" height="18" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </header>
+      <div class="event-select-body">
+        <div class="event-select-table-scroll">
+          <table class="event-select-table" aria-label="관련 이벤트 선택 목록">
+            <colgroup>
+              <col style="width: 118px;">
+              <col style="width: 86px;">
+              <col style="width: 132px;">
+              <col style="width: 180px;">
+              <col style="width: 118px;">
+              <col style="width: 260px;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">발생일시</th>
+                <th scope="col">채널유형</th>
+                <th scope="col">거래코드</th>
+                <th scope="col">거래명</th>
+                <th scope="col">에러코드</th>
+                <th scope="col">에러메시지</th>
+              </tr>
+            </thead>
+            <tbody id="problem-related-event-select-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="sample-data.js"></script>
   <script src="event-sample-data.js"></script>
@@ -5866,6 +6245,17 @@
     const problemFuturePlanDeleteButton = document.querySelector("[data-problem-future-row-delete]");
     const problemFiveWhyInput = document.querySelector("[data-problem-five-why]");
     const problemFiveWhyBody = document.querySelector("#problem-fivewhy-body");
+    const problemInfraCiInput = document.querySelector("[data-problem-infra-ci]");
+    const problemInfraCiBody = document.querySelector("#problem-infra-ci-body");
+    const problemInfraCiAddButton = document.querySelector("[data-problem-infra-row-add]");
+    const problemInfraCiDeleteButton = document.querySelector("[data-problem-infra-row-delete]");
+    const problemRelatedEventInput = document.querySelector("[data-problem-related-event]");
+    const problemRelatedEventBody = document.querySelector("#problem-related-event-body");
+    const problemRelatedEventAddButton = document.querySelector("[data-problem-related-event-row-add]");
+    const problemRelatedEventDeleteButton = document.querySelector("[data-problem-related-event-row-delete]");
+    const problemRelatedEventModal = document.querySelector("#problem-related-event-modal");
+    const problemRelatedEventSelectBody = document.querySelector("#problem-related-event-select-body");
+    const problemRelatedEventSelectCloseButtons = [...document.querySelectorAll("[data-related-event-select-close]")];
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -5955,9 +6345,12 @@
     let lastNoticeFocusedElement = null;
     let lastErrorCheckFocusedElement = null;
     let lastProblemAuthorFocusedElement = null;
+    let lastProblemRelatedEventFocusedElement = null;
     let activeStatusDetailRow = null;
     const selectedProblemActionTimelineRows = new Set();
     const selectedProblemFuturePlanRows = new Set();
+    const selectedProblemInfraRows = new Set();
+    const selectedProblemRelatedEventRows = new Set();
 
     problemRegisterPage.before(problemRegisterPageHome);
 
@@ -7635,6 +8028,515 @@
       return true;
     }
 
+    function createDefaultProblemInfraRow() {
+      return {
+        major: "서버",
+        middle: "물리서버",
+        minor: "랙마운트",
+        ciName: "elbkdb1p",
+        status: "사용",
+        tagging: "-"
+      };
+    }
+
+    function createProblemRelatedEventFromSearchRow(row) {
+      return {
+        eventNo: row.no || "",
+        occurredAt: row.occurredAt || "",
+        channelType: row.channelType || "",
+        transactionCode: row.transactionCode || "",
+        transactionName: row.transactionName || "",
+        errorCode: row.errorCode || "",
+        errorMessage: row.errorMessage || "",
+        globalId: row.globalId || ""
+      };
+    }
+
+    function getProblemRelatedEventKey(row) {
+      return [
+        row.globalId || row.eventNo || "",
+        row.occurredAt || "",
+        row.transactionCode || "",
+        row.errorCode || "",
+        row.errorMessage || ""
+      ].join("::");
+    }
+
+    function parseProblemGridRows(input, fallbackRows = []) {
+      const value = String(input.value || "").trim();
+
+      if (!value) {
+        return fallbackRows;
+      }
+
+      try {
+        const parsedRows = JSON.parse(value);
+
+        return Array.isArray(parsedRows) ? parsedRows : fallbackRows;
+      } catch {
+        return fallbackRows;
+      }
+    }
+
+    function getProblemInfraRows() {
+      return parseProblemGridRows(problemInfraCiInput, []);
+    }
+
+    function getProblemRelatedEventRows() {
+      return parseProblemGridRows(problemRelatedEventInput, []);
+    }
+
+    function formatProblemRelatedEventSelectValue(value) {
+      return String(value || "-");
+    }
+
+    function createProblemRelatedEventSelectCell(value) {
+      const cell = document.createElement("td");
+      const text = formatProblemRelatedEventSelectValue(value);
+
+      cell.title = text;
+      cell.textContent = text;
+
+      return cell;
+    }
+
+    function selectProblemRelatedEvent(row) {
+      const rows = updateProblemRelatedEventValue();
+      const nextRow = createProblemRelatedEventFromSearchRow(row);
+      const nextKey = getProblemRelatedEventKey(nextRow);
+
+      if (rows.some((currentRow) => getProblemRelatedEventKey(currentRow) === nextKey)) {
+        closeProblemRelatedEventSelectModal();
+        openEventActionEmptyModal("이미 추가된 관련 이벤트입니다");
+        return;
+      }
+
+      rows.push(nextRow);
+      selectedProblemRelatedEventRows.clear();
+      setProblemRelatedEventRows(rows);
+      closeProblemRelatedEventSelectModal();
+    }
+
+    function renderProblemRelatedEventSelectRows(rows = []) {
+      const fragment = document.createDocumentFragment();
+
+      if (rows.length === 0) {
+        const emptyRow = document.createElement("tr");
+        const emptyCell = document.createElement("td");
+
+        emptyCell.className = "event-select-empty";
+        emptyCell.colSpan = 6;
+        emptyCell.textContent = "선택할 이벤트가 없습니다.";
+        emptyRow.append(emptyCell);
+        problemRelatedEventSelectBody.replaceChildren(emptyRow);
+        return;
+      }
+
+      rows.forEach((row) => {
+        const tableRow = document.createElement("tr");
+        const cells = [
+          row.occurredAt,
+          row.channelType,
+          row.transactionCode,
+          row.transactionName,
+          row.errorCode,
+          row.errorMessage
+        ];
+
+        tableRow.tabIndex = 0;
+        tableRow.setAttribute("aria-label", `${row.transactionCode || "-"} ${row.errorCode || "-"} 관련 이벤트 선택`);
+        cells.forEach((value) => {
+          tableRow.append(createProblemRelatedEventSelectCell(value));
+        });
+        tableRow.addEventListener("click", () => selectProblemRelatedEvent(row));
+        tableRow.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectProblemRelatedEvent(row);
+          }
+        });
+        fragment.append(tableRow);
+      });
+
+      problemRelatedEventSelectBody.replaceChildren(fragment);
+    }
+
+    function openProblemRelatedEventSelectModal() {
+      const rows = eventRows.length ? eventRows : (window.EVENT_SEARCH_ROWS || []);
+
+      lastProblemRelatedEventFocusedElement = document.activeElement;
+      renderProblemRelatedEventSelectRows(rows);
+      problemRelatedEventModal.hidden = false;
+      body.classList.add("event-select-open");
+      problemRelatedEventSelectBody.querySelector("tr[tabindex='0']")?.focus();
+    }
+
+    function closeProblemRelatedEventSelectModal() {
+      problemRelatedEventModal.hidden = true;
+      body.classList.remove("event-select-open");
+
+      if (lastProblemRelatedEventFocusedElement && document.contains(lastProblemRelatedEventFocusedElement)) {
+        lastProblemRelatedEventFocusedElement.focus();
+      }
+    }
+
+    function createProblemGridTextInput({ value = "", label, dataName, onInput }) {
+      const input = document.createElement("input");
+
+      input.type = "text";
+      input.value = value || "";
+      input.disabled = problemRegisterMode !== "author";
+      input.dataset[dataName] = "true";
+      input.setAttribute("aria-label", label);
+      input.addEventListener("input", onInput);
+
+      return input;
+    }
+
+    function setProblemInfraRows(rows = []) {
+      const normalizedRows = Array.isArray(rows) ? rows : [];
+
+      problemInfraCiInput.value = normalizedRows.length ? JSON.stringify(normalizedRows) : "";
+      renderProblemInfraRows(normalizedRows);
+    }
+
+    function collectProblemInfraRows() {
+      return [...problemInfraCiBody.querySelectorAll("tr")].map((row) => ({
+        major: row.querySelector("[data-infra-major]")?.value.trim() || "",
+        middle: row.querySelector("[data-infra-middle]")?.value.trim() || "",
+        minor: row.querySelector("[data-infra-minor]")?.value.trim() || "",
+        ciName: row.querySelector("[data-infra-ci-name]")?.value.trim() || "",
+        status: row.querySelector("[data-infra-status]")?.value.trim() || "",
+        tagging: row.querySelector("[data-infra-tagging]")?.value.trim() || ""
+      }));
+    }
+
+    function updateProblemInfraValue() {
+      const rows = collectProblemInfraRows();
+
+      problemInfraCiInput.value = rows.length ? JSON.stringify(rows) : "";
+      return rows;
+    }
+
+    function applyProblemInfraSelection() {
+      problemInfraCiBody.querySelectorAll("tr").forEach((row, rowIndex) => {
+        const isSelected = selectedProblemInfraRows.has(rowIndex);
+        const checkbox = row.querySelector("[data-infra-select]");
+
+        row.classList.toggle("is-selected", isSelected);
+
+        if (checkbox) {
+          checkbox.checked = isSelected;
+        }
+      });
+    }
+
+    function toggleProblemInfraRow(rowIndex) {
+      if (selectedProblemInfraRows.has(rowIndex)) {
+        selectedProblemInfraRows.delete(rowIndex);
+      } else {
+        selectedProblemInfraRows.add(rowIndex);
+      }
+
+      applyProblemInfraSelection();
+    }
+
+    function createProblemInfraRow(row, rowIndex) {
+      const tableRow = document.createElement("tr");
+      const isDisabled = problemRegisterMode !== "author";
+      const selectCell = document.createElement("td");
+      const selectInput = document.createElement("input");
+      const fields = [
+        ["major", "infraMajor", "대분류"],
+        ["middle", "infraMiddle", "중분류"],
+        ["minor", "infraMinor", "소분류"],
+        ["ciName", "infraCiName", "CI명"],
+        ["status", "infraStatus", "상태"],
+        ["tagging", "infraTagging", "Tagging"]
+      ];
+
+      tableRow.tabIndex = isDisabled ? -1 : 0;
+      tableRow.setAttribute("aria-label", `${rowIndex + 1}행 대상 구성항목 선택`);
+      tableRow.addEventListener("click", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        toggleProblemInfraRow(rowIndex);
+      });
+      tableRow.addEventListener("keydown", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleProblemInfraRow(rowIndex);
+        }
+      });
+
+      selectCell.className = "is-center";
+      selectInput.className = "problem-timeline-select";
+      selectInput.type = "checkbox";
+      selectInput.disabled = isDisabled;
+      selectInput.dataset.infraSelect = "true";
+      selectInput.setAttribute("aria-label", `${rowIndex + 1}행 선택`);
+      selectInput.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+      selectInput.addEventListener("change", (event) => {
+        event.stopPropagation();
+
+        if (selectInput.checked) {
+          selectedProblemInfraRows.add(rowIndex);
+        } else {
+          selectedProblemInfraRows.delete(rowIndex);
+        }
+
+        applyProblemInfraSelection();
+      });
+      selectCell.append(selectInput);
+      tableRow.append(selectCell);
+
+      fields.forEach(([key, dataName, label]) => {
+        const cell = document.createElement("td");
+        const input = createProblemGridTextInput({
+          value: row[key] || "",
+          label: `${rowIndex + 1}행 ${label}`,
+          dataName,
+          onInput: updateProblemInfraValue
+        });
+
+        cell.append(input);
+        tableRow.append(cell);
+      });
+
+      return tableRow;
+    }
+
+    function renderProblemInfraRows(rows = getProblemInfraRows()) {
+      const fragment = document.createDocumentFragment();
+
+      rows.forEach((row, rowIndex) => {
+        fragment.append(createProblemInfraRow(row, rowIndex));
+      });
+
+      problemInfraCiBody.replaceChildren(fragment);
+      problemInfraCiAddButton.disabled = problemRegisterMode !== "author";
+      problemInfraCiDeleteButton.disabled = problemRegisterMode !== "author" || rows.length === 0;
+      [...selectedProblemInfraRows].forEach((rowIndex) => {
+        if (rowIndex >= rows.length) {
+          selectedProblemInfraRows.delete(rowIndex);
+        }
+      });
+      applyProblemInfraSelection();
+    }
+
+    function handleProblemInfraAdd() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemInfraValue();
+
+      rows.push(createDefaultProblemInfraRow());
+      setProblemInfraRows(rows);
+    }
+
+    function handleProblemInfraDelete() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemInfraValue();
+      const deleteIndexes = [...selectedProblemInfraRows].sort((left, right) => right - left);
+
+      if (deleteIndexes.length === 0) {
+        openEventActionEmptyModal("삭제할 대상 구성항목을 선택해주세요");
+        return;
+      }
+
+      deleteIndexes.forEach((rowIndex) => {
+        rows.splice(rowIndex, 1);
+      });
+      selectedProblemInfraRows.clear();
+      setProblemInfraRows(rows);
+    }
+
+    function setProblemRelatedEventRows(rows = []) {
+      const normalizedRows = Array.isArray(rows) ? rows : [];
+
+      problemRelatedEventInput.value = normalizedRows.length ? JSON.stringify(normalizedRows) : "";
+      renderProblemRelatedEventRows(normalizedRows);
+    }
+
+    function collectProblemRelatedEventRows() {
+      return [...problemRelatedEventBody.querySelectorAll("tr")].map((row) => ({
+        eventNo: row.dataset.eventNo || "",
+        channelType: row.dataset.channelType || "",
+        occurredAt: row.querySelector("[data-related-occurred]")?.value.trim() || "",
+        transactionCode: row.querySelector("[data-related-code]")?.value.trim() || "",
+        transactionName: row.querySelector("[data-related-name]")?.value.trim() || "",
+        errorCode: row.querySelector("[data-related-error]")?.value.trim() || "",
+        errorMessage: row.querySelector("[data-related-message]")?.value.trim() || "",
+        globalId: row.dataset.globalId || ""
+      }));
+    }
+
+    function updateProblemRelatedEventValue() {
+      const rows = collectProblemRelatedEventRows();
+
+      problemRelatedEventInput.value = rows.length ? JSON.stringify(rows) : "";
+      return rows;
+    }
+
+    function applyProblemRelatedEventSelection() {
+      problemRelatedEventBody.querySelectorAll("tr").forEach((row, rowIndex) => {
+        const isSelected = selectedProblemRelatedEventRows.has(rowIndex);
+        const checkbox = row.querySelector("[data-related-select]");
+
+        row.classList.toggle("is-selected", isSelected);
+
+        if (checkbox) {
+          checkbox.checked = isSelected;
+        }
+      });
+    }
+
+    function toggleProblemRelatedEventRow(rowIndex) {
+      if (selectedProblemRelatedEventRows.has(rowIndex)) {
+        selectedProblemRelatedEventRows.delete(rowIndex);
+      } else {
+        selectedProblemRelatedEventRows.add(rowIndex);
+      }
+
+      applyProblemRelatedEventSelection();
+    }
+
+    function createProblemRelatedEventRow(row, rowIndex) {
+      const tableRow = document.createElement("tr");
+      const isDisabled = problemRegisterMode !== "author";
+      const selectCell = document.createElement("td");
+      const selectInput = document.createElement("input");
+      const fields = [
+        ["occurredAt", "relatedOccurred", "발생일시"],
+        ["transactionCode", "relatedCode", "거래코드"],
+        ["transactionName", "relatedName", "거래명"],
+        ["errorCode", "relatedError", "에러코드"],
+        ["errorMessage", "relatedMessage", "에러메시지"]
+      ];
+
+      tableRow.tabIndex = isDisabled ? -1 : 0;
+      tableRow.dataset.eventNo = row.eventNo || "";
+      tableRow.dataset.channelType = row.channelType || "";
+      tableRow.dataset.globalId = row.globalId || "";
+      tableRow.setAttribute("aria-label", `${rowIndex + 1}행 관련 이벤트 선택`);
+      tableRow.addEventListener("click", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        toggleProblemRelatedEventRow(rowIndex);
+      });
+      tableRow.addEventListener("keydown", (event) => {
+        if (event.target.closest("input, select, textarea, button")) {
+          return;
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleProblemRelatedEventRow(rowIndex);
+        }
+      });
+
+      selectCell.className = "is-center";
+      selectInput.className = "problem-timeline-select";
+      selectInput.type = "checkbox";
+      selectInput.disabled = isDisabled;
+      selectInput.dataset.relatedSelect = "true";
+      selectInput.setAttribute("aria-label", `${rowIndex + 1}행 선택`);
+      selectInput.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+      selectInput.addEventListener("change", (event) => {
+        event.stopPropagation();
+
+        if (selectInput.checked) {
+          selectedProblemRelatedEventRows.add(rowIndex);
+        } else {
+          selectedProblemRelatedEventRows.delete(rowIndex);
+        }
+
+        applyProblemRelatedEventSelection();
+      });
+      selectCell.append(selectInput);
+      tableRow.append(selectCell);
+
+      fields.forEach(([key, dataName, label]) => {
+        const cell = document.createElement("td");
+        const input = createProblemGridTextInput({
+          value: row[key] || "",
+          label: `${rowIndex + 1}행 ${label}`,
+          dataName,
+          onInput: updateProblemRelatedEventValue
+        });
+
+        input.readOnly = true;
+        input.setAttribute("aria-readonly", "true");
+        cell.append(input);
+        tableRow.append(cell);
+      });
+
+      return tableRow;
+    }
+
+    function renderProblemRelatedEventRows(rows = getProblemRelatedEventRows()) {
+      const fragment = document.createDocumentFragment();
+
+      rows.forEach((row, rowIndex) => {
+        fragment.append(createProblemRelatedEventRow(row, rowIndex));
+      });
+
+      problemRelatedEventBody.replaceChildren(fragment);
+      problemRelatedEventAddButton.disabled = problemRegisterMode !== "author";
+      problemRelatedEventDeleteButton.disabled = problemRegisterMode !== "author" || rows.length === 0;
+      [...selectedProblemRelatedEventRows].forEach((rowIndex) => {
+        if (rowIndex >= rows.length) {
+          selectedProblemRelatedEventRows.delete(rowIndex);
+        }
+      });
+      applyProblemRelatedEventSelection();
+    }
+
+    function handleProblemRelatedEventAdd() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      updateProblemRelatedEventValue();
+      openProblemRelatedEventSelectModal();
+    }
+
+    function handleProblemRelatedEventDelete() {
+      if (problemRegisterMode !== "author") {
+        return;
+      }
+
+      const rows = updateProblemRelatedEventValue();
+      const deleteIndexes = [...selectedProblemRelatedEventRows].sort((left, right) => right - left);
+
+      if (deleteIndexes.length === 0) {
+        openEventActionEmptyModal("삭제할 관련 이벤트를 선택해주세요");
+        return;
+      }
+
+      deleteIndexes.forEach((rowIndex) => {
+        rows.splice(rowIndex, 1);
+      });
+      selectedProblemRelatedEventRows.clear();
+      setProblemRelatedEventRows(rows);
+    }
+
     function getProblemFollowupFields() {
       return [
         { label: "발생시작일자", key: "startDate", control: problemStartDateInput },
@@ -7646,7 +8548,9 @@
         { label: "문제 발생 원인 내용작성", key: "cause", control: document.querySelector("[data-problem-cause]") },
         { label: "조치 내용 (시간별)", key: "actionTimeline", control: document.querySelector("[data-problem-action-timeline]") },
         { label: "향후 대책", key: "futurePlan", control: document.querySelector("[data-problem-future-plan]") },
-        { label: "5-why", key: "fiveWhy", control: document.querySelector("[data-problem-five-why]") }
+        { label: "5-why", key: "fiveWhy", control: document.querySelector("[data-problem-five-why]") },
+        { label: "대상 구성항목(인프라)", key: "infraCi", control: document.querySelector("[data-problem-infra-ci]"), optional: true },
+        { label: "관련 이벤트", key: "relatedEvent", control: document.querySelector("[data-problem-related-event]"), optional: true }
       ];
     }
 
@@ -7669,6 +8573,8 @@
       const timelineRows = getProblemActionTimelineRows();
       const futureRows = getProblemFuturePlanRows();
       const fiveWhyRows = getProblemFiveWhyRows();
+      const infraRows = getProblemInfraRows();
+      const relatedEventRows = getProblemRelatedEventRows();
 
       setProblemActionTimelineRows(
         problemRegisterMode === "author" && timelineRows.length === 0
@@ -7681,6 +8587,8 @@
           : futureRows
       );
       setProblemFiveWhyRows(fiveWhyRows);
+      setProblemInfraRows(infraRows);
+      setProblemRelatedEventRows(relatedEventRows);
       updateProblemTotalMinutes();
     }
 
@@ -7776,7 +8684,9 @@
       });
 
       problemFollowupSections.forEach((section, index) => {
-        section.classList.toggle("is-required", isAuthorMode);
+        const isOptionalSection = section.dataset.problemSection === "etc";
+
+        section.classList.toggle("is-required", isAuthorMode && !isOptionalSection);
         setProblemSectionDisabled(section, !isAuthorMode);
 
         if (isAuthorMode) {
@@ -7814,6 +8724,10 @@
       selectedProblemFuturePlanRows.clear();
       setProblemFuturePlanRows([]);
       setProblemFiveWhyRows([]);
+      selectedProblemInfraRows.clear();
+      setProblemInfraRows([]);
+      selectedProblemRelatedEventRows.clear();
+      setProblemRelatedEventRows([]);
     }
 
     function createProblemRow() {
@@ -7842,10 +8756,12 @@
       updateProblemActionTimelineValue();
       updateProblemFuturePlanValue();
       updateProblemFiveWhyValue();
+      updateProblemInfraValue();
+      updateProblemRelatedEventValue();
 
       if (requireAllFields) {
         const missingFields = getProblemFollowupFields()
-          .filter(({ control }) => !String(control.value || "").trim())
+          .filter(({ control, optional }) => !optional && !String(control.value || "").trim())
           .map(({ label }) => label);
 
         if (missingFields.length > 0) {
@@ -8651,7 +9567,7 @@
     function renderEventResultRows(rows) {
       const fragment = document.createDocumentFragment();
 
-      eventRows = window.EVENT_SEARCH_ROWS || rows;
+      eventRows = rows;
       selectedEventRows.clear();
 
       rows.forEach((row) => {
@@ -8973,6 +9889,23 @@
     problemActionTimelineDeleteButton.addEventListener("click", handleProblemActionTimelineDelete);
     problemFuturePlanAddButton.addEventListener("click", handleProblemFuturePlanAdd);
     problemFuturePlanDeleteButton.addEventListener("click", handleProblemFuturePlanDelete);
+    problemInfraCiAddButton.addEventListener("click", handleProblemInfraAdd);
+    problemInfraCiDeleteButton.addEventListener("click", handleProblemInfraDelete);
+    problemRelatedEventAddButton.addEventListener("click", handleProblemRelatedEventAdd);
+    problemRelatedEventDeleteButton.addEventListener("click", handleProblemRelatedEventDelete);
+    problemRelatedEventSelectCloseButtons.forEach((button) => {
+      button.addEventListener("click", closeProblemRelatedEventSelectModal);
+    });
+    problemRelatedEventModal.addEventListener("click", (event) => {
+      if (event.target === problemRelatedEventModal) {
+        closeProblemRelatedEventSelectModal();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !problemRelatedEventModal.hidden) {
+        closeProblemRelatedEventSelectModal();
+      }
+    });
     [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput].forEach((control) => {
       control.addEventListener("input", updateProblemTotalMinutes);
     });
