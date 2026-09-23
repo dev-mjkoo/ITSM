@@ -5,29 +5,21 @@
   const table = panel.querySelector('table');
   const toolbar = panel.querySelector('.event-result-toolbar');
   const form = document.querySelector('#event-search-form');
-  let period = 'all', activeBucket = null, activeGroup = null, filtered = [];
+  let activeBucket = null, activeGroup = null, filtered = [];
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone: 'Asia/Seoul'}).format(new Date());
   const day = row => String(row.occurredAt || '').slice(0, 10);
   const el = (tag, text, cls) => { const n = document.createElement(tag); n.textContent = text; if (cls) n.className = cls; return n; };
   const button = (text, action, cls = 'explorer-button') => { const n = el('button', text, cls); n.type = 'button'; n.addEventListener('click', action); return n; };
   const groupBy = (rows, key) => { const map = new Map(); rows.forEach(r => { const k = key(r); if (!map.has(k)) map.set(k, []); map.get(k).push(r); }); return [...map.values()]; };
   const buckets = rows => groupBy(rows, r => JSON.stringify([day(r), r.transactionCode, r.errorCode]));
-  const intro = el('div', '', 'explorer-intro');
-  intro.append(el('strong', '발생일자별 이벤트 탐색'), el('p', '1차 집계: 일자 + 거래코드 + 에러코드 · 당일은 발생 위치가 달라도 모두 표시합니다. 이전 일자는 정규화된 오류 패턴으로 한 번 더 분류합니다.'));
-  const tabs = el('div', '', 'explorer-tabs');
-  tabs.setAttribute('aria-label', '발생일자 범위');
   const crumb = el('nav', '', 'explorer-crumb'); crumb.setAttribute('aria-label', '이벤트 탐색 경로');
   const identity = el('section', '', 'explorer-identity');
   identity.setAttribute('aria-label', '선택한 이벤트 식별 정보');
   identity.hidden = true;
   const summary = el('div', '', 'explorer-summary'); summary.setAttribute('aria-live', 'polite');
-  const guide = document.createElement('details'); guide.className = 'explorer-guide';
-  guide.append(el('summary', '발표용 시나리오 · 샘플 데이터 / 브라우저에 조치 저장'));
-  guide.append(el('p', '① 당일 BXM30011 12건: 위치가 다른 오류도 한 목록에 표시 → 원본 1건에 조치 저장 → 오류상황판에서도 같은 원본의 조치 확인.'));
-  guide.append(el('p', '② 전일 BXM30011 12건: 자정 이후 배치 결과로 8건 / 3건 / 1건의 3개 패턴 → 첫 그룹의 조치중 3건을 선택해 일괄 결재요청.'));
-  guide.append(el('p', '③ 같은 “필수 입력값 누락”도 validateAccount:142와 validateCustomer:356은 다른 그룹. requestId·경과시간만 다른 오류는 동일 위치·패턴으로 정규화.'));
-  guide.append(el('p', '당일 28건 · 전일 41건 · 전전일 25건. 실제 수집·배치·결재 전송은 연결되지 않은 설명용 예시입니다.'));
-  panel.prepend(intro, guide, tabs, crumb, identity, summary);
+  panel.prepend(crumb, identity, summary);
+  const listTitle = el('h2', '이벤트 목록', 'explorer-list-title');
+  toolbar.prepend(listTitle);
   table.className = 'explorer-table';
   const approval = toolbar.querySelector('[data-event-approval-button]');
   const selectionCount = el('span', '선택 0건', 'explorer-selection');
@@ -109,13 +101,11 @@
   }
   function render(focus = false) {
     selectedEventRows.clear();
-    tabs.replaceChildren();
-    [['all','전체'],['today','당일'],['past','당일 이전']].forEach(([key,label]) => {
-      const count = buckets(filtered.filter(r => key === 'all' || (key === 'today' ? day(r) === today() : day(r) < today()))).length;
-      const b = button(`${label} ${count}`, () => { period = key; resetPath(); render(true); }); b.setAttribute('aria-pressed', String(period === key)); tabs.append(b);
-    });
     crumb.replaceChildren(button('이벤트 목록', () => { resetPath(); render(true); }));
-    let rows = filtered.filter(r => period === 'all' || (period === 'today' ? day(r) === today() : day(r) < today()));
+    crumb.hidden = !activeBucket;
+    summary.hidden = !activeBucket;
+    listTitle.hidden = Boolean(activeBucket);
+    let rows = filtered;
     identity.replaceChildren();
     identity.hidden = !activeBucket;
     if (activeBucket) {
@@ -138,7 +128,7 @@
       leaf = isToday || !ready || !!activeGroup;
       if (!leaf) {
         const groups = groupBy(rows, r => r.batchGroupId);
-        summary.textContent = `배치 ${rows[0].batchProcessedAt || '완료'} · 오류 그룹 ${groups.length}개 · 이벤트 ${rows.length}건 — 그룹별 대표 원본을 표시합니다. 상태·조치·호스트는 그룹 전체 기준이며, 행을 누르면 전체 원본이 열립니다.`;
+        summary.textContent = `오류 그룹 ${groups.length}개 · 이벤트 ${rows.length}건 · 대표 원본 기준`;
         const groupColumns = rawGridColumns.map(label => label === '글로벌ID' ? '대표 GUID' : label === '발생일시' ? '발생일자' : label);
         groupColumns.splice(1, 0, '중복건수');
         heading(groupColumns);
@@ -159,7 +149,7 @@
           row(values, () => { activeGroup = g; render(true); }, `오류 그룹 ${i+1}, ${g.length}건 보기`);
         });
       } else {
-        summary.textContent = `${isToday ? '당일 수집 중 · 아직 오류 그룹으로 분류하지 않은 이벤트입니다.' : ready ? '동일 오류 그룹 · 개별 이벤트를 선택하면 상세정보가 열립니다.' : '분류 대기 · 배치 그룹 정보가 없어 개별 이벤트를 표시합니다.'} 총 ${rows.length}건 · 체크박스로 선택 후 결재요청할 수 있습니다. 요청 시 조치정보와 상태를 확인합니다.`;
+        summary.textContent = `${isToday ? '당일 이벤트' : ready ? '동일 오류 이벤트' : '분류 대기'} · ${rows.length}건`;
         heading(rawGridColumns);
         rows.forEach(r => {
           const container = selectionControl([r], `${r.no}번 이벤트 선택`);
@@ -168,7 +158,7 @@
       }
     } else {
       const grouped = buckets(rows).sort((a,b) => day(b[0]).localeCompare(day(a[0])));
-      summary.textContent = `${grouped.length}개 묶음 · 이벤트 ${rows.length}건 | 중복건수는 각 묶음에 포함된 전체 이벤트 수입니다.`;
+      summary.textContent = '';
       heading(['발생일자','데이터 구분','거래코드 / 거래명','에러코드','중복건수','오류 분류','에러메시지']);
       grouped.forEach(g => {
         const r = g[0], live = day(r) === today(), ready = !live && g.every(x => x.batchGroupId);
@@ -181,7 +171,7 @@
     eventRows = window.EVENT_SEARCH_ROWS || [];
     approval.hidden = !activeBucket; selectLabel.hidden = !activeBucket; selectionCount.hidden = !activeBucket; updateSelection();
     if (!rows.length) { const tr = document.createElement('tr'); const td = el('td','조회 조건에 맞는 이벤트가 없습니다. 조건을 변경하거나 초기화해주세요.'); td.colSpan = table.tHead.rows[0].cells.length; tr.append(td); eventResultBody.append(tr); }
-    if (focus) { summary.tabIndex = -1; summary.focus(); }
+    if (focus) { const focusTarget = activeBucket ? summary : listTitle; focusTarget.tabIndex = -1; focusTarget.focus(); }
   }
   renderEventResultRows = function(rows) {
     const q = new FormData(form);
@@ -189,7 +179,7 @@
     filtered = rows.filter(r => ['errorType','actionType','status','department','owner','serviceName'].every(k => match(r[k], q.get(k))) && (!q.get('startDate') || day(r) >= q.get('startDate')) && (!q.get('endDate') || day(r) <= q.get('endDate')));
     resetPath(); render();
   };
-  form.addEventListener('reset', () => { period = 'all'; setTimeout(refreshEventSearchResults, 0); });
+  form.addEventListener('reset', () => { setTimeout(refreshEventSearchResults, 0); });
   document.addEventListener('event-records-updated', () => { render(); renderStatusBoardRows(window.ERROR_BOARD_ROWS || []); });
   refreshEventSearchResults();
 })();
