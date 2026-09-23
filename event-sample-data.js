@@ -42,9 +42,9 @@
   }
 
   function makeOccurredAt(index) {
-    const day = 9 - Math.floor(index / 6);
-
-    return `2026-06-${pad(Math.max(day, 1), 2)}`;
+    const date = new Date();
+    date.setDate(date.getDate() - Math.floor(index / 40));
+    return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Seoul" }).format(date);
   }
 
   function makeDate(index, offset) {
@@ -103,46 +103,68 @@
     return "투자서비스개발부";
   }
 
-  window.EVENT_SEARCH_ROWS = Array.from({ length: 50 }, (_, index) => {
-    const itemIndex = index + 1;
-    const sampleIndex = index % transactionSamples.length;
-    const sample = transactionSamples[sampleIndex];
-    const status = statuses[index % statuses.length];
-    const actionType = status === "미조치" ? "" : actionTypes[(index % (actionTypes.length - 1)) + 1];
-    const actionContent = status === "미조치" ? "" : actionContents[index % actionContents.length];
-    const plannedDate = status === "미조치" ? "" : makeDate(index, 1);
-    const completedDate = status === "조치완료" ? makeDate(index, 5) : "";
-    const transactionCode = sample[2];
-    const errorCode = sample[4];
-    const businessGroup = sample[8];
-
-    return {
-      no: itemIndex,
-      status,
-      errorType: sample[1],
-      occurredAt: makeOccurredAt(index),
-      channelType: sample[0],
-      department: getDepartment(sample[0], businessGroup),
-      cell: sample[7],
-      owner: ownerByErrorKey[`${transactionCode}::${errorCode}`],
-      transactionCode,
-      transactionName: sample[3],
-      serviceName: transactionCode.slice(0, -2),
-      programDescription: `${sample[3]} 처리 프로그램`,
-      recentAppliedAt: makeAppliedAt(sampleIndex),
-      failureCause: getFailureCause(errorCode),
-      sourceLocation: makeSourceLocation(transactionCode, errorCode, sampleIndex),
-      globalId: makeGlobalId(itemIndex),
-      hostName: sample[6],
-      errorCode,
-      errorMessage: sample[5],
-      duplicateCount: (index % 5) + 1,
-      actionType,
-      actionContent,
-      plannedDate,
-      completedDate,
-      businessGroup,
-      business: sample[9]
-    };
+  // Different bucket sizes and pattern distributions for a presentation.
+  const scenarios = [
+    { days: 0, sample: 0, counts: [7, 3, 2] },
+    { days: 0, sample: 3, counts: [5] },
+    { days: 0, sample: 1, counts: [2, 1] },
+    { days: 0, sample: 6, counts: [4, 2, 1, 1] },
+    { days: 1, sample: 0, counts: [8, 3, 1] },
+    { days: 1, sample: 3, counts: [6] },
+    { days: 1, sample: 1, counts: [5, 2] },
+    { days: 1, sample: 6, counts: [9, 4, 2, 1] },
+    { days: 2, sample: 0, counts: [3, 2] },
+    { days: 2, sample: 4, counts: [11] },
+    { days: 2, sample: 7, counts: [4, 3, 2] }
+  ];
+  const patterns = [
+    ["필수 입력값 누락", "validateAccount", 142],
+    ["외부기관 응답시간 초과", "requestExternal", 287],
+    ["필수 입력값 누락", "validateCustomer", 356],
+    ["응답 전문 파싱 실패", "parseResponse", 421]
+  ];
+  const dateFor = days => {
+    const base = new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Seoul'}).format(new Date());
+    const d = new Date(base + 'T12:00:00+09:00'); d.setUTCDate(d.getUTCDate() - days);
+    return new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Seoul'}).format(d);
+  };
+  window.EVENT_SEARCH_ROWS = [];
+  scenarios.forEach((scenario, scenarioIndex) => {
+    const sample = transactionSamples[scenario.sample];
+    scenario.counts.forEach((count, patternIndex) => {
+      const pattern = patterns[patternIndex];
+      const source = `/app/service/${sample[2]}.java:${pattern[2]} (${pattern[1]})`;
+      for (let i = 0; i < count; i++) {
+        const no = window.EVENT_SEARCH_ROWS.length + 1;
+        const date = dateFor(scenario.days);
+        const occurredAt = `${date} ${pad(9 + (i % 3), 2)}:${pad((no * 3) % 60, 2)}:${pad(no % 60, 2)}`;
+        const ready = scenario.days > 0 && patternIndex === 0 && i < 3;
+        const normalizedError = `${pattern[0]} | ${source} | requestId=<ID> elapsed=<N>ms`;
+        window.EVENT_SEARCH_ROWS.push({
+          no, rawId: `${date}-S${scenarioIndex}-P${patternIndex}-${i}`,
+          globalId: `${date.replaceAll('-', '')}${pad(no,24)}`,
+          occurredAt, registeredAt: occurredAt,
+          status: ready ? '조치중' : '미조치', stage: ready ? '조치예정' : '미조치',
+          errorType: sample[1], channelType: sample[0], transactionCode: sample[2],
+          transactionName: sample[3], errorCode: sample[4], errorMessage: sample[5],
+          errorDetailMessage: `${pattern[0]} | ${source} | requestId=REQ${pad(no,6)} elapsed=${120 + no * 17}ms`,
+          normalizedError: scenario.days ? normalizedError : null,
+          batchGroupId: scenario.days ? JSON.stringify([date,sample[2],sample[4],normalizedError]) : null,
+          batchProcessedAt: scenario.days ? `${dateFor(scenario.days - 1)} 00:10:00` : null,
+          sourceLocation: source, hostName: sample[6], cell: sample[7],
+          department: getDepartment(sample[0], sample[8]), owner: ownerByErrorKey[`${sample[2]}::${sample[4]}`],
+          businessGroup: sample[8], business: sample[9], serviceName: sample[2].slice(0,-2),
+          programDescription: `${sample[3]} 처리 프로그램`, recentAppliedAt: `${dateFor(3)} 20:00`,
+          failureCause: pattern[0], duplicateCount: 1, part: '디지털수신', lastActor: '구민준',
+          store: '1042', pid: String(18000 + no),
+          actionOwner: ready ? '구민준' : '',
+          actionType: ready ? '프로그램수정' : '',
+          actionContent: ready ? '-' : '',
+          plannedDate: ready ? dateFor(0) : '', completedDate: ready ? dateFor(0) : ''
+        });
+      }
+    });
   });
+  // Both views reference the exact same raw event objects.
+  window.ERROR_BOARD_ROWS = window.EVENT_SEARCH_ROWS.filter(row => row.occurredAt.startsWith(dateFor(0)));
 })();

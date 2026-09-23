@@ -700,6 +700,19 @@
       line-height: 1.62;
     }
 
+    .script-keyword {
+      color: #1557ba;
+      font-weight: 800;
+    }
+
+    .script-keyword.is-warning {
+      color: #8a5b10;
+    }
+
+    .script-keyword.is-critical {
+      color: #b4232f;
+    }
+
     .script-lines li::before {
       content: "";
       width: 5px;
@@ -4840,6 +4853,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="event-explorer.css?v=15">
 </head>
 <body>
   <div class="app">
@@ -5117,27 +5131,27 @@
                 <section class="script-section" id="script-overview">
                   <h3>전체</h3>
                   <p class="script-callout">
-                    여기 구성된 그리드 컬럼이나 UI 배치는 실제로 이렇게 구성되었으면 하는 형태로 미리 만들어 둔 것입니다.
+                    여기 구성된 <strong class="script-keyword">그리드 컬럼</strong>이나 <strong class="script-keyword">UI 배치</strong>는 실제로 이렇게 구성되었으면 하는 형태로 미리 만들어 둔 것입니다.
                     그래서 별도로 "어떤 정보가 어떻게 보였으면 좋겠어요?"라고 다시 질문하지 않아도 됩니다.
                   </p>
                   <ul class="script-lines">
-                    <li>오늘은 오류상황판에서 실시간 오류를 확인하고, 이벤트 조회에서 전일자 취합 이벤트를 관리하고, 룰 관리와 문제관리까지 이어지는 흐름으로 설명드리겠습니다.</li>
-                    <li>화면은 MVP지만 컬럼 구성, 버튼 위치, 상세 팝업의 필드 구성은 실제 운영 화면에서 필요한 정보 기준으로 잡아두었습니다.</li>
+                    <li>오늘은 <strong class="script-keyword">오류상황판</strong>에서 실시간 오류를 확인하고, <strong class="script-keyword">이벤트 조회</strong>에서 전일자 취합 이벤트를 관리하고, 룰 관리와 문제관리까지 이어지는 흐름으로 설명드리겠습니다.</li>
+                    <li>화면은 MVP지만 컬럼 구성, 버튼 위치, 상세 팝업의 필드 구성은 <strong class="script-keyword">실제 운영 화면</strong>에서 필요한 정보 기준으로 잡아두었습니다.</li>
                   </ul>
                 </section>
 
                 <section class="script-section" id="script-status-board">
                   <h3>오류상황판</h3>
                   <ul class="script-lines">
-                    <li>먼저 오류상황판입니다. 상단의 형상관리, 설정, 새로고침, 일시정지 버튼은 기존에 있던 기능과 동일한 성격입니다.</li>
-                    <li>다만 설정 버튼을 열어보면, 조회시간, 반복주기, 파트, 채널유형, 단계, 오류구분, 거래코드 같은 조건을 이런 식으로 설정할 수 있었으면 해서 팝업 형태로 구성해 두었습니다.</li>
-                    <li>그리고 새로 추가된 버튼이 이벤트 조치하기입니다. 이 버튼은 조금 있다가 이벤트 조치접수 흐름에서 다시 설명드리겠습니다.</li>
-                    <li>이제 오류상황판의 Row를 하나 클릭해보겠습니다. Row를 클릭하면 상세 팝업이 뜨고, 탭은 상세내용과 이벤트 조치접수 두 개로 나뉩니다.</li>
-                    <li>상세내용 탭에는 기존에 받을 수 있는 데이터를 기준으로 오류 요약, 거래 정보, 일시 및 전문, 운영 정보처럼 비슷한 정보끼리 그룹핑해서 보여줄 수 있도록 섹션을 나누었습니다.</li>
-                    <li>이벤트 조치접수 탭은 오류상황판에서 해당 이벤트 담당자가 바로 조치담당자, 조치구분, 조치예정일, 조치예정내용을 입력하고 저장할 수 있게 하는 영역입니다.</li>
-                    <li>궁극적으로는 상황반에 "어떤 내용으로 언제까지 조치하겠습니다"라고 별도로 말하지 않아도, 오류상황판에 해당 이벤트가 나왔을 때 여기에서 바로 입력할 수 있게 하려는 목적입니다.</li>
-                    <li>여기서는 조치완료일을 바로 입력하는 용도가 아니라, 조치 예정 정보까지만 먼저 저장하는 용도입니다. 저장 후에야 조치완료일 입력과 결재요청 단계로 넘어갑니다.</li>
-                    <li>마지막으로 우측에 에러확인문구 버튼이 있습니다. 이 버튼을 누르면 상황반이나 업무팀에 바로 복사해서 요청할 수 있는 텍스트가 만들어집니다.</li>
+                    <li>먼저 오류상황판입니다. 상단의 <strong class="script-keyword">형상관리</strong>, <strong class="script-keyword">설정</strong>, 새로고침, 일시정지 버튼은 기존에 있던 기능과 동일한 성격입니다.</li>
+                    <li>다만 <strong class="script-keyword">설정 버튼</strong>을 열어보면, 조회시간, 반복주기, 파트, 채널유형, 단계, 오류구분, 거래코드 같은 조건을 이런 식으로 설정할 수 있었으면 해서 팝업 형태로 구성해 두었습니다.</li>
+                    <li>그리고 새로 추가된 버튼이 <strong class="script-keyword">이벤트 조치하기</strong>입니다. 이 버튼은 조금 있다가 이벤트 조치접수 흐름에서 다시 설명드리겠습니다.</li>
+                    <li>이제 오류상황판의 <strong class="script-keyword">Row</strong>를 하나 클릭해보겠습니다. Row를 클릭하면 상세 팝업이 뜨고, 탭은 <strong class="script-keyword">상세내용</strong>과 <strong class="script-keyword">이벤트 조치접수</strong> 두 개로 나뉩니다.</li>
+                    <li>상세내용 탭에는 기존에 받을 수 있는 데이터를 기준으로 오류 요약, 거래 정보, 일시 및 전문, 운영 정보처럼 비슷한 정보끼리 <strong class="script-keyword">그룹핑</strong>해서 보여줄 수 있도록 섹션을 나누었습니다.</li>
+                    <li>이벤트 조치접수 탭은 오류상황판에서 해당 이벤트 담당자가 바로 <strong class="script-keyword">조치담당자</strong>, 조치구분, 조치예정일, 조치예정내용을 입력하고 저장할 수 있게 하는 영역입니다.</li>
+                    <li>궁극적으로는 상황반에 "어떤 내용으로 언제까지 조치하겠습니다"라고 별도로 말하지 않아도, 오류상황판에 해당 이벤트가 나왔을 때 <strong class="script-keyword">여기에서 바로 입력</strong>할 수 있게 하려는 목적입니다.</li>
+                    <li>여기서는 <strong class="script-keyword is-critical">조치완료일을 바로 입력</strong>하는 용도가 아니라, <strong class="script-keyword">조치 예정 정보</strong>까지만 먼저 저장하는 용도입니다. 저장 후에야 조치완료일 입력과 결재요청 단계로 넘어갑니다.</li>
+                    <li>마지막으로 우측에 <strong class="script-keyword">에러확인문구</strong> 버튼이 있습니다. 이 버튼을 누르면 상황반이나 업무팀에 바로 복사해서 요청할 수 있는 텍스트가 만들어집니다.</li>
                     <li>이 포맷은 개발요건에도 적어두었기 때문에, 실제 개발 시에는 해당 양식을 기준으로 맞추면 됩니다.</li>
                   </ul>
                 </section>
@@ -5145,21 +5159,21 @@
                 <section class="script-section" id="script-event-search">
                   <h3>이벤트 조회</h3>
                   <ul class="script-lines">
-                    <li>이벤트 관리에는 이벤트 조회와 이벤트 룰 관리 탭이 있습니다. 먼저 이벤트 조회 페이지를 보겠습니다.</li>
-                    <li>이 화면은 과거 이벤트를 조회하고, 실제 조치 여부까지 관리하기 위해 만든 화면입니다.</li>
-                    <li>오류상황판에 보인 이벤트가 여기에도 즉시 보이는 구조는 아닙니다. 하루 동안 발생한 이벤트를 모아서 다음날 중복 건 취합, 오류상황판에서 입력해둔 조치예정정보 반영 같은 정제를 거친 뒤 표시하는 구조입니다.</li>
-                    <li>예를 들어 6월 15일에 오류상황판에 A 이벤트가 5개, B 이벤트가 3개 발생했다면, 6월 16일 이벤트 조회에서는 A 이벤트 Row 1개에 중복 5건, B 이벤트 Row 1개에 중복 3건으로 총 2줄이 보이는 방식입니다.</li>
+                    <li>이벤트 관리에는 <strong class="script-keyword">이벤트 조회</strong>와 <strong class="script-keyword">이벤트 룰 관리</strong> 탭이 있습니다. 먼저 이벤트 조회 페이지를 보겠습니다.</li>
+                    <li>이 화면은 과거 이벤트를 조회하고, 실제 <strong class="script-keyword">조치 여부까지 관리</strong>하기 위해 만든 화면입니다.</li>
+                    <li>오류상황판에 보인 이벤트가 여기에도 즉시 보이는 구조는 아닙니다. 하루 동안 발생한 이벤트를 모아서 다음날 <strong class="script-keyword">중복 건 취합</strong>, 오류상황판에서 입력해둔 조치예정정보 반영 같은 정제를 거친 뒤 표시하는 구조입니다.</li>
+                    <li>예를 들어 6월 15일에 오류상황판에 A 이벤트가 5개, B 이벤트가 3개 발생했다면, 6월 16일 이벤트 조회에서는 A 이벤트 Row 1개에 <strong class="script-keyword">중복 5건</strong>, B 이벤트 Row 1개에 <strong class="script-keyword">중복 3건</strong>으로 총 2줄이 보이는 방식입니다.</li>
                     <li>상단에는 조회에 필요한 검색 조건을 모두 배치해두었습니다. 오류구분, 조치구분, 발생일시, 담당부서, 담당자, 서비스명, 진행상태 기준으로 조회할 수 있습니다.</li>
-                    <li>우측에는 Excel 다운로드 버튼과 결재요청 버튼이 있습니다. 결재요청은 진행상태가 조치중인 이벤트들만 선택되어 있을 때만 가능합니다.</li>
-                    <li>이벤트 Row를 하나 클릭해보면 상세정보 탭과 최근내역 탭이 있습니다.</li>
-                    <li>상세정보 탭에는 상세정보 섹션과 이벤트 접수 섹션이 있습니다. 상세정보 섹션의 UI는 ITBPI와 유사한 형태로 실제 화면도 이렇게 갔으면 해서 구성해두었습니다.</li>
-                    <li>하단의 이벤트 접수 섹션은 조치담당자, 조치구분, 조치예정일, 조치완료일, 조치내용 필드를 가지고 있습니다. 이 UI/UX는 앞에서 본 오류상황판의 이벤트 조치접수 탭과 동일합니다.</li>
-                    <li>여기서도 조치담당자, 조치구분, 조치예정일, 조치내용을 먼저 입력하고 저장해야 그 다음에 조치완료일을 넣을 수 있습니다. 조치예정일과 조치완료일을 동시에 입력해서 저장하는 구조가 아닙니다.</li>
-                    <li>조치예정일까지 입력하고 저장하면 버튼이 결재요청으로 전환되어 보입니다.</li>
-                    <li>중요한 포인트는, 전일자 오류상황판의 이벤트 조치접수 탭에서 조치 관련 데이터를 입력해두었다면, 익일 이벤트 조회 시 이 이벤트 접수 섹션에 해당 값들이 채워져 있어야 한다는 점입니다.</li>
-                    <li>업무팀이 같은 내용을 두 번 입력하지 않게 하려는 것이 핵심입니다.</li>
-                    <li>두 번째 최근내역 탭은 거래코드를 기준으로 최대 100건의 오류 데이터를 보여줍니다. 물음표 도움말을 보면 기준을 확인할 수 있습니다.</li>
-                    <li>여기서는 에러코드가 달라도 거래코드가 같으면 같은 서비스의 과거 내역으로 보고 같이 보여주는 구조입니다.</li>
+                    <li>우측에는 Excel 다운로드 버튼과 결재요청 버튼이 있습니다. 결재요청은 진행상태가 <strong class="script-keyword is-warning">조치중</strong>인 이벤트들만 선택되어 있을 때만 가능합니다.</li>
+                    <li>이벤트 Row를 하나 클릭해보면 <strong class="script-keyword">상세정보</strong> 탭과 <strong class="script-keyword">최근내역</strong> 탭이 있습니다.</li>
+                    <li>상세정보 탭에는 상세정보 섹션과 이벤트 접수 섹션이 있습니다. 상세정보 섹션의 UI는 <strong class="script-keyword">ITBPI와 유사한 형태</strong>로 실제 화면도 이렇게 갔으면 해서 구성해두었습니다.</li>
+                    <li>하단의 이벤트 접수 섹션은 조치담당자, 조치구분, 조치예정일, 조치완료일, 조치내용 필드를 가지고 있습니다. 이 UI/UX는 앞에서 본 오류상황판의 <strong class="script-keyword">이벤트 조치접수 탭과 동일</strong>합니다.</li>
+                    <li>여기서도 조치담당자, 조치구분, 조치예정일, 조치내용을 먼저 입력하고 저장해야 그 다음에 조치완료일을 넣을 수 있습니다. <strong class="script-keyword is-critical">조치예정일과 조치완료일을 동시에 입력</strong>해서 저장하는 구조가 아닙니다.</li>
+                    <li>조치예정일까지 입력하고 저장하면 버튼이 <strong class="script-keyword">결재요청</strong>으로 전환되어 보입니다.</li>
+                    <li>중요한 포인트는, 전일자 오류상황판의 이벤트 조치접수 탭에서 조치 관련 데이터를 입력해두었다면, 익일 이벤트 조회 시 이 이벤트 접수 섹션에 <strong class="script-keyword">해당 값들이 채워져 있어야 한다</strong>는 점입니다.</li>
+                    <li>업무팀이 <strong class="script-keyword is-critical">같은 내용을 두 번 입력하지 않게</strong> 하려는 것이 핵심입니다.</li>
+                    <li>두 번째 최근내역 탭은 <strong class="script-keyword">거래코드 기준</strong>으로 최대 100건의 오류 데이터를 보여줍니다. 물음표 도움말을 보면 기준을 확인할 수 있습니다.</li>
+                    <li>여기서는 에러코드가 달라도 거래코드가 같으면 <strong class="script-keyword">같은 서비스의 과거 내역</strong>으로 보고 같이 보여주는 구조입니다.</li>
                   </ul>
                 </section>
 
@@ -5167,32 +5181,32 @@
                   <h3>이벤트 룰 관리</h3>
                   <ul class="script-lines">
                     <li>이제 이벤트 룰 관리 탭으로 이동하겠습니다.</li>
-                    <li>여기에 이벤트 룰을 등록하면 오류상황판에서는 해당 조건에 맞는 오류를 단계가 제외인 건으로 식별할 수 있고, 익일 이벤트 데이터 취합 시에는 해당 조건을 취합 대상에서 제외하면 됩니다.</li>
-                    <li>룰 등록 조건은 에러코드 단독 또는 에러코드와 거래코드 조합입니다. 거래코드만 단독으로 등록하는 것은 허용하지 않습니다.</li>
-                    <li>그리고 룰을 등록한다고 해서 이미 이벤트 조회에 적재된 데이터가 삭제되는 것은 아닙니다. 등록 이후 전일자 데이터 취합 단계부터 신규 표시되지 않는 구조입니다.</li>
+                    <li>여기에 이벤트 룰을 등록하면 오류상황판에서는 해당 조건에 맞는 오류를 단계가 <strong class="script-keyword is-warning">제외</strong>인 건으로 식별할 수 있고, 익일 이벤트 데이터 취합 시에는 해당 조건을 <strong class="script-keyword">취합 대상에서 제외</strong>하면 됩니다.</li>
+                    <li>룰 등록 조건은 <strong class="script-keyword">에러코드 단독</strong> 또는 <strong class="script-keyword">에러코드와 거래코드 조합</strong>입니다. 거래코드만 단독으로 등록하는 것은 허용하지 않습니다.</li>
+                    <li>그리고 룰을 등록한다고 해서 이미 이벤트 조회에 적재된 데이터가 삭제되는 것은 아닙니다. <strong class="script-keyword">등록 이후 전일자 데이터 취합 단계</strong>부터 신규 표시되지 않는 구조입니다.</li>
                   </ul>
                 </section>
 
                 <section class="script-section" id="script-problem-register">
                   <h3>문제관리 등록</h3>
                   <ul class="script-lines">
-                    <li>다음은 문제관리 등록입니다. 이 화면은 상황관리 Cell 인원이 문제관리 건을 처음 등록하는 화면입니다.</li>
-                    <li>처음 진입하면 01 기본정보 섹션만 열려 있고, 요청부서, 요청팀, 요청자, 작성부서, 작성팀, 작성자, 제목, 내용을 입력하게 되어 있습니다.</li>
-                    <li>요청자와 작성자는 돋보기 검색으로 선택하고, 요청부서와 요청팀, 작성부서와 작성팀은 선택된 사용자 정보 기준으로 자동 세팅되는 구조입니다.</li>
-                    <li>상황관리 Cell은 기본정보까지만 입력해서 등록하고, 등록이 완료되면 작성자에게 SWING 메일로 후속 작성 요청이 전달되는 흐름입니다.</li>
-                    <li>그래서 등록 화면에서는 02번 이후 섹션을 직접 작성하지 않고 비활성화해 두었습니다.</li>
+                    <li>다음은 문제관리 등록입니다. 이 화면은 <strong class="script-keyword">상황관리 Cell</strong> 인원이 문제관리 건을 처음 등록하는 화면입니다.</li>
+                    <li>처음 진입하면 <strong class="script-keyword">01 기본정보</strong> 섹션만 열려 있고, 요청부서, 요청팀, 요청자, 작성부서, 작성팀, 작성자, 제목, 내용을 입력하게 되어 있습니다.</li>
+                    <li>요청자와 작성자는 <strong class="script-keyword">돋보기 검색</strong>으로 선택하고, 요청부서와 요청팀, 작성부서와 작성팀은 선택된 사용자 정보 기준으로 자동 세팅되는 구조입니다.</li>
+                    <li>상황관리 Cell은 기본정보까지만 입력해서 등록하고, 등록이 완료되면 작성자에게 <strong class="script-keyword">SWING 메일</strong>로 후속 작성 요청이 전달되는 흐름입니다.</li>
+                    <li>그래서 등록 화면에서는 <strong class="script-keyword is-critical">02번 이후 섹션</strong>을 직접 작성하지 않고 비활성화해 두었습니다.</li>
                   </ul>
                 </section>
 
                 <section class="script-section" id="script-problem-search">
                   <h3>문제관리 조회</h3>
                   <ul class="script-lines">
-                    <li>마지막으로 문제관리 조회입니다. 등록된 문제는 이 목록에서 확인할 수 있고, 작성자 본인 건을 클릭하면 후속 작성 팝업이 열립니다.</li>
-                    <li>후속 작성 팝업은 문제관리 등록 화면과 동일한 화면을 재사용하지만, 이때는 01 기본정보는 잠겨 있고 02 개요부터 08 기타까지 작성자가 입력할 수 있습니다.</li>
-                    <li>02 개요에서는 발생시작시간, 발생종료시간, 총 발생시간, 오류내용을 입력합니다. 총 발생시간은 시작/종료 시간을 기준으로 자동 계산됩니다.</li>
-                    <li>03 서비스영향도, 04 문제 발생 원인, 05 조치 내용, 06 향후 대책, 07 5-why, 08 기타까지 문제 분석과 재발 방지에 필요한 정보를 작성합니다.</li>
-                    <li>08 기타에는 대상 구성항목(인프라)과 관련 이벤트를 연결할 수 있도록 구성했습니다. 인프라 문제인지 서비스 이벤트 문제인지에 따라 분석 대상을 같이 묶어 관리하기 위한 영역입니다.</li>
-                    <li>작성 중에는 임시저장을 할 수 있고, 작성이 완료되면 결재요청으로 넘어가는 흐름입니다.</li>
+                    <li>마지막으로 문제관리 조회입니다. 등록된 문제는 이 목록에서 확인할 수 있고, <strong class="script-keyword">작성자 본인 건</strong>을 클릭하면 후속 작성 팝업이 열립니다.</li>
+                    <li>후속 작성 팝업은 문제관리 등록 화면과 동일한 화면을 재사용하지만, 이때는 <strong class="script-keyword is-critical">01 기본정보는 잠겨 있고</strong> 02 개요부터 08 기타까지 작성자가 입력할 수 있습니다.</li>
+                    <li>02 개요에서는 발생시작시간, 발생종료시간, 총 발생시간, 오류내용을 입력합니다. <strong class="script-keyword">총 발생시간</strong>은 시작/종료 시간을 기준으로 자동 계산됩니다.</li>
+                    <li>03 서비스영향도, 04 문제 발생 원인, 05 조치 내용, 06 향후 대책, 07 5-why, 08 기타까지 <strong class="script-keyword">문제 분석과 재발 방지</strong>에 필요한 정보를 작성합니다.</li>
+                    <li>08 기타에는 <strong class="script-keyword">대상 구성항목(인프라)</strong>과 <strong class="script-keyword">관련 이벤트</strong>를 연결할 수 있도록 구성했습니다. 인프라 문제인지 서비스 이벤트 문제인지에 따라 분석 대상을 같이 묶어 관리하기 위한 영역입니다.</li>
+                    <li>작성 중에는 <strong class="script-keyword">임시저장</strong>을 할 수 있고, 작성이 완료되면 <strong class="script-keyword">결재요청</strong>으로 넘어가는 흐름입니다.</li>
                   </ul>
                 </section>
               </div>
@@ -5279,7 +5293,7 @@
                     <label for="event-status">진행상태</label>
                     <select id="event-status" name="status">
                       <option value="전체">전체</option>
-                      <option value="미조치" selected>미조치</option>
+                      <option value="미조치">미조치</option>
                       <option value="조치중">조치중</option>
                       <option value="결재요청">결재요청</option>
                       <option value="조치완료">조치완료</option>
@@ -6471,7 +6485,8 @@
   </div>
 
   <script src="sample-data.js"></script>
-  <script src="event-sample-data.js"></script>
+  <script src="event-sample-data.js?v=13"></script>
+  <script src="event-record-store.js?v=5"></script>
   <script src="problem-data.js"></script>
   <script>
     const statusBoardColumns = [
@@ -6802,13 +6817,14 @@
           { label: "글로벌ID", key: "globalId", code: true },
           { label: "에러코드", key: "errorCode", code: true },
           { label: "에러내용", key: "errorMessage", wide: true },
+          { label: "에러 상세 메시지", key: "errorDetailMessage", full: true },
           { label: "발생한 소스 위치정보", key: "sourceLocation", full: true, code: true, textarea: true }
         ]
       }
     ];
 
     const koreanWeekdays = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-    const statusTotalTodayCount = 2000;
+    const statusTotalTodayCount = (window.ERROR_BOARD_ROWS || []).length;
 
     function padTwoDigits(value) {
       return String(value).padStart(2, "0");
@@ -6915,11 +6931,11 @@
         hostName: row.hostName,
         errorCode: row.errorCode,
         errorMessage: row.errorMessage,
-        errorMessageDetail: errorDetailMessages[row.errorCode] || row.errorMessage,
+        errorMessageDetail: row.errorDetailMessage || errorDetailMessages[row.errorCode] || row.errorMessage,
         transactionCode: row.transactionCode,
         transactionName: row.transactionName,
         screenId: getScreenId(row),
-        globalId: getGlobalId(row, businessDate, compactTime),
+        globalId: row.globalId || getGlobalId(row, businessDate, compactTime),
         deployDate: dateText,
         deployTime: getDeployTime(row),
         pid: row.pid,
@@ -6935,7 +6951,7 @@
         partName: row.part,
         lastActor: row.lastActor,
         owner: row.owner,
-        errorCodeLocation: `${serviceName}/error-map/${row.errorCode}`,
+        errorCodeLocation: row.sourceLocation || `${serviceName}/error-map/${row.errorCode}`,
         errorOccurrenceInfo: `${row.channelType} 채널 ${row.part}에서 ${row.transactionName} 처리 중 ${row.hostName} PID ${row.pid}에서 ${row.errorCode}가 발생했습니다.`
       };
     }
@@ -7175,29 +7191,17 @@
     }
 
     function getActionReceiptKey(actionRows, keyPrefix = "status") {
-      const rowKey = actionRows
-        .map((row) => String(row.no))
-        .sort((left, right) => Number(left) - Number(right))
-        .join("-");
-
-      return `${keyPrefix}:${rowKey}`;
+      return actionRows.map(row => row.rawId || `legacy:${keyPrefix}:${row.no}`).sort().join("|");
     }
 
     function getActionReceiptState(actionRows, keyPrefix) {
-      const key = getActionReceiptKey(actionRows, keyPrefix);
-
-      if (!actionReceiptStates.has(key)) {
-        actionReceiptStates.set(key, {
-          owner: "",
-          actionType: "",
-          plannedDate: "",
-          completedDate: "",
-          comment: "",
-          isReceiptSaved: false
-        });
-      }
-
-      return actionReceiptStates.get(key);
+      const row = actionRows[0];
+      // Read the raw event again on each open; no separate state per screen.
+      return {
+        owner: row.actionOwner || "", actionType: row.actionType || "",
+        plannedDate: row.plannedDate || "", completedDate: row.completedDate || "",
+        comment: row.actionContent || "", isReceiptSaved: Boolean(row.actionContent)
+      };
     }
 
     function getTodayDateValue() {
@@ -9313,7 +9317,7 @@
           </svg>
         `;
         searchButton.addEventListener("click", () => {
-          control.value = config.searchValue || "20100061(구민준)";
+          control.value = config.searchValue || "구민준";
         });
         searchWrapper.append(control, searchButton);
         fieldContent = searchWrapper;
@@ -9468,7 +9472,7 @@
       const ownerField = createActionInputField({
         id: `${fieldPrefix}-owner`,
         label: "조치담당자",
-        value: state.owner,
+        value: state.owner.replace(/^\d+\s*\(([^)]+)\)$/, "$1"),
         search: true
       });
       const typeField = createActionInputField({
@@ -9484,14 +9488,14 @@
         label: "조치 예정일",
         type: "date",
         value: state.plannedDate,
-        disabled: state.isReceiptSaved
+        disabled: false
       });
       const completedDateField = createActionInputField({
         id: `${fieldPrefix}-completed-date`,
         label: "조치완료일",
         type: "date",
         value: state.completedDate,
-        disabled: !state.isReceiptSaved
+        disabled: false
       });
       const commentField = createActionInputField({
         id: `${fieldPrefix}-comment`,
@@ -9506,10 +9510,13 @@
       saveRow.className = "action-save-row";
       saveButton.className = "action-save-button";
       saveButton.type = "button";
-      saveButton.textContent = state.isReceiptSaved ? "결재요청" : "저장";
+      saveButton.textContent = "조치내용 저장";
+      let requestingApproval = false;
       saveButton.classList.toggle("is-approval", state.isReceiptSaved);
+      saveButton.disabled = actionRows.some(item => item.cell !== currentUserProfile.cell || ["결재요청", "조치완료"].includes(item.status));
+      if (saveButton.disabled) saveButton.title = "같은 셀의 미조치·조치중 이벤트만 변경할 수 있습니다.";
       saveButton.addEventListener("click", () => {
-        const wasReceiptSaved = state.isReceiptSaved;
+        const wasReceiptSaved = requestingApproval;
 
         if (!wasReceiptSaved) {
           const missingFields = getMissingActionReceiptFields([
@@ -9553,9 +9560,22 @@
         state.completedDate = completedDateField.inputControl.value;
         state.comment = commentField.inputControl.value;
         state.isReceiptSaved = true;
-
+        try {
+          window.EventRecordStore.save(actionRows, {
+            actionOwner: state.owner, actionType: state.actionType,
+            plannedDate: state.plannedDate, completedDate: state.completedDate,
+            actionContent: state.comment, status: wasReceiptSaved ? "결재요청" : "조치중",
+            stage: wasReceiptSaved ? "결재요청" : "조치예정",
+            actionSavedAt: new Date().toISOString(),
+            ...(wasReceiptSaved ? {approvalRequestedAt: new Date().toISOString()} : {})
+          });
+        } catch {
+          openEventActionEmptyModal("저장하지 못했습니다. 브라우저 저장 공간을 확인해주세요.");
+          return;
+        }
         if (wasReceiptSaved) {
-          openEventActionEmptyModal("담당 셀장에게 결재 요청을 하고 SWING 메일이 전송되면 좋겠습니다");
+          saveButton.disabled = true;
+          openEventActionEmptyModal("선택한 원본 이벤트를 결재요청 상태로 저장했습니다. (MVP: 실제 결재·메일 전송 없음)");
           return;
         }
 
@@ -9569,7 +9589,18 @@
         openEventActionEmptyModal("저장되었습니다");
       });
 
-      saveRow.append(saveButton);
+      const requestButton = document.createElement("button");
+      requestButton.type = "button";
+      requestButton.className = "action-save-button is-approval";
+      requestButton.textContent = "결재요청";
+      requestButton.disabled = saveButton.disabled;
+      requestButton.addEventListener("click", () => {
+        requestingApproval = true;
+        saveButton.click();
+        requestingApproval = false;
+        requestButton.disabled = saveButton.disabled;
+      });
+      saveRow.append(saveButton, requestButton);
       formGrid.append(ownerField, typeField, plannedDateField, completedDateField, commentField, saveRow);
 
       if (includeTargetSummary) {
@@ -9841,7 +9872,16 @@
         return;
       }
 
-      openEventActionEmptyModal("담당 셀장에게 결재 요청을 하고 SWING 메일이 전송되면 좋겠습니다");
+      if (approvalRows.some(row => !row.actionOwner || !row.actionType || !row.actionContent || !row.completedDate)) {
+        openEventActionEmptyModal("선택한 모든 원본 이벤트에 조치담당자·조치구분·조치내용·조치완료일을 입력해주세요.");
+        return;
+      }
+      try {
+        window.EventRecordStore.save(approvalRows, {status: "결재요청", stage: "결재요청", approvalRequestedAt: new Date().toISOString()});
+        openEventActionEmptyModal(`${approvalRows.length}건을 결재요청 상태로 저장했습니다. (MVP: 실제 결재·메일 전송 없음)`);
+      } catch {
+        openEventActionEmptyModal("결재요청을 저장하지 못했습니다. 다시 시도해주세요.");
+      }
     }
 
     function createStatusCell(row, column) {
@@ -10422,5 +10462,6 @@
     window.setInterval(updateCurrentClock, 1000);
     showView("status-board");
   </script>
+  <script src="event-explorer.js?v=17"></script>
 </body>
 </html>
