@@ -5040,6 +5040,7 @@
                   <tr>
                     <th class="col-select" scope="col">선택</th>
                     <th class="col-no" scope="col">NO</th>
+                    <th class="col-stage" scope="col">단계</th>
                     <th class="col-time" scope="col">등록시간</th>
                     <th class="col-channel" scope="col">채널유형</th>
                     <th class="col-part" scope="col">파트</th>
@@ -5052,7 +5053,6 @@
                     <th class="col-message" scope="col">에러메시지</th>
                     <th class="col-store" scope="col">거래점</th>
                     <th class="col-host" scope="col">호스트명</th>
-                    <th class="col-stage" scope="col">단계</th>
                     <th class="col-pid" scope="col">PID</th>
                   </tr>
                 </thead>
@@ -6493,6 +6493,7 @@
     const statusBoardColumns = [
       { key: "select", className: "col-select", selectable: true },
       { key: "no", className: "col-no" },
+      { key: "stage", className: "col-stage", stageBadge: true },
       { key: "registeredAt", className: "col-time" },
       { key: "channelType", className: "col-channel" },
       { key: "part", className: "col-part" },
@@ -6505,7 +6506,6 @@
       { key: "errorMessage", className: "col-message" },
       { key: "store", className: "col-store" },
       { key: "hostName", className: "col-host" },
-      { key: "stage", className: "col-stage", stageBadge: true },
       { key: "pid", className: "col-pid" }
     ];
 
