@@ -4921,7 +4921,7 @@
                 <path d="M12 3.5 21 19H3l9-15.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
                 <path d="M12 9v4M12 16.5h.01" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
               </svg>
-              <span>장애관리 (TBD)</span>
+              <span>장애관리</span>
               <svg class="nav-expander" aria-hidden="true" viewBox="0 0 24 24" fill="none">
                 <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -6490,6 +6490,55 @@
   <script src="event-record-store.js?v=5"></script>
   <script src="problem-data.js"></script>
   <script>
+    function cloneProblemViewForIncident(sourceSelector, targetSelector) {
+      const source = document.querySelector(sourceSelector);
+      const target = document.querySelector(targetSelector);
+
+      if (!source || !target) {
+        return;
+      }
+
+      const clone = source.cloneNode(true);
+      const nodes = [clone, ...clone.querySelectorAll("*")];
+
+      nodes.forEach((node) => {
+        [...node.attributes].forEach((attribute) => {
+          const nextName = attribute.name.replaceAll("problem", "incident");
+          const shouldPreserveClass = attribute.name === "class";
+          const nextValue = shouldPreserveClass
+            ? attribute.value
+            : attribute.value
+              .replaceAll("problem", "incident")
+              .replaceAll("문제관리", "장애관리")
+              .replaceAll("문제 발생", "장애 발생")
+              .replaceAll("문제 후속", "장애 후속");
+
+          if (nextName !== attribute.name) {
+            node.removeAttribute(attribute.name);
+          }
+
+          node.setAttribute(nextName, nextValue);
+        });
+      });
+
+      const textWalker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+      let textNode = textWalker.nextNode();
+
+      while (textNode) {
+        textNode.nodeValue = textNode.nodeValue
+          .replaceAll("문제관리", "장애관리")
+          .replaceAll("문제 발생", "장애 발생")
+          .replaceAll("등록된 문제", "등록된 장애")
+          .replaceAll("맞는 문제", "맞는 장애");
+        textNode = textWalker.nextNode();
+      }
+
+      target.replaceChildren(clone);
+    }
+
+    cloneProblemViewForIncident("#problem-register .problem-register-page", "#incident-register .workspace");
+    cloneProblemViewForIncident("#problem-search .problem-search-page", "#incident-search .workspace");
+
     const statusBoardColumns = [
       { key: "select", className: "col-select", selectable: true },
       { key: "no", className: "col-no" },
@@ -10126,6 +10175,193 @@
       problemResultBody.replaceChildren(fragment);
     }
 
+    function initializeIncidentManagement() {
+      const registerView = document.querySelector("#incident-register");
+      const searchView = document.querySelector("#incident-search");
+      const registerButton = registerView?.querySelector("[data-incident-register-button]");
+      const searchForm = searchView?.querySelector("#incident-search-form");
+      const resultBody = searchView?.querySelector("#incident-result-body");
+      const resultCount = searchView?.querySelector("#incident-result-count");
+      const storageKey = "itsm.incident.register.rows";
+      const basicFields = [
+        { label: "요청부서", control: registerView?.querySelector("[data-incident-request-department]"), key: "requestDepartment" },
+        { label: "요청팀", control: registerView?.querySelector("[data-incident-request-team]"), key: "requestTeam" },
+        { label: "요청자", control: registerView?.querySelector("[data-incident-requester]"), key: "requester" },
+        { label: "작성부서", control: registerView?.querySelector("[data-incident-author-department]"), key: "authorDepartment" },
+        { label: "작성팀", control: registerView?.querySelector("[data-incident-author-team]"), key: "authorTeam" },
+        { label: "작성자", control: registerView?.querySelector("[data-incident-author]"), key: "author" },
+        { label: "제목", control: registerView?.querySelector("#incident-title"), key: "title" },
+        { label: "내용", control: registerView?.querySelector("#incident-content"), key: "content" }
+      ];
+
+      if (!registerView || !searchView || !registerButton || !searchForm || !resultBody || !resultCount) {
+        return;
+      }
+
+      const readRows = () => {
+        try {
+          const rows = JSON.parse(window.localStorage.getItem(storageKey) || "[]");
+          return Array.isArray(rows) ? rows : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const writeRows = (rows) => {
+        try {
+          window.localStorage.setItem(storageKey, JSON.stringify(rows));
+          return true;
+        } catch {
+          openEventActionEmptyModal("브라우저 저장소에 장애 등록 데이터를 저장할 수 없습니다");
+          return false;
+        }
+      };
+
+      const getCriteria = () => {
+        const formData = new FormData(searchForm);
+        const normalize = (value) => String(value || "").trim().toLowerCase();
+
+        return {
+          authorDepartment: normalize(formData.get("authorDepartment")),
+          authorTeam: normalize(formData.get("authorTeam")),
+          author: normalize(formData.get("author")),
+          startDate: String(formData.get("startDate") || "").trim(),
+          endDate: String(formData.get("endDate") || "").trim(),
+          title: normalize(formData.get("title"))
+        };
+      };
+
+      const renderRows = () => {
+        const criteria = getCriteria();
+        const hasCriteria = Object.values(criteria).some((value) => value);
+        const normalize = (value) => String(value || "").trim().toLowerCase();
+        const rows = readRows().filter((row) => {
+          const registeredDate = String(row.registeredAt || "").slice(0, 10);
+          const includes = (value, query) => !query || normalize(value).includes(query);
+
+          return includes(row.authorDepartment, criteria.authorDepartment)
+            && includes(row.authorTeam, criteria.authorTeam)
+            && includes(row.author, criteria.author)
+            && includes(row.title, criteria.title)
+            && (!criteria.startDate || (registeredDate && registeredDate >= criteria.startDate))
+            && (!criteria.endDate || (registeredDate && registeredDate <= criteria.endDate));
+        });
+        const fragment = document.createDocumentFragment();
+
+        resultCount.textContent = `${rows.length}건`;
+
+        if (rows.length === 0) {
+          const emptyRow = document.createElement("tr");
+          const emptyCell = document.createElement("td");
+
+          emptyCell.colSpan = problemSearchColumns.length;
+          emptyCell.textContent = hasCriteria
+            ? "조회 조건에 맞는 장애가 없습니다."
+            : "등록된 장애가 없습니다.";
+          emptyRow.append(emptyCell);
+          resultBody.replaceChildren(emptyRow);
+          return;
+        }
+
+        rows.forEach((row, index) => {
+          const tableRow = document.createElement("tr");
+          const displayRow = { ...row, no: index + 1 };
+
+          problemSearchColumns.forEach((column) => {
+            tableRow.append(createProblemResultCell(displayRow, column));
+          });
+          fragment.append(tableRow);
+        });
+
+        resultBody.replaceChildren(fragment);
+      };
+
+      const initializeDateControls = () => {
+        searchView.querySelectorAll("[data-incident-search-date]").forEach((dateWrapper) => {
+          const control = dateWrapper.querySelector("input");
+          const dateButton = dateWrapper.querySelector(".action-date-button");
+
+          if (!control || !dateButton || dateWrapper.querySelector(".action-date-popover")) {
+            return;
+          }
+
+          dateWrapper.append(createActionDateCalendar({
+            control,
+            dateButton,
+            dateWrapper,
+            label: dateButton.dataset.dateLabel || "기간",
+            minDateValue: ""
+          }));
+        });
+      };
+
+      registerView.querySelector("[data-incident-requester-search]")?.addEventListener("click", () => {
+        registerView.querySelector("[data-incident-requester]").value = "구민준";
+        registerView.querySelector("[data-incident-request-department]").value = "Tech운영부";
+        registerView.querySelector("[data-incident-request-team]").value = "상황관리Cell";
+      });
+
+      registerView.querySelector("[data-incident-author-search]")?.addEventListener("click", () => {
+        registerView.querySelector("[data-incident-author]").value = "홍길동";
+        registerView.querySelector("[data-incident-author-department]").value = "디지털서비스개발부";
+        registerView.querySelector("[data-incident-author-team]").value = "디지털수신Cell";
+      });
+
+      searchView.querySelectorAll("[data-incident-search-lookup]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById(button.dataset.target);
+
+          if (target) {
+            target.value = button.dataset.value || "";
+          }
+        });
+      });
+
+      registerButton.addEventListener("click", () => {
+        const missingFields = basicFields
+          .filter(({ control }) => !String(control?.value || "").trim())
+          .map(({ label }) => label);
+
+        if (missingFields.length > 0) {
+          openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
+          return;
+        }
+
+        const row = {
+          incidentId: `INC-${Date.now()}`,
+          registeredAt: formatProblemRegisteredAt()
+        };
+
+        basicFields.forEach(({ control, key }) => {
+          row[key] = control.value.trim();
+        });
+
+        const rows = readRows();
+        rows.unshift(row);
+
+        if (!writeRows(rows)) {
+          return;
+        }
+
+        basicFields.forEach(({ control }) => {
+          control.value = "";
+        });
+        renderRows();
+        openEventActionEmptyModal("장애가 등록되었습니다(SWING메일로도 전달됩니다)");
+      });
+
+      searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        renderRows();
+      });
+      searchForm.addEventListener("reset", () => {
+        window.setTimeout(renderRows, 0);
+      });
+
+      initializeDateControls();
+      renderRows();
+    }
+
     function renderStatusBoardRows(rows) {
       const fragment = document.createDocumentFragment();
 
@@ -10238,13 +10474,13 @@
 
     document.querySelectorAll(".problem-section summary").forEach((summary) => {
       summary.addEventListener("click", (event) => {
-        if (summary.closest("[data-problem-disabled-section]")) {
+        if (summary.closest("[data-problem-disabled-section], [data-incident-disabled-section]")) {
           event.preventDefault();
         }
       });
 
       summary.addEventListener("keydown", (event) => {
-        if (summary.closest("[data-problem-disabled-section]") && (event.key === "Enter" || event.key === " ")) {
+        if (summary.closest("[data-problem-disabled-section], [data-incident-disabled-section]") && (event.key === "Enter" || event.key === " ")) {
           event.preventDefault();
         }
       });
@@ -10452,6 +10688,7 @@
     initializeEventSearchControls();
     initializeProblemSearchControls();
     initializeProblemDateControls();
+    initializeIncidentManagement();
     setProblemRegisterMode("create");
     renderEventRuleRows();
     renderEventResultRows(window.EVENT_SEARCH_ROWS || []);
