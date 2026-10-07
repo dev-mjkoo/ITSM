@@ -6598,7 +6598,7 @@
                     <td class="req-id">REQ-069</td>
                     <td class="req-screen">장애관리 등록</td>
                     <td class="req-category">03 장애 판정 및 분류</td>
-                    <td>고객서비스영향, SLA 적용, 대고객안내, 금감원 보고, 지식등록 여부와 장애원인유형, 장애해결유형, 재발방지조치 예정일을 입력할 수 있도록 한다.</td>
+                    <td>고객서비스영향, SLA 적용, 대고객안내, 금감원 보고 여부와 장애원인유형, 장애해결유형, 재발방지조치 예정일을 입력할 수 있도록 한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
                   <tr>
@@ -7055,7 +7055,6 @@
         createIncidentField({ id: "incident-customer-impact", label: "고객서비스영향여부", dataName: "incident-customer-impact", options: ["[선택]", "예", "아니오"] }),
         createIncidentField({ id: "incident-sla-applied", label: "SLA적용여부", dataName: "incident-sla-applied", options: ["[선택]", "예", "아니오"] }),
         createIncidentField({ id: "incident-customer-notice", label: "대고객안내여부", dataName: "incident-customer-notice", options: ["[선택]", "예", "아니오"] }),
-        createIncidentField({ id: "incident-knowledge-registered", label: "지식등록여부", dataName: "incident-knowledge-registered", options: ["[선택]", "예", "아니오"] }),
         createIncidentField({ id: "incident-regulator-report", label: "금감원 보고여부", dataName: "incident-regulator-report", options: ["[선택]", "예", "아니오"] }),
         createIncidentField({ id: "incident-cause-type", label: "장애원인유형", dataName: "incident-cause-type", options: ["[선택]", "H/W(장비)", "H/W(용량)", "N/W(회선)", "N/W(장비)", "S/W(AP)", "S/W(System)", "변경", "운영자실수", "사용자실수", "외부영향", "원인불명", "대외기관", "기타"] }),
         createIncidentField({ id: "incident-resolution-type", label: "장애해결유형", dataName: "incident-resolution-type", options: ["[선택]", "Restart(H/W)", "Restart(S/W)", "H/W변경", "S/W변경", "Reconfig/삭제", "자동해결", "Restore", "교육/안내", "데이터 수정", "프로그램 수정", "임시해결", "기타"] }),
@@ -7064,10 +7063,10 @@
       ];
       assessmentForm.classList.add("incident-basic-form", "incident-assessment-form");
       assessmentForm.replaceChildren(
-        createIncidentRow({ id: "incident-grade-row-label", label: "등급 판정", modifier: "assessment-grade", fields: [assessmentFields[0], assessmentFields[9]], className: "incident-assessment-row" }),
-        createIncidentRow({ id: "incident-impact-row-label", label: "영향 및 보고", modifier: "four", fields: assessmentFields.slice(1, 4).concat(assessmentFields[5]), className: "incident-assessment-row" }),
-        createIncidentRow({ id: "incident-cause-row-label", label: "원인 및 해결", modifier: "two", fields: assessmentFields.slice(6, 8), className: "incident-assessment-row" }),
-        createIncidentRow({ id: "incident-followup-row-label", label: "후속 관리", modifier: "two", fields: [assessmentFields[4], assessmentFields[8]], className: "incident-assessment-row" })
+        createIncidentRow({ id: "incident-grade-row-label", label: "등급 판정", modifier: "assessment-grade", fields: [assessmentFields[0], assessmentFields[8]], className: "incident-assessment-row" }),
+        createIncidentRow({ id: "incident-impact-row-label", label: "영향 및 보고", modifier: "four", fields: assessmentFields.slice(1, 5), className: "incident-assessment-row" }),
+        createIncidentRow({ id: "incident-cause-row-label", label: "원인 및 해결", modifier: "two", fields: assessmentFields.slice(5, 7), className: "incident-assessment-row" }),
+        createIncidentRow({ id: "incident-followup-row-label", label: "후속 관리", modifier: "two", fields: [assessmentFields[7]], className: "incident-assessment-row" })
       );
       assessmentForm.querySelector("[data-incident-recurrence-due-date]").type = "date";
       overviewSection?.after(assessmentSection);
@@ -10824,7 +10823,6 @@
         { label: "금감원 보고여부", control: registerView?.querySelector("[data-incident-regulator-report]"), key: "regulatorReport" },
         { label: "장애원인유형", control: registerView?.querySelector("[data-incident-cause-type]"), key: "causeType" },
         { label: "장애해결유형", control: registerView?.querySelector("[data-incident-resolution-type]"), key: "resolutionType" },
-        { label: "지식등록여부", control: registerView?.querySelector("[data-incident-knowledge-registered]"), key: "knowledgeRegistered" },
         { label: "재발방지조치 예정일", control: registerView?.querySelector("[data-incident-recurrence-due-date]"), key: "recurrenceDueDate" },
         { label: "서비스영향도", control: registerView?.querySelector("[data-incident-service-impact]"), key: "serviceImpact" },
         { label: "장애 발생 원인", control: registerView?.querySelector("[data-incident-cause]"), key: "cause" }
