@@ -899,6 +899,188 @@
       grid-column: span 2;
     }
 
+    #incident-register .problem-basic-form {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    #incident-register .problem-basic-form.incident-basic-form {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .incident-basic-row {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+      padding: 13px 0;
+      border-bottom: 1px solid #e8edf3;
+    }
+
+    .incident-basic-row:first-child {
+      padding-top: 0;
+    }
+
+    .incident-basic-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .incident-basic-row-label {
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      border-left: 2px solid #c9d7e8;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .incident-basic-row-fields {
+      min-width: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .incident-basic-row-fields.is-three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .incident-basic-row-fields.is-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .incident-basic-row-fields.is-four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .incident-basic-row-fields.is-assessment-grade {
+      grid-template-columns: minmax(180px, 0.65fr) minmax(0, 1.35fr);
+    }
+
+    .incident-basic-row-fields.is-content {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #incident-register .incident-basic-row-fields .problem-form-field.is-full {
+      grid-column: auto;
+    }
+
+    #incident-register .problem-overview-form .problem-form-field.is-span-2 {
+      grid-column: span 1;
+    }
+
+    #incident-register .problem-overview-form.incident-overview-form {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .problem-result-table .incident-col-status {
+      width: 90px;
+      text-align: center;
+    }
+
+    .incident-status-badge {
+      display: inline-flex;
+      min-height: 24px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #e9f1ff;
+      color: #1557ba;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .incident-status-badge.is-draft {
+      background: #fff4db;
+      color: #8a5b10;
+    }
+
+    .incident-report-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .incident-report-copy {
+      min-width: 0;
+    }
+
+    .incident-report-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .incident-report-description,
+    .incident-report-status {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .incident-report-status.has-file {
+      color: #1557ba;
+      font-weight: 700;
+    }
+
+    .incident-report-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .incident-report-button {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .incident-report-button:hover,
+    .incident-report-button:focus-visible {
+      border-color: var(--primary);
+      background: #eef6ff;
+      color: var(--primary-strong);
+      outline: none;
+    }
+
+    .incident-report-file {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
     .problem-form-field label {
       color: var(--muted);
       font-size: 11px;
@@ -906,7 +1088,8 @@
     }
 
     .problem-form-field input,
-    .problem-form-field textarea {
+    .problem-form-field textarea,
+    .problem-form-field select {
       width: 100%;
       border: 1px solid var(--border);
       border-radius: 6px;
@@ -917,9 +1100,14 @@
       transition: border-color 160ms ease, background 160ms ease;
     }
 
-    .problem-form-field input {
+    .problem-form-field input,
+    .problem-form-field select {
       height: 30px;
       padding: 0 8px;
+    }
+
+    .problem-form-field select {
+      cursor: pointer;
     }
 
     .problem-form-field textarea {
@@ -1430,6 +1618,32 @@
     body.is-dark-mode .problem-form-field input[readonly] {
       background: #111820;
       color: #aebbd0;
+    }
+
+    body.is-dark-mode .incident-report-panel {
+      border-color: var(--border);
+      background: #161b22;
+    }
+
+    body.is-dark-mode .incident-report-button {
+      border-color: var(--border);
+      background: #1f2630;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .incident-report-button:hover,
+    body.is-dark-mode .incident-report-button:focus-visible {
+      background: #263241;
+      color: #79b8ff;
+    }
+
+    body.is-dark-mode .incident-basic-row {
+      border-bottom-color: var(--border);
+    }
+
+    body.is-dark-mode .incident-basic-row-label {
+      border-left-color: #3b516d;
+      color: #c8d6e8;
     }
 
     body.is-dark-mode .problem-extra-grid-title {
@@ -4697,6 +4911,55 @@
         grid-template-columns: minmax(0, 1fr);
       }
 
+      #incident-register .problem-basic-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #incident-register .problem-basic-form.incident-basic-form {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .incident-basic-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+        padding: 12px 0;
+      }
+
+      .incident-basic-row-label {
+        min-height: 0;
+      }
+
+      .incident-basic-row-fields.is-three,
+      .incident-basic-row-fields.is-two,
+      .incident-basic-row-fields.is-four,
+      .incident-basic-row-fields.is-assessment-grade {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .incident-basic-row-fields.is-three .problem-form-field:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+      }
+
+      #incident-register .problem-overview-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #incident-register .problem-overview-form.incident-overview-form {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      #incident-register .problem-overview-form .problem-form-field.is-span-2 {
+        grid-column: span 1;
+      }
+
+      .incident-report-panel {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .incident-report-actions {
+        justify-content: flex-start;
+      }
+
       .script-header {
         align-items: stretch;
         flex-direction: column;
@@ -5836,6 +6099,8 @@
                   <option value="오류상황판/이벤트관리">오류상황판/이벤트관리</option>
                   <option value="문제관리 등록">문제관리 등록</option>
                   <option value="문제관리 조회">문제관리 조회</option>
+                  <option value="장애관리 등록">장애관리 등록</option>
+                  <option value="장애관리 조회">장애관리 조회</option>
                   <option value="공통">공통</option>
                 </select>
               </div>
@@ -6280,6 +6545,83 @@
                     <td>이벤트 조회 목록에서 결재요청은 선택된 이벤트가 모두 조치중 상태인 경우에만 실행할 수 있으며, 미조치, 결재요청, 조치완료 상태가 포함되면 결재요청하지 않고 안내를 표시한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-062</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">기본정보</td>
+                    <td>장애관리 등록자는 작성자와 동일하므로 기본정보에서 요청부서, 요청팀, 요청자 항목을 제공하지 않고 작성부서, 작성팀, 작성자 정보를 사용한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-063</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">작성 범위</td>
+                    <td>장애관리 등록 화면에서는 별도의 후속 작성 단계 없이 01 기본정보부터 10 보고서까지 모든 섹션을 처음부터 입력할 수 있도록 활성화한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-064</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">저장 기능</td>
+                    <td>장애관리 등록 화면 상단에는 임시저장과 등록 버튼을 제공하며, 임시저장은 미완성 상태의 입력값을 허용하고 등록은 필수입력 항목을 검증한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-065</td>
+                    <td class="req-screen">장애관리 조회</td>
+                    <td class="req-category">처리 상태</td>
+                    <td>장애관리 조회 결과에는 임시저장 또는 등록 상태를 표시하여 최종 등록 여부를 구분할 수 있도록 한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-066</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">기본정보 분류</td>
+                    <td>01 기본정보에는 장애구분, 발생구분, 장애유형, 장애복구조장, 상황관리조장을 제공하며 두 조장 항목은 돋보기 검색으로 선택한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-067</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">02 개요</td>
+                    <td>02 개요에는 장애발생일시, 장애인지일시, 장애조치시작일시, 장애종료일시, 장애보고일시를 각각 행 라벨로 구분하고, 각 행에서 날짜와 시간을 나란히 입력하며 시간 순서를 검증한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-068</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">03 장애 판정 및 분류</td>
+                    <td>장애/사고 등급은 [선택], 1~5등급, 등급외를 제공하고 장애등급판단기준을 텍스트로 입력할 수 있도록 한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-069</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">03 장애 판정 및 분류</td>
+                    <td>고객서비스영향, SLA 적용, 대고객안내, 금감원 보고, 지식등록 여부와 장애원인유형, 장애해결유형, 재발방지조치 예정일을 입력할 수 있도록 한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-070</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">10 보고서</td>
+                    <td>10 보고서 섹션에서는 DOC, DOCX, PDF 형식의 장애보고서를 첨부할 수 있으며, 임시저장에는 첨부하지 않아도 되지만 최종 등록 시에는 보고서 첨부를 필수로 검증한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-071</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">10 보고서</td>
+                    <td>10 보고서 섹션에서 작성에 사용할 수 있는 장애보고서 샘플 DOCX 파일을 다운로드할 수 있도록 한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-072</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">01~03 입력 배치</td>
+                    <td>01 기본정보, 02 개요, 03 장애 판정 및 분류는 얇은 행 라벨과 구분선으로 정보를 구분하고, 03은 등급 판정, 영향 및 보고, 원인 및 해결, 후속 관리로 연관된 입력 항목을 묶어 배치한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -6538,6 +6880,272 @@
 
     cloneProblemViewForIncident("#problem-register .problem-register-page", "#incident-register .workspace");
     cloneProblemViewForIncident("#problem-search .problem-search-page", "#incident-search .workspace");
+
+    function configureIncidentRegisterView() {
+      const registerView = document.querySelector("#incident-register");
+      const toolbar = registerView?.querySelector(".problem-register-toolbar");
+      const registerButton = registerView?.querySelector("[data-incident-register-button]");
+
+      if (!registerView || !toolbar || !registerButton) {
+        return;
+      }
+
+      [
+        "[data-incident-request-department]",
+        "[data-incident-request-team]",
+        "[data-incident-requester]"
+      ].forEach((selector) => {
+        registerView.querySelector(selector)?.closest(".problem-form-field")?.remove();
+      });
+
+      const createSelectOptions = (values) => values.map((value) => (
+        `<option value="${value === "[선택]" ? "" : value}">${value}</option>`
+      )).join("");
+      const createIncidentField = ({ id, label, dataName, options, full = false, search = false }) => {
+        const field = document.createElement("div");
+        const labelElement = document.createElement("label");
+
+        field.className = `problem-form-field${full ? " is-full" : ""}`;
+        labelElement.htmlFor = id;
+        labelElement.textContent = label;
+        field.append(labelElement);
+
+        if (search) {
+          const searchControl = document.createElement("div");
+          const input = document.createElement("input");
+          const button = document.createElement("button");
+
+          searchControl.className = "problem-search-control";
+          input.id = id;
+          input.type = "text";
+          input.readOnly = true;
+          input.setAttribute("aria-readonly", "true");
+          input.setAttribute(`data-${dataName}`, "");
+          button.className = "problem-search-button";
+          button.type = "button";
+          button.setAttribute(`data-${dataName}-search`, "");
+          button.setAttribute("aria-label", `${label} 검색`);
+          button.innerHTML = `
+            <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          `;
+          searchControl.append(input, button);
+          field.append(searchControl);
+          return field;
+        }
+
+        if (options) {
+          const select = document.createElement("select");
+          select.id = id;
+          select.setAttribute(`data-${dataName}`, "");
+          select.innerHTML = createSelectOptions(options);
+          field.append(select);
+          return field;
+        }
+
+        const input = document.createElement("input");
+        input.id = id;
+        input.type = "text";
+        input.setAttribute(`data-${dataName}`, "");
+        field.append(input);
+        return field;
+      };
+
+      const basicForm = registerView.querySelector(".problem-basic-form");
+      const titleField = registerView.querySelector("#incident-title")?.closest(".problem-form-field");
+      const basicIncidentFields = [
+        createIncidentField({
+          id: "incident-category",
+          label: "장애구분",
+          dataName: "incident-category",
+          options: ["[선택]", "시스템", "그룹공통", "어플리케이션", "퍼블릭클라우드", "채널", "DB", "DB접근제어(샤크라)", "클라우드 보안", "네트워크", "백업", "미들웨어", "보안", "스토리지", "통합관제", "프라이빗클라우드", "대외", "콜센터", "승인", "클라우드", "배치", "프로프레임,배치,DevOps,형상관리", "그룹공통개발", "오픈쉬프트", "코어계 프레임워크", "그룹 클라우드", "기타"]
+        }),
+        createIncidentField({ id: "incident-occurrence-type", label: "발생구분", dataName: "incident-occurrence-type", options: ["[선택]", "내부발생장애", "대외기관발생장애"] }),
+        createIncidentField({ id: "incident-type", label: "장애유형", dataName: "incident-type", options: ["[선택]", "오류", "장애", "사고"] }),
+        createIncidentField({ id: "incident-recovery-leader", label: "장애복구조장", dataName: "incident-recovery-leader", search: true }),
+        createIncidentField({ id: "incident-situation-leader", label: "상황관리조장", dataName: "incident-situation-leader", search: true })
+      ];
+
+      const createIncidentRow = ({ id, label, modifier, fields, className = "" }) => {
+        const row = document.createElement("div");
+        const rowLabel = document.createElement("span");
+        const fieldGrid = document.createElement("div");
+
+        row.className = `incident-basic-row ${className}`.trim();
+        row.setAttribute("role", "group");
+        row.setAttribute("aria-labelledby", id);
+        rowLabel.className = "incident-basic-row-label";
+        rowLabel.id = id;
+        rowLabel.textContent = label;
+        fieldGrid.className = `incident-basic-row-fields is-${modifier}`;
+        fields.filter(Boolean).forEach((field) => fieldGrid.append(field));
+        row.append(rowLabel, fieldGrid);
+        return row;
+      };
+
+      if (basicForm && titleField) {
+        basicIncidentFields.forEach((field) => basicForm.insertBefore(field, titleField));
+        const authorFields = [
+          registerView.querySelector("[data-incident-author-department]")?.closest(".problem-form-field"),
+          registerView.querySelector("[data-incident-author-team]")?.closest(".problem-form-field"),
+          registerView.querySelector("[data-incident-author]")?.closest(".problem-form-field")
+        ];
+        const contentField = registerView.querySelector("#incident-content")?.closest(".problem-form-field");
+
+        basicForm.classList.add("incident-basic-form");
+        basicForm.replaceChildren(
+          createIncidentRow({ id: "incident-author-row-label", label: "작성자 정보", modifier: "three", fields: authorFields }),
+          createIncidentRow({ id: "incident-category-row-label", label: "장애 분류", modifier: "three", fields: basicIncidentFields.slice(0, 3) }),
+          createIncidentRow({ id: "incident-leader-row-label", label: "장애전담정보", modifier: "two", fields: basicIncidentFields.slice(3) }),
+          createIncidentRow({ id: "incident-content-row-label", label: "장애 내용", modifier: "content", fields: [titleField, contentField] })
+        );
+      }
+
+      const createDateTimeRow = (prefix, label) => `
+        <div class="incident-basic-row incident-overview-row" role="group" aria-labelledby="incident-${prefix}-row-label">
+          <span class="incident-basic-row-label" id="incident-${prefix}-row-label">${label}일시</span>
+          <div class="incident-basic-row-fields is-two">
+            <div class="problem-form-field">
+              <label for="incident-${prefix}-date">일자</label>
+              <div class="action-date-control" data-incident-date-control>
+                <input id="incident-${prefix}-date" type="text" data-incident-${prefix}-date readonly aria-readonly="true">
+                <button class="action-date-button" type="button" aria-label="${label}일자 달력 열기" aria-haspopup="dialog" aria-expanded="false" data-date-label="${label}일자">
+                  <svg width="17" height="17" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 3.5v3M17 3.5v3M4.5 9.5h15M6.5 5.5h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="problem-form-field">
+              <label for="incident-${prefix}-time">시간</label>
+              <input id="incident-${prefix}-time" type="time" min="00:00" max="23:59" step="60" data-incident-${prefix}-time>
+            </div>
+          </div>
+        </div>
+      `;
+      const overviewSection = registerView.querySelector("[data-incident-section='overview']");
+      const overviewForm = document.createElement("div");
+      overviewForm.className = "problem-overview-form incident-overview-form";
+      overviewForm.innerHTML = [
+        createDateTimeRow("occurred", "장애발생"),
+        createDateTimeRow("recognized", "장애인지"),
+        createDateTimeRow("action-start", "장애조치시작"),
+        createDateTimeRow("ended", "장애종료"),
+        createDateTimeRow("reported", "장애보고")
+      ].join("");
+      overviewSection?.querySelector(".problem-section-body")?.replaceChildren(overviewForm);
+
+      const assessmentSection = document.createElement("details");
+      assessmentSection.className = "problem-section is-required";
+      assessmentSection.dataset.incidentSection = "assessment";
+      assessmentSection.innerHTML = `
+        <summary>
+          <span class="problem-section-heading">03 장애 판정 및 분류</span>
+          <span class="problem-required-note" data-incident-followup-required-note>* 필수입력 항목입니다</span>
+          <span class="problem-section-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="problem-section-body">
+          <div class="problem-basic-form" data-incident-assessment-form></div>
+        </div>
+      `;
+      const assessmentForm = assessmentSection.querySelector("[data-incident-assessment-form]");
+      const assessmentFields = [
+        createIncidentField({ id: "incident-grade", label: "장애/사고 등급", dataName: "incident-grade", options: ["[선택]", "1등급", "2등급", "3등급", "4등급", "5등급", "등급외"] }),
+        createIncidentField({ id: "incident-customer-impact", label: "고객서비스영향여부", dataName: "incident-customer-impact", options: ["[선택]", "예", "아니오"] }),
+        createIncidentField({ id: "incident-sla-applied", label: "SLA적용여부", dataName: "incident-sla-applied", options: ["[선택]", "예", "아니오"] }),
+        createIncidentField({ id: "incident-customer-notice", label: "대고객안내여부", dataName: "incident-customer-notice", options: ["[선택]", "예", "아니오"] }),
+        createIncidentField({ id: "incident-knowledge-registered", label: "지식등록여부", dataName: "incident-knowledge-registered", options: ["[선택]", "예", "아니오"] }),
+        createIncidentField({ id: "incident-regulator-report", label: "금감원 보고여부", dataName: "incident-regulator-report", options: ["[선택]", "예", "아니오"] }),
+        createIncidentField({ id: "incident-cause-type", label: "장애원인유형", dataName: "incident-cause-type", options: ["[선택]", "H/W(장비)", "H/W(용량)", "N/W(회선)", "N/W(장비)", "S/W(AP)", "S/W(System)", "변경", "운영자실수", "사용자실수", "외부영향", "원인불명", "대외기관", "기타"] }),
+        createIncidentField({ id: "incident-resolution-type", label: "장애해결유형", dataName: "incident-resolution-type", options: ["[선택]", "Restart(H/W)", "Restart(S/W)", "H/W변경", "S/W변경", "Reconfig/삭제", "자동해결", "Restore", "교육/안내", "데이터 수정", "프로그램 수정", "임시해결", "기타"] }),
+        createIncidentField({ id: "incident-recurrence-due-date", label: "재발방지조치 예정일", dataName: "incident-recurrence-due-date" }),
+        createIncidentField({ id: "incident-grade-criteria", label: "장애등급판단기준", dataName: "incident-grade-criteria", full: true })
+      ];
+      assessmentForm.classList.add("incident-basic-form", "incident-assessment-form");
+      assessmentForm.replaceChildren(
+        createIncidentRow({ id: "incident-grade-row-label", label: "등급 판정", modifier: "assessment-grade", fields: [assessmentFields[0], assessmentFields[9]], className: "incident-assessment-row" }),
+        createIncidentRow({ id: "incident-impact-row-label", label: "영향 및 보고", modifier: "four", fields: assessmentFields.slice(1, 4).concat(assessmentFields[5]), className: "incident-assessment-row" }),
+        createIncidentRow({ id: "incident-cause-row-label", label: "원인 및 해결", modifier: "two", fields: assessmentFields.slice(6, 8), className: "incident-assessment-row" }),
+        createIncidentRow({ id: "incident-followup-row-label", label: "후속 관리", modifier: "two", fields: [assessmentFields[4], assessmentFields[8]], className: "incident-assessment-row" })
+      );
+      assessmentForm.querySelector("[data-incident-recurrence-due-date]").type = "date";
+      overviewSection?.after(assessmentSection);
+
+      const sectionHeadings = {
+        serviceImpact: "04 서비스영향도",
+        cause: "05 장애 발생 원인",
+        actionTimeline: "06 조치 내용 (시간별)",
+        futurePlan: "07 향후 대책",
+        fiveWhy: "08 5-why",
+        etc: "09 기타"
+      };
+      Object.entries(sectionHeadings).forEach(([sectionName, heading]) => {
+        const headingElement = registerView.querySelector(`[data-incident-section='${sectionName}'] .problem-section-heading`);
+
+        if (headingElement) {
+          headingElement.textContent = heading;
+        }
+      });
+
+      const reportSection = document.createElement("details");
+      reportSection.className = "problem-section is-required";
+      reportSection.dataset.incidentSection = "report";
+      reportSection.innerHTML = `
+        <summary>
+          <span class="problem-section-heading">10 보고서</span>
+          <span class="problem-required-note" data-incident-followup-required-note>* 등록 시 첨부 필수입니다</span>
+          <span class="problem-section-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="problem-section-body">
+          <div class="incident-report-panel">
+            <div class="incident-report-copy">
+              <p class="incident-report-title">장애보고서 첨부</p>
+              <p class="incident-report-description">DOC, DOCX, PDF 파일을 첨부할 수 있으며 최종 등록 시 반드시 필요합니다.</p>
+              <p class="incident-report-status" id="incident-report-status" role="status" aria-live="polite" data-incident-report-status>선택된 파일이 없습니다.</p>
+            </div>
+            <div class="incident-report-actions">
+              <a class="incident-report-button" href="templates/%EC%9E%A5%EC%95%A0%EB%B3%B4%EA%B3%A0%EC%84%9C_%EC%83%98%ED%94%8C.docx" download="장애보고서_샘플.docx">
+                장애보고서 샘플 다운로드
+              </a>
+              <label class="incident-report-button" for="incident-report-file">보고서 파일 선택</label>
+              <input class="incident-report-file" id="incident-report-file" type="file" accept=".doc,.docx,.pdf" data-incident-report-file aria-describedby="incident-report-status">
+            </div>
+          </div>
+        </div>
+      `;
+      registerView.querySelector("[data-incident-section='etc']")?.after(reportSection);
+
+      const draftButton = document.createElement("button");
+      draftButton.className = "problem-action-button";
+      draftButton.type = "button";
+      draftButton.dataset.incidentDraftButton = "";
+      draftButton.textContent = "임시저장";
+      toolbar.insertBefore(draftButton, registerButton);
+
+      registerView.querySelectorAll("[data-incident-section]").forEach((section) => {
+        section.classList.remove("is-disabled");
+        section.removeAttribute("data-incident-disabled-section");
+        section.removeAttribute("aria-disabled");
+
+        if (section.dataset.incidentSection !== "etc") {
+          section.classList.add("is-required");
+        }
+      });
+
+      registerView.querySelectorAll("[data-incident-followup-required-note]").forEach((note) => {
+        note.hidden = false;
+      });
+      registerView.querySelectorAll("input, textarea, select, button").forEach((control) => {
+        control.disabled = false;
+      });
+      registerView.querySelectorAll("[data-incident-date-control] input").forEach((control) => {
+        control.readOnly = true;
+        control.setAttribute("aria-readonly", "true");
+      });
+    }
+
+    configureIncidentRegisterView();
 
     const statusBoardColumns = [
       { key: "select", className: "col-select", selectable: true },
@@ -10179,23 +10787,75 @@
       const registerView = document.querySelector("#incident-register");
       const searchView = document.querySelector("#incident-search");
       const registerButton = registerView?.querySelector("[data-incident-register-button]");
+      const draftButton = registerView?.querySelector("[data-incident-draft-button]");
       const searchForm = searchView?.querySelector("#incident-search-form");
       const resultBody = searchView?.querySelector("#incident-result-body");
       const resultCount = searchView?.querySelector("#incident-result-count");
       const storageKey = "itsm.incident.register.rows";
+      let activeIncidentId = "";
       const basicFields = [
-        { label: "요청부서", control: registerView?.querySelector("[data-incident-request-department]"), key: "requestDepartment" },
-        { label: "요청팀", control: registerView?.querySelector("[data-incident-request-team]"), key: "requestTeam" },
-        { label: "요청자", control: registerView?.querySelector("[data-incident-requester]"), key: "requester" },
         { label: "작성부서", control: registerView?.querySelector("[data-incident-author-department]"), key: "authorDepartment" },
         { label: "작성팀", control: registerView?.querySelector("[data-incident-author-team]"), key: "authorTeam" },
         { label: "작성자", control: registerView?.querySelector("[data-incident-author]"), key: "author" },
+        { label: "장애구분", control: registerView?.querySelector("[data-incident-category]"), key: "incidentCategory" },
+        { label: "발생구분", control: registerView?.querySelector("[data-incident-occurrence-type]"), key: "occurrenceType" },
+        { label: "장애유형", control: registerView?.querySelector("[data-incident-type]"), key: "incidentType" },
+        { label: "장애복구조장", control: registerView?.querySelector("[data-incident-recovery-leader]"), key: "recoveryLeader" },
+        { label: "상황관리조장", control: registerView?.querySelector("[data-incident-situation-leader]"), key: "situationLeader" },
         { label: "제목", control: registerView?.querySelector("#incident-title"), key: "title" },
         { label: "내용", control: registerView?.querySelector("#incident-content"), key: "content" }
       ];
+      const followupFields = [
+        { label: "장애발생일자", control: registerView?.querySelector("[data-incident-occurred-date]"), key: "occurredDate" },
+        { label: "장애발생시간", control: registerView?.querySelector("[data-incident-occurred-time]"), key: "occurredTime" },
+        { label: "장애인지일자", control: registerView?.querySelector("[data-incident-recognized-date]"), key: "recognizedDate" },
+        { label: "장애인지시간", control: registerView?.querySelector("[data-incident-recognized-time]"), key: "recognizedTime" },
+        { label: "장애조치시작일자", control: registerView?.querySelector("[data-incident-action-start-date]"), key: "actionStartDate" },
+        { label: "장애조치시작시간", control: registerView?.querySelector("[data-incident-action-start-time]"), key: "actionStartTime" },
+        { label: "장애종료일자", control: registerView?.querySelector("[data-incident-ended-date]"), key: "endedDate" },
+        { label: "장애종료시간", control: registerView?.querySelector("[data-incident-ended-time]"), key: "endedTime" },
+        { label: "장애보고일자", control: registerView?.querySelector("[data-incident-reported-date]"), key: "reportedDate" },
+        { label: "장애보고시간", control: registerView?.querySelector("[data-incident-reported-time]"), key: "reportedTime" },
+        { label: "장애/사고 등급", control: registerView?.querySelector("[data-incident-grade]"), key: "incidentGrade" },
+        { label: "장애등급판단기준", control: registerView?.querySelector("[data-incident-grade-criteria]"), key: "gradeCriteria" },
+        { label: "고객서비스영향여부", control: registerView?.querySelector("[data-incident-customer-impact]"), key: "customerImpact" },
+        { label: "SLA적용여부", control: registerView?.querySelector("[data-incident-sla-applied]"), key: "slaApplied" },
+        { label: "대고객안내여부", control: registerView?.querySelector("[data-incident-customer-notice]"), key: "customerNotice" },
+        { label: "금감원 보고여부", control: registerView?.querySelector("[data-incident-regulator-report]"), key: "regulatorReport" },
+        { label: "장애원인유형", control: registerView?.querySelector("[data-incident-cause-type]"), key: "causeType" },
+        { label: "장애해결유형", control: registerView?.querySelector("[data-incident-resolution-type]"), key: "resolutionType" },
+        { label: "지식등록여부", control: registerView?.querySelector("[data-incident-knowledge-registered]"), key: "knowledgeRegistered" },
+        { label: "재발방지조치 예정일", control: registerView?.querySelector("[data-incident-recurrence-due-date]"), key: "recurrenceDueDate" },
+        { label: "서비스영향도", control: registerView?.querySelector("[data-incident-service-impact]"), key: "serviceImpact" },
+        { label: "장애 발생 원인", control: registerView?.querySelector("[data-incident-cause]"), key: "cause" }
+      ];
+      const actionTimelineInput = registerView?.querySelector("[data-incident-action-timeline]");
+      const futurePlanInput = registerView?.querySelector("[data-incident-future-plan]");
+      const fiveWhyInput = registerView?.querySelector("[data-incident-five-why]");
+      const infraInput = registerView?.querySelector("[data-incident-infra-ci]");
+      const relatedEventInput = registerView?.querySelector("[data-incident-related-event]");
+      const reportFileInput = registerView?.querySelector("[data-incident-report-file]");
+      const reportFileStatus = registerView?.querySelector("[data-incident-report-status]");
+      const maxReportFileSize = 20 * 1024 * 1024;
+      let attachedReport = null;
 
-      if (!registerView || !searchView || !registerButton || !searchForm || !resultBody || !resultCount) {
+      if (!registerView || !searchView || !registerButton || !draftButton || !searchForm || !resultBody || !resultCount) {
         return;
+      }
+
+      const resultHeaderRow = searchView.querySelector(".problem-result-table thead tr");
+      const incidentColumns = [
+        { key: "no", className: "problem-col-no" },
+        { key: "status", className: "incident-col-status" },
+        ...problemSearchColumns.slice(1)
+      ];
+
+      if (resultHeaderRow && !resultHeaderRow.querySelector(".incident-col-status")) {
+        const statusHeader = document.createElement("th");
+        statusHeader.className = "incident-col-status";
+        statusHeader.scope = "col";
+        statusHeader.textContent = "상태";
+        resultHeaderRow.children[0]?.after(statusHeader);
       }
 
       const readRows = () => {
@@ -10254,7 +10914,7 @@
           const emptyRow = document.createElement("tr");
           const emptyCell = document.createElement("td");
 
-          emptyCell.colSpan = problemSearchColumns.length;
+          emptyCell.colSpan = incidentColumns.length;
           emptyCell.textContent = hasCriteria
             ? "조회 조건에 맞는 장애가 없습니다."
             : "등록된 장애가 없습니다.";
@@ -10267,7 +10927,20 @@
           const tableRow = document.createElement("tr");
           const displayRow = { ...row, no: index + 1 };
 
-          problemSearchColumns.forEach((column) => {
+          incidentColumns.forEach((column) => {
+            if (column.key === "status") {
+              const statusCell = document.createElement("td");
+              const badge = document.createElement("span");
+
+              statusCell.className = column.className;
+              badge.className = "incident-status-badge";
+              badge.classList.toggle("is-draft", row.status === "임시저장");
+              badge.textContent = row.status || "등록";
+              statusCell.append(badge);
+              tableRow.append(statusCell);
+              return;
+            }
+
             tableRow.append(createProblemResultCell(displayRow, column));
           });
           fragment.append(tableRow);
@@ -10277,7 +10950,12 @@
       };
 
       const initializeDateControls = () => {
-        searchView.querySelectorAll("[data-incident-search-date]").forEach((dateWrapper) => {
+        const dateWrappers = [
+          ...searchView.querySelectorAll("[data-incident-search-date]"),
+          ...registerView.querySelectorAll("[data-incident-date-control]")
+        ];
+
+        dateWrappers.forEach((dateWrapper) => {
           const control = dateWrapper.querySelector("input");
           const dateButton = dateWrapper.querySelector(".action-date-button");
 
@@ -10289,22 +10967,288 @@
             control,
             dateButton,
             dateWrapper,
-            label: dateButton.dataset.dateLabel || "기간",
+            label: dateButton.dataset.dateLabel || "일자",
             minDateValue: ""
           }));
         });
       };
 
-      registerView.querySelector("[data-incident-requester-search]")?.addEventListener("click", () => {
-        registerView.querySelector("[data-incident-requester]").value = "구민준";
-        registerView.querySelector("[data-incident-request-department]").value = "Tech운영부";
-        registerView.querySelector("[data-incident-request-team]").value = "상황관리Cell";
+      const createGridControl = (field, rowIndex) => {
+        let control;
+
+        if (field.type === "textarea") {
+          control = document.createElement("textarea");
+          control.rows = 2;
+        } else if (field.type === "select") {
+          control = document.createElement("select");
+          field.options.forEach((value) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            control.append(option);
+          });
+        } else {
+          control = document.createElement("input");
+          control.type = field.type || "text";
+        }
+
+        control.dataset.incidentGridField = field.key;
+        control.setAttribute("aria-label", `${rowIndex + 1}행 ${field.label}`);
+
+        if (field.placeholder) {
+          control.placeholder = field.placeholder;
+        }
+
+        return control;
+      };
+
+      const setupSelectableGrid = ({ bodySelector, addSelector, deleteSelector, fields, hiddenInput, defaultCount = 0 }) => {
+        const body = registerView.querySelector(bodySelector);
+        const addButton = registerView.querySelector(addSelector);
+        const deleteButton = registerView.querySelector(deleteSelector);
+
+        if (!body || !addButton || !deleteButton || !hiddenInput) {
+          return { collect: () => [], reset: () => {} };
+        }
+
+        const collect = () => [...body.querySelectorAll("tr")].map((row) => {
+          const value = {};
+
+          fields.forEach((field) => {
+            value[field.key] = row.querySelector(`[data-incident-grid-field='${field.key}']`)?.value.trim() || "";
+          });
+          return value;
+        });
+
+        const sync = () => {
+          const rows = collect();
+          hiddenInput.value = rows.length ? JSON.stringify(rows) : "";
+          deleteButton.disabled = rows.length === 0;
+          return rows;
+        };
+
+        const appendRow = (values = {}) => {
+          const rowIndex = body.children.length;
+          const row = document.createElement("tr");
+          const selectCell = document.createElement("td");
+          const checkbox = document.createElement("input");
+
+          selectCell.className = "is-center";
+          checkbox.className = "problem-timeline-select";
+          checkbox.type = "checkbox";
+          checkbox.setAttribute("aria-label", `${rowIndex + 1}행 선택`);
+          selectCell.append(checkbox);
+          row.append(selectCell);
+
+          fields.forEach((field) => {
+            const cell = document.createElement("td");
+            const control = createGridControl(field, rowIndex);
+            control.value = values[field.key] || "";
+            control.addEventListener("input", sync);
+            control.addEventListener("change", sync);
+            cell.append(control);
+            row.append(cell);
+          });
+
+          body.append(row);
+          sync();
+        };
+
+        const reset = () => {
+          body.replaceChildren();
+          Array.from({ length: defaultCount }).forEach(() => appendRow());
+          sync();
+        };
+
+        addButton.addEventListener("click", () => appendRow());
+        deleteButton.addEventListener("click", () => {
+          const selectedRows = [...body.querySelectorAll("tr")]
+            .filter((row) => row.querySelector("input[type='checkbox']")?.checked);
+
+          if (selectedRows.length === 0) {
+            openEventActionEmptyModal("삭제할 행을 선택해주세요");
+            return;
+          }
+
+          selectedRows.forEach((row) => row.remove());
+          [...body.querySelectorAll("tr")].forEach((row, index) => {
+            row.querySelector("input[type='checkbox']")?.setAttribute("aria-label", `${index + 1}행 선택`);
+          });
+          sync();
+        });
+
+        reset();
+        return { collect, reset };
+      };
+
+      const actionGrid = setupSelectableGrid({
+        bodySelector: "#incident-action-timeline-body",
+        addSelector: "[data-incident-action-row-add]",
+        deleteSelector: "[data-incident-action-row-delete]",
+        hiddenInput: actionTimelineInput,
+        defaultCount: 1,
+        fields: [
+          { key: "date", label: "날짜", type: "date" },
+          { key: "time", label: "시간", type: "time" },
+          { key: "type", label: "구분", type: "select", options: ["", "발생", "인지", "원인파악", "조치", "정상화", "기타"] },
+          { key: "content", label: "조치내용", type: "textarea", placeholder: "- 조치내용 입력" }
+        ]
       });
+      const futureGrid = setupSelectableGrid({
+        bodySelector: "#incident-future-plan-body",
+        addSelector: "[data-incident-future-row-add]",
+        deleteSelector: "[data-incident-future-row-delete]",
+        hiddenInput: futurePlanInput,
+        defaultCount: 2,
+        fields: [
+          { key: "task", label: "TASK", type: "textarea", placeholder: "- 향후 대책 입력" },
+          { key: "dueAt", label: "예정완료일시", type: "date" }
+        ]
+      });
+      const infraGrid = setupSelectableGrid({
+        bodySelector: "#incident-infra-ci-body",
+        addSelector: "[data-incident-infra-row-add]",
+        deleteSelector: "[data-incident-infra-row-delete]",
+        hiddenInput: infraInput,
+        fields: [
+          { key: "largeCategory", label: "대분류" },
+          { key: "middleCategory", label: "중분류" },
+          { key: "smallCategory", label: "소분류" },
+          { key: "ciName", label: "CI명(호스트명)" },
+          { key: "status", label: "상태" },
+          { key: "tagging", label: "Tagging" }
+        ]
+      });
+      const relatedEventGrid = setupSelectableGrid({
+        bodySelector: "#incident-related-event-body",
+        addSelector: "[data-incident-related-event-row-add]",
+        deleteSelector: "[data-incident-related-event-row-delete]",
+        hiddenInput: relatedEventInput,
+        fields: [
+          { key: "occurredAt", label: "발생일시", type: "datetime-local" },
+          { key: "transactionCode", label: "거래코드" },
+          { key: "transactionName", label: "거래명" },
+          { key: "errorCode", label: "에러코드" },
+          { key: "errorMessage", label: "에러메시지" }
+        ]
+      });
+
+      const fiveWhyBody = registerView.querySelector("#incident-fivewhy-body");
+      const resetFiveWhy = () => {
+        const fragment = document.createDocumentFragment();
+
+        Array.from({ length: 5 }).forEach((_, index) => {
+          const row = document.createElement("tr");
+          const noCell = document.createElement("td");
+          const whyCell = document.createElement("td");
+          const causeCell = document.createElement("td");
+          const whyInput = document.createElement("textarea");
+          const causeInput = document.createElement("textarea");
+
+          noCell.textContent = `WHY${index + 1}`;
+          whyInput.rows = 2;
+          whyInput.dataset.incidentFiveWhy = "why";
+          whyInput.setAttribute("aria-label", `WHY${index + 1} 질문`);
+          causeInput.rows = 2;
+          causeInput.dataset.incidentFiveWhy = "cause";
+          causeInput.setAttribute("aria-label", `WHY${index + 1} 원인`);
+          whyCell.append(whyInput);
+          causeCell.append(causeInput);
+          row.append(noCell, whyCell, causeCell);
+          fragment.append(row);
+        });
+
+        fiveWhyBody?.replaceChildren(fragment);
+      };
+
+      const collectFiveWhy = () => [...(fiveWhyBody?.querySelectorAll("tr") || [])].map((row, index) => ({
+        no: `WHY${index + 1}`,
+        why: row.querySelector("[data-incident-five-why='why']")?.value.trim() || "",
+        cause: row.querySelector("[data-incident-five-why='cause']")?.value.trim() || ""
+      }));
+
+      resetFiveWhy();
+
+      const validateIncidentTimeline = () => {
+        const timeline = [
+          ["occurred", "장애발생"],
+          ["recognized", "장애인지"],
+          ["action-start", "장애조치시작"],
+          ["ended", "장애종료"],
+          ["reported", "장애보고"]
+        ].map(([prefix, label]) => ({
+          label,
+          value: new Date(
+            `${registerView.querySelector(`[data-incident-${prefix}-date]`).value}`
+            + `T${registerView.querySelector(`[data-incident-${prefix}-time]`).value}`
+          ).getTime()
+        }));
+
+        for (let index = 1; index < timeline.length; index += 1) {
+          if (timeline[index].value < timeline[index - 1].value) {
+            openEventActionEmptyModal(`${timeline[index].label}일시는 ${timeline[index - 1].label}일시보다 빠를 수 없습니다`);
+            return false;
+          }
+        }
+
+        return true;
+      };
 
       registerView.querySelector("[data-incident-author-search]")?.addEventListener("click", () => {
         registerView.querySelector("[data-incident-author]").value = "홍길동";
         registerView.querySelector("[data-incident-author-department]").value = "디지털서비스개발부";
         registerView.querySelector("[data-incident-author-team]").value = "디지털수신Cell";
+      });
+      registerView.querySelector("[data-incident-recovery-leader-search]")?.addEventListener("click", () => {
+        registerView.querySelector("[data-incident-recovery-leader]").value = "김민준";
+      });
+      registerView.querySelector("[data-incident-situation-leader-search]")?.addEventListener("click", () => {
+        registerView.querySelector("[data-incident-situation-leader]").value = "구민준";
+      });
+
+      const updateReportFileStatus = () => {
+        if (!reportFileStatus) {
+          return;
+        }
+
+        reportFileStatus.classList.toggle("has-file", Boolean(attachedReport));
+        reportFileStatus.textContent = attachedReport
+          ? `${attachedReport.name} · ${(attachedReport.size / 1024 / 1024).toFixed(2)} MB`
+          : "선택된 파일이 없습니다.";
+      };
+
+      reportFileInput?.addEventListener("change", () => {
+        const file = reportFileInput.files?.[0];
+
+        if (!file) {
+          attachedReport = null;
+          updateReportFileStatus();
+          return;
+        }
+
+        if (!/\.(doc|docx|pdf)$/i.test(file.name)) {
+          reportFileInput.value = "";
+          attachedReport = null;
+          updateReportFileStatus();
+          openEventActionEmptyModal("DOC, DOCX, PDF 형식의 장애보고서만 첨부할 수 있습니다");
+          return;
+        }
+
+        if (file.size > maxReportFileSize) {
+          reportFileInput.value = "";
+          attachedReport = null;
+          updateReportFileStatus();
+          openEventActionEmptyModal("장애보고서는 20MB 이하 파일만 첨부할 수 있습니다");
+          return;
+        }
+
+        attachedReport = {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          lastModified: file.lastModified
+        };
+        updateReportFileStatus();
       });
 
       searchView.querySelectorAll("[data-incident-search-lookup]").forEach((button) => {
@@ -10317,38 +11261,134 @@
         });
       });
 
-      registerButton.addEventListener("click", () => {
-        const missingFields = basicFields
+      const resetRegisterForm = () => {
+        [...basicFields, ...followupFields].forEach(({ control }) => {
+          control.value = "";
+        });
+        actionGrid.reset();
+        futureGrid.reset();
+        infraGrid.reset();
+        relatedEventGrid.reset();
+        resetFiveWhy();
+        if (reportFileInput) {
+          reportFileInput.value = "";
+        }
+        attachedReport = null;
+        updateReportFileStatus();
+        activeIncidentId = "";
+
+        registerView.querySelectorAll("[data-incident-section]").forEach((section) => {
+          section.open = section.dataset.incidentSection === "basic";
+        });
+      };
+
+      const isGridComplete = (rows, keys) => (
+        rows.length > 0 && rows.every((row) => keys.every((key) => String(row[key] || "").trim()))
+      );
+
+      const saveIncident = (isFinal) => {
+        const actionRows = actionGrid.collect();
+        const futureRows = futureGrid.collect();
+        const fiveWhyRows = collectFiveWhy();
+        const infraRows = infraGrid.collect();
+        const relatedEventRows = relatedEventGrid.collect();
+        const missingFields = [...basicFields, ...followupFields]
           .filter(({ control }) => !String(control?.value || "").trim())
           .map(({ label }) => label);
 
-        if (missingFields.length > 0) {
+        actionTimelineInput.value = JSON.stringify(actionRows);
+        futurePlanInput.value = JSON.stringify(futureRows);
+        fiveWhyInput.value = JSON.stringify(fiveWhyRows);
+        infraInput.value = infraRows.length ? JSON.stringify(infraRows) : "";
+        relatedEventInput.value = relatedEventRows.length ? JSON.stringify(relatedEventRows) : "";
+
+        if (isFinal && missingFields.length > 0) {
           openEventActionEmptyModal(`다음 항목을 입력해주세요: ${missingFields.join(", ")}`);
           return;
         }
 
+        if (isFinal && !validateIncidentTimeline()) {
+          return;
+        }
+
+        if (isFinal && !isGridComplete(actionRows, ["date", "time", "type", "content"])) {
+          openEventActionEmptyModal("조치 내용 (시간별)의 날짜, 시간, 구분, 조치내용을 모두 입력해주세요");
+          return;
+        }
+
+        if (isFinal && !isGridComplete(futureRows, ["task", "dueAt"])) {
+          openEventActionEmptyModal("향후 대책의 TASK와 예정완료일시를 모두 입력해주세요");
+          return;
+        }
+
+        if (isFinal && !isGridComplete(fiveWhyRows, ["why", "cause"])) {
+          openEventActionEmptyModal("5-why의 WHY와 원인을 모두 입력해주세요");
+          return;
+        }
+
+        if (isFinal && !attachedReport) {
+          registerView.querySelector("[data-incident-section='report']").open = true;
+          openEventActionEmptyModal("장애보고서를 첨부해주세요");
+          return;
+        }
+
+        const hasAnyValue = [...basicFields, ...followupFields]
+          .some(({ control }) => String(control?.value || "").trim())
+          || actionRows.some((row) => Object.values(row).some((value) => value))
+          || futureRows.some((row) => Object.values(row).some((value) => value))
+          || Boolean(attachedReport);
+
+        if (!isFinal && !hasAnyValue) {
+          openEventActionEmptyModal("임시저장할 내용을 하나 이상 입력해주세요");
+          return;
+        }
+
+        const rows = readRows();
+        const existingIndex = activeIncidentId
+          ? rows.findIndex((row) => row.incidentId === activeIncidentId)
+          : -1;
+        const existingRow = existingIndex >= 0 ? rows[existingIndex] : null;
         const row = {
-          incidentId: `INC-${Date.now()}`,
-          registeredAt: formatProblemRegisteredAt()
+          ...(existingRow || {}),
+          incidentId: activeIncidentId || `INC-${Date.now()}`,
+          registeredAt: existingRow?.registeredAt || formatProblemRegisteredAt(),
+          status: isFinal ? "등록" : "임시저장",
+          actionTimeline: actionTimelineInput.value,
+          futurePlan: futurePlanInput.value,
+          fiveWhy: fiveWhyInput.value,
+          infraCi: infraInput.value,
+          relatedEvent: relatedEventInput.value,
+          reportFile: attachedReport
         };
 
-        basicFields.forEach(({ control, key }) => {
+        [...basicFields, ...followupFields].forEach(({ control, key }) => {
           row[key] = control.value.trim();
         });
 
-        const rows = readRows();
-        rows.unshift(row);
+        if (existingIndex >= 0) {
+          rows[existingIndex] = row;
+        } else {
+          rows.unshift(row);
+        }
 
         if (!writeRows(rows)) {
           return;
         }
 
-        basicFields.forEach(({ control }) => {
-          control.value = "";
-        });
+        activeIncidentId = row.incidentId;
         renderRows();
-        openEventActionEmptyModal("장애가 등록되었습니다(SWING메일로도 전달됩니다)");
-      });
+
+        if (isFinal) {
+          resetRegisterForm();
+          openEventActionEmptyModal("장애가 등록되었습니다");
+          return;
+        }
+
+        openEventActionEmptyModal("임시저장되었습니다");
+      };
+
+      draftButton.addEventListener("click", () => saveIncident(false));
+      registerButton.addEventListener("click", () => saveIncident(true));
 
       searchForm.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -10359,6 +11399,7 @@
       });
 
       initializeDateControls();
+      updateReportFileStatus();
       renderRows();
     }
 
