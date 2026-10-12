@@ -832,6 +832,34 @@
       line-height: 1.25;
     }
 
+    .problem-section-title-row {
+      min-width: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .report-attachment-badge {
+      display: inline-flex;
+      min-height: 23px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #fff1dc;
+      color: #935214;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .report-attachment-badge.is-attached {
+      background: #e7f7ed;
+      color: #18794e;
+    }
+
     .problem-section.is-required summary {
       grid-template-columns: minmax(0, 1fr) auto 20px;
     }
@@ -978,9 +1006,93 @@
       gap: 0;
     }
 
+    .problem-result-table .problem-col-status,
     .problem-result-table .incident-col-status {
-      width: 90px;
+      width: 126px;
       text-align: center;
+    }
+
+    .problem-result-table th.problem-col-status,
+    .problem-result-table th.incident-col-status {
+      z-index: 12;
+      overflow: visible;
+    }
+
+    .problem-status-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .problem-status-help {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 1px solid #8fa2b8;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #42546a;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: help;
+    }
+
+    .problem-status-help:focus-visible {
+      outline: 2px solid #2f81f7;
+      outline-offset: 2px;
+    }
+
+    .problem-status-tooltip {
+      position: absolute;
+      z-index: 30;
+      top: calc(100% + 8px);
+      left: 50%;
+      width: 180px;
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.18);
+      color: #1f2937;
+      text-align: left;
+      visibility: hidden;
+      opacity: 0;
+      transform: translate(-50%, -4px);
+      transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+      pointer-events: none;
+    }
+
+    .problem-status-help:hover .problem-status-tooltip,
+    .problem-status-help:focus .problem-status-tooltip {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .problem-status-tooltip-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #475569;
+    }
+
+    .workflow-status-tag {
+      display: inline-flex;
+      min-height: 23px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .incident-status-badge {
@@ -1001,6 +1113,36 @@
       color: #8a5b10;
     }
 
+    .workflow-status-tag.is-authoring,
+    .incident-status-badge.is-authoring {
+      background: #edf1f5;
+      color: #465568;
+    }
+
+    .workflow-status-tag.is-author-approval,
+    .incident-status-badge.is-author-approval {
+      background: #e9f1ff;
+      color: #1557ba;
+    }
+
+    .workflow-status-tag.is-followup,
+    .incident-status-badge.is-followup {
+      background: #fff1dc;
+      color: #935214;
+    }
+
+    .workflow-status-tag.is-followup-approval,
+    .incident-status-badge.is-followup-approval {
+      background: #f2eaff;
+      color: #6941c6;
+    }
+
+    .workflow-status-tag.is-closed,
+    .incident-status-badge.is-closed {
+      background: #e7f7ed;
+      color: #18794e;
+    }
+
     .incident-report-panel {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
@@ -1010,6 +1152,11 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       background: #f8fafc;
+    }
+
+    .incident-report-list {
+      display: grid;
+      gap: 12px;
     }
 
     .incident-report-copy {
@@ -1585,6 +1732,23 @@
       background: #263241;
     }
 
+    body.is-dark-mode .problem-status-help {
+      border-color: #5c6d82;
+      background: #1f2630;
+      color: #dbe6f3;
+    }
+
+    body.is-dark-mode .problem-status-tooltip {
+      border-color: #46566b;
+      background: #1b222c;
+      color: #e5edf6;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.42);
+    }
+
+    body.is-dark-mode .problem-status-tooltip-title {
+      color: #b7c4d4;
+    }
+
     body.is-dark-mode .problem-section-body {
       background: #111820;
     }
@@ -1596,6 +1760,16 @@
     body.is-dark-mode .problem-section summary:hover,
     body.is-dark-mode .problem-section summary:focus-visible {
       background: #222b37;
+    }
+
+    body.is-dark-mode .report-attachment-badge {
+      background: #3c2b18;
+      color: #f4c97a;
+    }
+
+    body.is-dark-mode .report-attachment-badge.is-attached {
+      background: #153b2a;
+      color: #82d9a8;
     }
 
     body.is-dark-mode .problem-section.is-disabled summary:hover,
@@ -5466,9 +5640,9 @@
                   <h3>문제관리 조회</h3>
                   <ul class="script-lines">
                     <li>마지막으로 문제관리 조회입니다. 등록된 문제는 이 목록에서 확인할 수 있고, <strong class="script-keyword">작성자 본인 건</strong>을 클릭하면 후속 작성 팝업이 열립니다.</li>
-                    <li>후속 작성 팝업은 문제관리 등록 화면과 동일한 화면을 재사용하지만, 이때는 <strong class="script-keyword is-critical">01 기본정보는 잠겨 있고</strong> 02 개요부터 08 기타까지 작성자가 입력할 수 있습니다.</li>
+                    <li>후속 작성 팝업은 문제관리 등록 화면과 동일한 화면을 재사용하지만, 이때는 <strong class="script-keyword is-critical">01 기본정보는 잠겨 있고</strong> 02 개요부터 09 보고서까지 작성자가 입력할 수 있습니다.</li>
                     <li>02 개요에서는 발생시작시간, 발생종료시간, 총 발생시간, 오류내용을 입력합니다. <strong class="script-keyword">총 발생시간</strong>은 시작/종료 시간을 기준으로 자동 계산됩니다.</li>
-                    <li>03 서비스영향도, 04 문제 발생 원인, 05 조치 내용, 06 향후 대책, 07 5-why, 08 기타까지 <strong class="script-keyword">문제 분석과 재발 방지</strong>에 필요한 정보를 작성합니다.</li>
+                    <li>03 서비스영향도, 04 문제 발생 원인, 05 조치 내용, 06 향후 대책, 07 5-why, 08 기타까지 <strong class="script-keyword">문제 분석과 재발 방지</strong>에 필요한 정보를 작성하고, 09 보고서에서 향후대책보고서를 첨부합니다.</li>
                     <li>08 기타에는 <strong class="script-keyword">대상 구성항목(인프라)</strong>과 <strong class="script-keyword">관련 이벤트</strong>를 연결할 수 있도록 구성했습니다. 인프라 문제인지 서비스 이벤트 문제인지에 따라 분석 대상을 같이 묶어 관리하기 위한 영역입니다.</li>
                     <li>작성 중에는 <strong class="script-keyword">임시저장</strong>을 할 수 있고, 작성이 완료되면 <strong class="script-keyword">결재요청</strong>으로 넘어가는 흐름입니다.</li>
                   </ul>
@@ -5981,6 +6155,34 @@
                 </div>
               </div>
             </details>
+            <details class="problem-section is-disabled" data-problem-section="report" data-problem-disabled-section aria-disabled="true">
+              <summary>
+                <span class="problem-section-title-row">
+                  <span class="problem-section-heading">09 보고서</span>
+                  <span class="report-attachment-badge" role="status" aria-live="polite" data-problem-future-report-summary-status>향후대책보고서 미첨부</span>
+                </span>
+                <span class="problem-required-note" data-problem-followup-required-note hidden>* 결재요청 시 첨부 필수입니다</span>
+                <span class="problem-section-chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="problem-section-body">
+                <div class="incident-report-list">
+                  <div class="incident-report-panel">
+                    <div class="incident-report-copy">
+                      <p class="incident-report-title">향후대책보고서 첨부</p>
+                      <p class="incident-report-description">DOC, DOCX, PDF 파일을 첨부할 수 있으며 결재요청 시 반드시 필요합니다.</p>
+                      <p class="incident-report-status" id="problem-future-report-status" role="status" aria-live="polite" data-problem-future-report-status>선택된 파일이 없습니다.</p>
+                    </div>
+                    <div class="incident-report-actions">
+                      <a class="incident-report-button" href="templates/%ED%96%A5%ED%9B%84%EB%8C%80%EC%B1%85%EB%B3%B4%EA%B3%A0%EC%84%9C_%EC%83%98%ED%94%8C.docx" download="향후대책보고서_샘플.docx">
+                        향후대책보고서 샘플 다운로드
+                      </a>
+                      <label class="incident-report-button" for="problem-future-report-file">보고서 파일 선택</label>
+                      <input class="incident-report-file" id="problem-future-report-file" type="file" accept=".doc,.docx,.pdf" data-problem-future-report-file aria-describedby="problem-future-report-status" disabled>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -6065,6 +6267,22 @@
                   <thead>
                     <tr>
                       <th class="problem-col-no" scope="col">NO</th>
+                      <th class="problem-col-status" scope="col">
+                        <span class="problem-status-header">
+                          <span>진행상태</span>
+                          <button class="problem-status-help" type="button" aria-label="진행상태 종류 안내">
+                            ?
+                            <span class="problem-status-tooltip" role="tooltip">
+                              <span class="problem-status-tooltip-title">진행상태 안내</span>
+                              <span class="workflow-status-tag is-authoring">작성중</span>
+                              <span class="workflow-status-tag is-author-approval">작성결재대기</span>
+                              <span class="workflow-status-tag is-followup">후속조치중</span>
+                              <span class="workflow-status-tag is-followup-approval">후속조치결재대기</span>
+                              <span class="workflow-status-tag is-closed">종결</span>
+                            </span>
+                          </button>
+                        </span>
+                      </th>
                       <th class="problem-col-title" scope="col">제목</th>
                       <th class="problem-col-author-department" scope="col">작성부서</th>
                       <th class="problem-col-author-team" scope="col">작성팀</th>
@@ -6622,6 +6840,34 @@
                     <td>01 기본정보, 02 개요, 03 장애 판정 및 분류는 얇은 행 라벨과 구분선으로 정보를 구분하고, 03은 등급 판정, 영향 및 보고, 원인 및 해결, 후속 관리로 연관된 입력 항목을 묶어 배치한다.</td>
                     <td class="req-status">적용</td>
                   </tr>
+                  <tr>
+                    <td class="req-id">REQ-073</td>
+                    <td class="req-screen">문제관리 조회</td>
+                    <td class="req-category">09 보고서</td>
+                    <td>문제 후속 작성 화면의 09 보고서 섹션에서는 향후대책보고서 샘플 DOCX를 다운로드하고 DOC, DOCX, PDF 형식의 보고서를 첨부할 수 있으며, 임시저장에는 선택 사항이지만 결재요청 시에는 첨부를 필수로 검증한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-074</td>
+                    <td class="req-screen">장애관리 등록</td>
+                    <td class="req-category">10 보고서</td>
+                    <td>장애관리 10 보고서 섹션에는 장애보고서와 향후대책보고서 샘플 DOCX를 각각 다운로드하고 보고서를 첨부할 수 있으며, 임시저장에는 선택 사항이지만 최종 등록 시에는 두 보고서 모두 첨부를 필수로 검증한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-075</td>
+                    <td class="req-screen">공통</td>
+                    <td class="req-category">진행상태</td>
+                    <td>문제관리와 장애관리 조회 결과의 진행상태는 작성중, 작성결재대기, 후속조치중, 후속조치결재대기, 종결로 관리하며, 컬럼 제목 옆 도움말 버튼에 마우스를 올리거나 키보드로 포커스하면 색상별 상태 안내를 표시한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
+                  <tr>
+                    <td class="req-id">REQ-076</td>
+                    <td class="req-screen">공통</td>
+                    <td class="req-category">보고서 첨부 상태</td>
+                    <td>문제관리 09 보고서와 장애관리 10 보고서 섹션 제목 옆에는 각 보고서 이름과 첨부 또는 미첨부 상태를 표시하고 파일 선택 및 기존 데이터 불러오기 상태에 맞춰 즉시 갱신한다.</td>
+                    <td class="req-status">적용</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -7087,28 +7333,50 @@
         }
       });
 
+      registerView.querySelector("[data-incident-section='report']")?.remove();
+
       const reportSection = document.createElement("details");
       reportSection.className = "problem-section is-required";
       reportSection.dataset.incidentSection = "report";
       reportSection.innerHTML = `
         <summary>
-          <span class="problem-section-heading">10 보고서</span>
+          <span class="problem-section-title-row">
+            <span class="problem-section-heading">10 보고서</span>
+            <span class="report-attachment-badge" role="status" aria-live="polite" data-incident-report-summary-status>장애보고서 미첨부</span>
+            <span class="report-attachment-badge" role="status" aria-live="polite" data-incident-future-report-summary-status>향후대책보고서 미첨부</span>
+          </span>
           <span class="problem-required-note" data-incident-followup-required-note>* 등록 시 첨부 필수입니다</span>
           <span class="problem-section-chevron" aria-hidden="true"></span>
         </summary>
         <div class="problem-section-body">
-          <div class="incident-report-panel">
-            <div class="incident-report-copy">
-              <p class="incident-report-title">장애보고서 첨부</p>
-              <p class="incident-report-description">DOC, DOCX, PDF 파일을 첨부할 수 있으며 최종 등록 시 반드시 필요합니다.</p>
-              <p class="incident-report-status" id="incident-report-status" role="status" aria-live="polite" data-incident-report-status>선택된 파일이 없습니다.</p>
+          <div class="incident-report-list">
+            <div class="incident-report-panel">
+              <div class="incident-report-copy">
+                <p class="incident-report-title">장애보고서 첨부</p>
+                <p class="incident-report-description">DOC, DOCX, PDF 파일을 첨부할 수 있으며 최종 등록 시 반드시 필요합니다.</p>
+                <p class="incident-report-status" id="incident-report-status" role="status" aria-live="polite" data-incident-report-status>선택된 파일이 없습니다.</p>
+              </div>
+              <div class="incident-report-actions">
+                <a class="incident-report-button" href="templates/%EC%9E%A5%EC%95%A0%EB%B3%B4%EA%B3%A0%EC%84%9C_%EC%83%98%ED%94%8C.docx" download="장애보고서_샘플.docx">
+                  장애보고서 샘플 다운로드
+                </a>
+                <label class="incident-report-button" for="incident-report-file">보고서 파일 선택</label>
+                <input class="incident-report-file" id="incident-report-file" type="file" accept=".doc,.docx,.pdf" data-incident-report-file aria-describedby="incident-report-status">
+              </div>
             </div>
-            <div class="incident-report-actions">
-              <a class="incident-report-button" href="templates/%EC%9E%A5%EC%95%A0%EB%B3%B4%EA%B3%A0%EC%84%9C_%EC%83%98%ED%94%8C.docx" download="장애보고서_샘플.docx">
-                장애보고서 샘플 다운로드
-              </a>
-              <label class="incident-report-button" for="incident-report-file">보고서 파일 선택</label>
-              <input class="incident-report-file" id="incident-report-file" type="file" accept=".doc,.docx,.pdf" data-incident-report-file aria-describedby="incident-report-status">
+            <div class="incident-report-panel">
+              <div class="incident-report-copy">
+                <p class="incident-report-title">향후대책보고서 첨부</p>
+                <p class="incident-report-description">DOC, DOCX, PDF 파일을 첨부할 수 있으며 최종 등록 시 반드시 필요합니다.</p>
+                <p class="incident-report-status" id="incident-future-report-status" role="status" aria-live="polite" data-incident-future-report-status>선택된 파일이 없습니다.</p>
+              </div>
+              <div class="incident-report-actions">
+                <a class="incident-report-button" href="templates/%ED%96%A5%ED%9B%84%EB%8C%80%EC%B1%85%EB%B3%B4%EA%B3%A0%EC%84%9C_%EC%83%98%ED%94%8C.docx" download="향후대책보고서_샘플.docx">
+                  향후대책보고서 샘플 다운로드
+                </a>
+                <label class="incident-report-button" for="incident-future-report-file">보고서 파일 선택</label>
+                <input class="incident-report-file" id="incident-future-report-file" type="file" accept=".doc,.docx,.pdf" data-incident-future-report-file aria-describedby="incident-future-report-status">
+              </div>
             </div>
           </div>
         </div>
@@ -7208,12 +7476,35 @@
 
     const problemSearchColumns = [
       { key: "no", className: "problem-col-no" },
+      { key: "status", className: "problem-col-status" },
       { key: "title", className: "problem-col-title" },
       { key: "authorDepartment", className: "problem-col-author-department" },
       { key: "authorTeam", className: "problem-col-author-team" },
       { key: "author", className: "problem-col-author" },
       { key: "registeredAt", className: "problem-col-registered-at" }
     ];
+    const workflowStatusClassNames = {
+      "작성중": "is-authoring",
+      "작성결재대기": "is-author-approval",
+      "후속조치중": "is-followup",
+      "후속조치결재대기": "is-followup-approval",
+      "종결": "is-closed"
+    };
+
+    function normalizeWorkflowStatus(status) {
+      if (workflowStatusClassNames[status]) {
+        return status;
+      }
+
+      return "작성중";
+    }
+
+    function applyWorkflowStatusBadge(badge, status) {
+      const normalizedStatus = normalizeWorkflowStatus(status);
+
+      badge.className = `incident-status-badge ${workflowStatusClassNames[normalizedStatus]}`;
+      badge.textContent = normalizedStatus;
+    }
 
     const currentUserProfile = {
       cell: "디지털수신셀",
@@ -7308,6 +7599,9 @@
     const problemRelatedEventModal = document.querySelector("#problem-related-event-modal");
     const problemRelatedEventSelectBody = document.querySelector("#problem-related-event-select-body");
     const problemRelatedEventSelectCloseButtons = [...document.querySelectorAll("[data-related-event-select-close]")];
+    const problemFutureReportFileInput = document.querySelector("[data-problem-future-report-file]");
+    const problemFutureReportStatus = document.querySelector("[data-problem-future-report-status]");
+    const problemFutureReportSummaryStatus = document.querySelector("[data-problem-future-report-summary-status]");
     const problemRequesterSearchButton = document.querySelector("[data-problem-requester-search]");
     const problemAuthorSearchButton = document.querySelector("[data-problem-author-search]");
     const problemRequestDepartmentInput = document.querySelector("[data-problem-request-department]");
@@ -7390,6 +7684,7 @@
     let problemRows = [];
     let problemRegisterMode = "create";
     let activeProblemId = "";
+    let attachedProblemFutureReport = null;
     let eventRuleSequence = 0;
     let lastStatusUpdatedAt = new Date();
     let lastFocusedElement = null;
@@ -9607,6 +9902,57 @@
       problemContentInput.value = row.content || "";
     }
 
+    function updateProblemFutureReportStatus() {
+      if (!problemFutureReportStatus) {
+        return;
+      }
+
+      problemFutureReportStatus.classList.toggle("has-file", Boolean(attachedProblemFutureReport));
+      problemFutureReportStatus.textContent = attachedProblemFutureReport
+        ? `${attachedProblemFutureReport.name} · ${(attachedProblemFutureReport.size / 1024 / 1024).toFixed(2)} MB`
+        : "선택된 파일이 없습니다.";
+      if (problemFutureReportSummaryStatus) {
+        problemFutureReportSummaryStatus.classList.toggle("is-attached", Boolean(attachedProblemFutureReport));
+        problemFutureReportSummaryStatus.textContent = attachedProblemFutureReport
+          ? "향후대책보고서 첨부"
+          : "향후대책보고서 미첨부";
+      }
+    }
+
+    problemFutureReportFileInput?.addEventListener("change", () => {
+      const file = problemFutureReportFileInput.files?.[0];
+
+      if (!file) {
+        attachedProblemFutureReport = null;
+        updateProblemFutureReportStatus();
+        return;
+      }
+
+      if (!/\.(doc|docx|pdf)$/i.test(file.name)) {
+        problemFutureReportFileInput.value = "";
+        attachedProblemFutureReport = null;
+        updateProblemFutureReportStatus();
+        openEventActionEmptyModal("DOC, DOCX, PDF 형식의 향후대책보고서만 첨부할 수 있습니다");
+        return;
+      }
+
+      if (file.size > 20 * 1024 * 1024) {
+        problemFutureReportFileInput.value = "";
+        attachedProblemFutureReport = null;
+        updateProblemFutureReportStatus();
+        openEventActionEmptyModal("향후대책보고서는 20MB 이하 파일만 첨부할 수 있습니다");
+        return;
+      }
+
+      attachedProblemFutureReport = {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified
+      };
+      updateProblemFutureReportStatus();
+    });
+
     function setProblemFollowupValues(row = {}) {
       getProblemFollowupFields().forEach(({ key, control }) => {
         control.value = row[key] || "";
@@ -9631,6 +9977,11 @@
       setProblemFiveWhyRows(fiveWhyRows);
       setProblemInfraRows(infraRows);
       setProblemRelatedEventRows(relatedEventRows);
+      attachedProblemFutureReport = row.futurePlanReportFile || null;
+      if (problemFutureReportFileInput) {
+        problemFutureReportFileInput.value = "";
+      }
+      updateProblemFutureReportStatus();
       updateProblemTotalMinutes();
     }
 
@@ -9739,6 +10090,9 @@
       problemFollowupFields.forEach((control) => {
         control.disabled = !isAuthorMode;
       });
+      if (problemFutureReportFileInput) {
+        problemFutureReportFileInput.disabled = !isAuthorMode;
+      }
       document.querySelectorAll("[data-problem-date-control] .action-date-button").forEach((button) => {
         button.disabled = !isAuthorMode;
       });
@@ -9770,11 +10124,17 @@
       setProblemInfraRows([]);
       selectedProblemRelatedEventRows.clear();
       setProblemRelatedEventRows([]);
+      if (problemFutureReportFileInput) {
+        problemFutureReportFileInput.value = "";
+      }
+      attachedProblemFutureReport = null;
+      updateProblemFutureReportStatus();
     }
 
     function createProblemRow() {
       return {
         problemId: `PBM-${Date.now()}`,
+        status: "작성중",
         registeredAt: formatProblemRegisteredAt(),
         requestDepartment: problemRequestDepartmentInput.value,
         requestTeam: problemRequestTeamInput.value,
@@ -9790,7 +10150,8 @@
     function saveProblemFollowup(options = {}) {
       const {
         requireAllFields = true,
-        successMessage = "저장되었습니다"
+        successMessage = "저장되었습니다",
+        nextStatus = null
       } = options;
       const scheduleControls = [problemStartDateInput, problemStartTimeInput, problemEndDateInput, problemEndTimeInput];
       const hasFullSchedule = scheduleControls.every((control) => String(control.value || "").trim());
@@ -9820,6 +10181,12 @@
         }
 
         if (!validateProblemFiveWhyRows()) {
+          return false;
+        }
+
+        if (!attachedProblemFutureReport) {
+          document.querySelector("[data-problem-section='report']").open = true;
+          openEventActionEmptyModal("향후대책보고서를 첨부해주세요");
           return false;
         }
       }
@@ -9866,6 +10233,8 @@
         updatedRow[key] = control.value.trim();
       });
       updatedRow.totalMinutes = problemTotalMinutesInput.value;
+      updatedRow.futurePlanReportFile = attachedProblemFutureReport;
+      updatedRow.status = nextStatus || normalizeWorkflowStatus(currentRow.status);
 
       const storedRows = readStoredProblemRows();
       const storedIndex = storedRows.findIndex((row) => row.problemId === activeProblemId);
@@ -9895,7 +10264,8 @@
     function handleProblemAuthorApprovalRequest() {
       saveProblemFollowup({
         requireAllFields: true,
-        successMessage: "결재요청되었습니다"
+        successMessage: "결재요청되었습니다",
+        nextStatus: "작성결재대기"
       });
     }
 
@@ -10758,6 +11128,17 @@
         const isOwnedRow = row.author === currentProblemAuthor;
 
         problemSearchColumns.forEach((column) => {
+          if (column.key === "status") {
+            const statusCell = document.createElement("td");
+            const badge = document.createElement("span");
+
+            statusCell.className = column.className;
+            applyWorkflowStatusBadge(badge, row.status);
+            statusCell.append(badge);
+            tableRow.append(statusCell);
+            return;
+          }
+
           tableRow.append(createProblemResultCell(row, column));
         });
 
@@ -10834,8 +11215,13 @@
       const relatedEventInput = registerView?.querySelector("[data-incident-related-event]");
       const reportFileInput = registerView?.querySelector("[data-incident-report-file]");
       const reportFileStatus = registerView?.querySelector("[data-incident-report-status]");
+      const reportSummaryStatus = registerView?.querySelector("[data-incident-report-summary-status]");
+      const futureReportFileInput = registerView?.querySelector("[data-incident-future-report-file]");
+      const futureReportFileStatus = registerView?.querySelector("[data-incident-future-report-status]");
+      const futureReportSummaryStatus = registerView?.querySelector("[data-incident-future-report-summary-status]");
       const maxReportFileSize = 20 * 1024 * 1024;
       let attachedReport = null;
+      let attachedFutureReport = null;
 
       if (!registerView || !searchView || !registerButton || !draftButton || !searchForm || !resultBody || !resultCount) {
         return;
@@ -10845,14 +11231,18 @@
       const incidentColumns = [
         { key: "no", className: "problem-col-no" },
         { key: "status", className: "incident-col-status" },
-        ...problemSearchColumns.slice(1)
+        ...problemSearchColumns.slice(2)
       ];
 
-      if (resultHeaderRow && !resultHeaderRow.querySelector(".incident-col-status")) {
+      const inheritedStatusHeader = resultHeaderRow?.querySelector(".problem-col-status");
+
+      if (inheritedStatusHeader) {
+        inheritedStatusHeader.className = "incident-col-status";
+      } else if (resultHeaderRow && !resultHeaderRow.querySelector(".incident-col-status")) {
         const statusHeader = document.createElement("th");
         statusHeader.className = "incident-col-status";
         statusHeader.scope = "col";
-        statusHeader.textContent = "상태";
+        statusHeader.innerHTML = document.querySelector("#problem-search .problem-col-status")?.innerHTML || "진행상태";
         resultHeaderRow.children[0]?.after(statusHeader);
       }
 
@@ -10931,15 +11321,24 @@
               const badge = document.createElement("span");
 
               statusCell.className = column.className;
-              badge.className = "incident-status-badge";
-              badge.classList.toggle("is-draft", row.status === "임시저장");
-              badge.textContent = row.status || "등록";
+              applyWorkflowStatusBadge(badge, row.status);
               statusCell.append(badge);
               tableRow.append(statusCell);
               return;
             }
 
             tableRow.append(createProblemResultCell(displayRow, column));
+          });
+          tableRow.classList.add("is-clickable");
+          tableRow.tabIndex = 0;
+          tableRow.title = "장애 등록 화면 열기";
+          tableRow.setAttribute("aria-label", `${displayRow.no}번 장애 ${row.title || ""} 열기`);
+          tableRow.addEventListener("click", () => openIncidentRow(row));
+          tableRow.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openIncidentRow(row);
+            }
           });
           fragment.append(tableRow);
         });
@@ -11006,7 +11405,7 @@
         const deleteButton = registerView.querySelector(deleteSelector);
 
         if (!body || !addButton || !deleteButton || !hiddenInput) {
-          return { collect: () => [], reset: () => {} };
+          return { collect: () => [], reset: () => {}, setRows: () => {} };
         }
 
         const collect = () => [...body.querySelectorAll("tr")].map((row) => {
@@ -11052,11 +11451,17 @@
           sync();
         };
 
-        const reset = () => {
+        const setRows = (values = []) => {
           body.replaceChildren();
-          Array.from({ length: defaultCount }).forEach(() => appendRow());
+          const rows = Array.isArray(values) && values.length
+            ? values
+            : Array.from({ length: defaultCount }, () => ({}));
+
+          rows.forEach((row) => appendRow(row));
           sync();
         };
+
+        const reset = () => setRows([]);
 
         addButton.addEventListener("click", () => appendRow());
         deleteButton.addEventListener("click", () => {
@@ -11076,7 +11481,7 @@
         });
 
         reset();
-        return { collect, reset };
+        return { collect, reset, setRows };
       };
 
       const actionGrid = setupSelectableGrid({
@@ -11132,10 +11537,11 @@
       });
 
       const fiveWhyBody = registerView.querySelector("#incident-fivewhy-body");
-      const resetFiveWhy = () => {
+      const setFiveWhyRows = (values = []) => {
         const fragment = document.createDocumentFragment();
 
         Array.from({ length: 5 }).forEach((_, index) => {
+          const value = values[index] || {};
           const row = document.createElement("tr");
           const noCell = document.createElement("td");
           const whyCell = document.createElement("td");
@@ -11147,9 +11553,11 @@
           whyInput.rows = 2;
           whyInput.dataset.incidentFiveWhy = "why";
           whyInput.setAttribute("aria-label", `WHY${index + 1} 질문`);
+          whyInput.value = value.why || "";
           causeInput.rows = 2;
           causeInput.dataset.incidentFiveWhy = "cause";
           causeInput.setAttribute("aria-label", `WHY${index + 1} 원인`);
+          causeInput.value = value.cause || "";
           whyCell.append(whyInput);
           causeCell.append(causeInput);
           row.append(noCell, whyCell, causeCell);
@@ -11158,6 +11566,8 @@
 
         fiveWhyBody?.replaceChildren(fragment);
       };
+
+      const resetFiveWhy = () => setFiveWhyRows([]);
 
       const collectFiveWhy = () => [...(fiveWhyBody?.querySelectorAll("tr") || [])].map((row, index) => ({
         no: `WHY${index + 1}`,
@@ -11213,6 +11623,27 @@
         reportFileStatus.textContent = attachedReport
           ? `${attachedReport.name} · ${(attachedReport.size / 1024 / 1024).toFixed(2)} MB`
           : "선택된 파일이 없습니다.";
+        if (reportSummaryStatus) {
+          reportSummaryStatus.classList.toggle("is-attached", Boolean(attachedReport));
+          reportSummaryStatus.textContent = attachedReport ? "장애보고서 첨부" : "장애보고서 미첨부";
+        }
+      };
+
+      const updateFutureReportFileStatus = () => {
+        if (!futureReportFileStatus) {
+          return;
+        }
+
+        futureReportFileStatus.classList.toggle("has-file", Boolean(attachedFutureReport));
+        futureReportFileStatus.textContent = attachedFutureReport
+          ? `${attachedFutureReport.name} · ${(attachedFutureReport.size / 1024 / 1024).toFixed(2)} MB`
+          : "선택된 파일이 없습니다.";
+        if (futureReportSummaryStatus) {
+          futureReportSummaryStatus.classList.toggle("is-attached", Boolean(attachedFutureReport));
+          futureReportSummaryStatus.textContent = attachedFutureReport
+            ? "향후대책보고서 첨부"
+            : "향후대책보고서 미첨부";
+        }
       };
 
       reportFileInput?.addEventListener("change", () => {
@@ -11249,6 +11680,77 @@
         updateReportFileStatus();
       });
 
+      futureReportFileInput?.addEventListener("change", () => {
+        const file = futureReportFileInput.files?.[0];
+
+        if (!file) {
+          attachedFutureReport = null;
+          updateFutureReportFileStatus();
+          return;
+        }
+
+        if (!/\.(doc|docx|pdf)$/i.test(file.name)) {
+          futureReportFileInput.value = "";
+          attachedFutureReport = null;
+          updateFutureReportFileStatus();
+          openEventActionEmptyModal("DOC, DOCX, PDF 형식의 향후대책보고서만 첨부할 수 있습니다");
+          return;
+        }
+
+        if (file.size > maxReportFileSize) {
+          futureReportFileInput.value = "";
+          attachedFutureReport = null;
+          updateFutureReportFileStatus();
+          openEventActionEmptyModal("향후대책보고서는 20MB 이하 파일만 첨부할 수 있습니다");
+          return;
+        }
+
+        attachedFutureReport = {
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          lastModified: file.lastModified
+        };
+        updateFutureReportFileStatus();
+      });
+
+      const parseGridRows = (value) => {
+        try {
+          const rows = JSON.parse(value || "[]");
+          return Array.isArray(rows) ? rows : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const openIncidentRow = (row) => {
+        [...basicFields, ...followupFields].forEach(({ control, key }) => {
+          control.value = row[key] || "";
+        });
+        actionGrid.setRows(parseGridRows(row.actionTimeline));
+        futureGrid.setRows(parseGridRows(row.futurePlan));
+        infraGrid.setRows(parseGridRows(row.infraCi));
+        relatedEventGrid.setRows(parseGridRows(row.relatedEvent));
+        setFiveWhyRows(parseGridRows(row.fiveWhy));
+        attachedReport = row.reportFile || null;
+        attachedFutureReport = row.futurePlanReportFile || null;
+        if (reportFileInput) {
+          reportFileInput.value = "";
+        }
+        if (futureReportFileInput) {
+          futureReportFileInput.value = "";
+        }
+        updateReportFileStatus();
+        updateFutureReportFileStatus();
+        activeIncidentId = row.incidentId;
+        registerButton.textContent = "수정 등록";
+        registerView.querySelectorAll("[data-incident-section]").forEach((section) => {
+          section.open = section.dataset.incidentSection === "basic";
+        });
+        showView("incident-register");
+        registerView.querySelector("#incident-title")?.focus();
+      };
+
       searchView.querySelectorAll("[data-incident-search-lookup]").forEach((button) => {
         button.addEventListener("click", () => {
           const target = document.getElementById(button.dataset.target);
@@ -11271,9 +11773,15 @@
         if (reportFileInput) {
           reportFileInput.value = "";
         }
+        if (futureReportFileInput) {
+          futureReportFileInput.value = "";
+        }
         attachedReport = null;
+        attachedFutureReport = null;
         updateReportFileStatus();
+        updateFutureReportFileStatus();
         activeIncidentId = "";
+        registerButton.textContent = "등록";
 
         registerView.querySelectorAll("[data-incident-section]").forEach((section) => {
           section.open = section.dataset.incidentSection === "basic";
@@ -11330,11 +11838,18 @@
           return;
         }
 
+        if (isFinal && !attachedFutureReport) {
+          registerView.querySelector("[data-incident-section='report']").open = true;
+          openEventActionEmptyModal("향후대책보고서를 첨부해주세요");
+          return;
+        }
+
         const hasAnyValue = [...basicFields, ...followupFields]
           .some(({ control }) => String(control?.value || "").trim())
           || actionRows.some((row) => Object.values(row).some((value) => value))
           || futureRows.some((row) => Object.values(row).some((value) => value))
-          || Boolean(attachedReport);
+          || Boolean(attachedReport)
+          || Boolean(attachedFutureReport);
 
         if (!isFinal && !hasAnyValue) {
           openEventActionEmptyModal("임시저장할 내용을 하나 이상 입력해주세요");
@@ -11350,13 +11865,14 @@
           ...(existingRow || {}),
           incidentId: activeIncidentId || `INC-${Date.now()}`,
           registeredAt: existingRow?.registeredAt || formatProblemRegisteredAt(),
-          status: isFinal ? "등록" : "임시저장",
+          status: normalizeWorkflowStatus(existingRow?.status),
           actionTimeline: actionTimelineInput.value,
           futurePlan: futurePlanInput.value,
           fiveWhy: fiveWhyInput.value,
           infraCi: infraInput.value,
           relatedEvent: relatedEventInput.value,
-          reportFile: attachedReport
+          reportFile: attachedReport,
+          futurePlanReportFile: attachedFutureReport
         };
 
         [...basicFields, ...followupFields].forEach(({ control, key }) => {
@@ -11398,6 +11914,7 @@
 
       initializeDateControls();
       updateReportFileStatus();
+      updateFutureReportFileStatus();
       renderRows();
     }
 
